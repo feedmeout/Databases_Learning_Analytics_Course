@@ -479,7 +479,10 @@ N2P1:
   pending
 
 N2P2:
-  pending
+  12 slides, 47 notes (4 per slide, 3 on the break slide), one «Αν ρωτήσουν» (slide 7); meta.notesMarkup = true. make_n2p2.py asserts 2 to 4 notes per slide,
+  fills [[s_page]] and [[p1_install]] (N2P1 install slide, read from content/n2p1.json); timers, room minutes and break length are variables now (same JSON slides).
+  Left out of the notes: slide 2, SQL strings in single quotes «όπως στο πρότυπο»; slide 3, «όπως στα εργαστήρια της Μαθησιακής Αναλυτικής»; slide 12, stop on time.
+  Slide 6 (and slide 3, row Χρόνος) still has the two-team rule, the sheet has every team present one item in turn (v13.5): note 1 of slide 6 says so. Proposals: see PR.
 
 N2P3:
   pending
@@ -518,7 +521,10 @@ N2P1 slide 5: the older material also showed the reverse command, mongoexport (m
 N2P1 slide 8: the older material used count(); it still works, with a DeprecationWarning. The deck uses countDocuments().
 
 N2P2:
-  none
+N2P2 slide 1: the group task is the older material's, as it was (study the SQL-MongoDB comparison page, groups, plenary); its optional exercises are the 13 items of the sheet.
+N2P2 slide 2: the older material gave the address docs.mongodb.com; today it is mongodb.com/docs.
+N2P2 slide 7: the older solutions of items 4 and 5 had typographic quotes (“Java”); mongosh answers SyntaxError: Unexpected character '“'. (1:27)
+N2P2 slide 7: the older solution of item 1, db.books.count(), works with a deprecation warning; the answers file uses db.books.countDocuments().
 
 N2P3:
   none
