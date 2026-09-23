@@ -11,7 +11,7 @@ O = json.load(open(os.path.join(H, 'e2p1_outputs.json'), encoding='utf8'))
 S = []
 
 def add(**k):
-    assert 2 <= len(k.get('notes', [])) <= 3, (k['title'], len(k.get('notes', [])))
+    assert 2 <= len(k.get('notes', [])) <= 4, (k['title'], len(k.get('notes', [])))
     S.append(k)
 
 def cmd(key, idx=None):
@@ -39,6 +39,8 @@ INT_IDS, OID_IDS = O['idtypes']
 assert N['total'] == '431' and SAME_RIGHT == SAME_AND and N['lt400'] == SAME_WRONG and PETER == PETER_SIMPLE and N['piter'] == '0'
 assert int(EXACT_ALL) - int(EXACT_ONLY) == 20 and int(EX1FIX) == int(EX1) + 1
 IMPORT_OUT = O['import']
+IMPORT_OK = IMPORT_OUT.split('\n')[-1].split('\t', 1)[1].split('. ')[0]
+assert IMPORT_OUT.endswith('%s document(s) imported successfully. 0 document(s) failed to import.' % N['total'])
 import re
 _p = re.findall(r'pageCount: (\d+)', O['zerosfix'][0])
 assert len(_p) == 3
@@ -92,9 +94,10 @@ add(type='shell', mins=1, title='Η εντολή mongoimport', dense=True,
             'Εκτελείται στο τερματικό του συστήματος, όχι μέσα στο mongosh.'],
     stack=True,
     src='MongoDB Database Tools: mongoimport.',
-    notes=['Η ώρα στην αρχή κάθε γραμμής είναι η στιγμή της εκτέλεσης και διαφέρει σε κάθε υπολογιστή. Βάση και συλλογή δημιουργούνται με την εισαγωγή.',
-           'Το αρχείο έχει ένα έγγραφο ανά γραμμή, σε Extended JSON: τα πεδία της μορφής { "$date": … } γίνονται τύπος Date. Για αρχείο με μία λίστα [ … ] χρειάζεται η επιλογή --jsonArray.',
-           'Το παλαιότερο υλικό έδειχνε και το αντίστροφο, το mongoexport (mongoexport --db=world --collection=country --out=country_export.json). Δεν χρειάζεται για την Εργασία 2.'])
+    notes=['**`%s`**: Η εντολή της διαφάνειας [[s_install]]. Γράφεται στο τερματικό του συστήματος, όχι στο mongosh.' % IMPORT,
+           '**`%s`**: Αυτό πρέπει να δει ο καθένας στο τερματικό του. Η ώρα στην αρχή κάθε γραμμής θα είναι διαφορετική.' % IMPORT_OK,
+           '**`-d library`**, **`-c books`**: Η εισαγωγή δημιουργεί τη βάση library και τη συλλογή books. Με αυτά τα ονόματα τις βρίσκουμε στο mongosh.',
+           '**`--drop`**: Αν κάποιος εκτελέσει την εντολή δεύτερη φορά, η συλλογή αδειάζει πρώτα και τα %s βιβλία φορτώνονται ξανά.' % N['total']])
 
 add(type='table', mins=1, skippable=True, kicker='Προσοχή', title='Τρία συνηθισμένα λάθη', compact=True,
     rows=[{'h': 'Μέσα στο mongosh', 't': 'Σφάλμα `%s`: το mongoimport γράφεται στο τερματικό, όχι στο mongosh.' % SYNTAX_ERR.split('.')[0]},
@@ -107,16 +110,21 @@ add(type='table', mins=1, skippable=True, kicker='Προσοχή', title='Τρί
 add(type='shell', mins=1, title='Ένα βιβλίο της συλλογής',
     cmd=cmd('book23'), cmdLabel='Εντολές, στο mongosh', out=out('book23'), outLabel='Αποτελέσματα',
     foot='Κείμενα, αριθμοί, μια ημερομηνία (Date) και δύο λίστες, authors και categories. Άλλα βιβλία έχουν και isbn, shortDescription, longDescription.',
-    notes=['Το findOne() χωρίς φίλτρο επιστρέφει το πρώτο βιβλίο, με περιγραφή εκατοντάδων λέξεων που δεν χωρά στην οθόνη· γι’ αυτό εδώ ζητείται ένα βιβλίο χωρίς περιγραφές.',
-           'Το _id είναι ακέραιος σε %s βιβλία και ObjectId στα υπόλοιπα %s: ίδια συλλογή, δύο τύποι κλειδιού.' % (INT_IDS, OID_IDS)])
+    notes=['**`use library`**: Περνάμε στη βάση που δημιούργησε το mongoimport. Το mongosh απαντά `switched to db library`.',
+           '**`db.books.findOne({ _id: 23 })`**: Φέρνει ένα μόνο έγγραφο, το βιβλίο με `_id` 23.',
+           '**Κείμενα, αριθμοί, μια ημερομηνία (Date) και δύο λίστες**: Για παράδειγμα `title`, `pageCount`, `publishedDate`, `authors` και `categories`. '
+           'Τα βιβλία της ίδιας συλλογής δεν έχουν όλα τα ίδια πεδία.',
+           'Αν ρωτήσουν: γιατί το `_id` είναι αριθμός; Το ορίζει το ίδιο το books.json: ακέραιο σε %s βιβλία, ObjectId στα %s.' % (INT_IDS, OID_IDS)])
 
 add(type='shell', mins=1, title='Πριν από τα ερωτήματα: μετρήσεις',
     cmd=cmd('counts'), cmdLabel='Εντολές', out=out('counts'), outLabel='Αποτελέσματα',
     points=['%s βιβλία είναι σε MEAP: γράφονται ακόμη και δεν έχουν κυκλοφορήσει.' % MEAP,
             '%s βιβλία έχουν 0 σελίδες: ο αριθμός είναι άγνωστος. Τα %s είναι βιβλία MEAP.' % (ZERO, MEAP0),
             'Η κατηγορία «Internet» έχει %s βιβλία· με πεζά, «internet», υπάρχει ακόμη %s.' % (INTERNET, 'ένα' if INTERNET_LC == '1' else INTERNET_LC)],
-    notes=['Το countDocuments είναι της Βραδιάς 1. Το παλαιό count() εξακολουθεί να λειτουργεί, με προειδοποίηση απόσυρσης (DeprecationWarning).',
-           'Τα μηδενικά και τα πεζά επανέρχονται στη λύση της Άσκησης 1 (διαφάνεια [[s_ex1sol]]) και στη διαφάνεια «Τα μηδενικά πρώτα» ([[s_zeros]]).'])
+    notes=['**`countDocuments`**: Μετρά τα έγγραφα χωρίς να τα εμφανίζει, όπως στη Βραδιά 1. Κάθε αριθμός στα Αποτελέσματα αντιστοιχεί σε μία εντολή, με τη σειρά.',
+           '**%s βιβλία είναι σε MEAP**: Τα %s από αυτά έχουν ακόμη 0 σελίδες, όπως δείχνει η επόμενη γραμμή.' % (MEAP, MEAP0),
+           '**%s βιβλία έχουν 0 σελίδες**: Εδώ το 0 σημαίνει «άγνωστο». Θα το ξαναβρούμε στην ταξινόμηση, στη διαφάνεια [[s_zeros]].' % ZERO,
+           '**Η κατηγορία «Internet» έχει %s βιβλία**: Η σύγκριση ξεχωρίζει κεφαλαία από πεζά, άρα το «internet» είναι άλλη τιμή.' % INTERNET])
 
 add(type='shell', mins=1, title='Προβολή: ποια πεδία εμφανίζονται', dense=True,
     cmd=cmd('proj1'), out=out('proj1'),
@@ -340,7 +348,8 @@ def num(pred):
     hits = [i + 1 for i, s in enumerate(S) if pred(s)]
     assert len(hits) == 1, hits
     return hits[0]
-REF = {'s_errors': num(lambda s: s['title'] == 'Τρία συνηθισμένα λάθη'),
+REF = {'s_install': num(lambda s: s['title'] == 'Εγκατάσταση και εισαγωγή τώρα'),
+       's_errors': num(lambda s: s['title'] == 'Τρία συνηθισμένα λάθη'),
        's_ex1sol': num(lambda s: s['title'] == 'Άσκηση 1: η λύση'),
        's_zeros': num(lambda s: s['title'] == 'Τα μηδενικά πρώτα'),
        's_sort': num(lambda s: s['title'].startswith('Ταξινόμηση και περιορισμός')),
@@ -367,7 +376,8 @@ for s in S:
     t = json.dumps(s, ensure_ascii=False)
     assert '[[s_' not in t and '[[skips]]' not in t, s['title']
 D = {'meta': {'course': 'Βάσεις Δεδομένων & Ανάλυση Δεδομένων Μάθησης', 'deckTitle': 'Ερωτήματα στη συλλογή books',
-              'part': 'Μη σχεσιακές βάσεις, Βραδιά 2, Μέρος 1', 'start': '18:15', 'lengthMin': 45, 'breakMin': 15, 'lang': 'el'},
+              'part': 'Μη σχεσιακές βάσεις, Βραδιά 2, Μέρος 1', 'start': '18:15', 'lengthMin': 45, 'breakMin': 15, 'lang': 'el',
+              'notesMarkup': True},
      'slides': S}
 json.dump(D, open(os.path.join(H, '..', 'content', 'n2p1.json'), 'w', encoding='utf8'), ensure_ascii=False, indent=1)
 print('slides', len(S), 'minutes', tot, 'skippable', sk, 'poll', polls)

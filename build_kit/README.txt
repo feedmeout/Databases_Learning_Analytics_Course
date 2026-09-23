@@ -448,3 +448,27 @@ v13.5 (lecturer's comments on the exercise sheet ONLY, "this concerns only this 
 v13.6 (same day): the kit moves to a git repository for Claude Code. Repository layout: CLAUDE.md (rules, build, checks, notes rules, how to work with the
   lecturer), FIRST_TASK.md (steps and the first message), setup.sh (Playwright Chromium, poppler-utils, Pillow, docx), .gitignore, and this kit as build_kit/.
   Next task: speaker notes, deck by deck (N2P1, N2P2, N2P3, then W1P1 to W3P3), pilot first on N2P1 slides 5, 7 and 8.
+
+==================== v14 (23 Sept 2026: speaker notes, PILOT on N2P1 slides 5, 7 and 8; waiting for the lecturer's OK) ====================
+Pipeline proved in the repository: N2P1-3 JSON (make_n2p*.py) and HTML rebuild byte-identical to the delivered files; shot2.py problems 0, check_pre.py clipped code
+  none, topdf_deck.py 33 / 12 / 32 pages with the same links; N2P2 sheet and answers "pages overflowing: none".
+ENGINE (opt-in, meta.notesMarkup = true): in the speaker notes **item** -> bold and `code` -> code. build_html2.js writes notesHtml next to notes, deck.client.js
+  shows it when present; decks without the flag get byte-identical DECK data and the old plain-text path. All fifteen decks rebuilt: slide HTML identical.
+  The optional spotlight (click a note, light up its item on the slide) is not built.
+N2P1: meta.notesMarkup = true; notes of slides 5, 7, 8 rewritten by the notes rules of CLAUDE.md (item in bold, top to bottom, 4 notes each, one «Αν ρωτήσουν»
+  on slide 7). Every number in them comes from e2p1_outputs.json; new slide reference [[s_install]]. make_n2p1.py now asserts 2 to 4 notes per slide.
+  Student PDF not regenerated: notes are not printed. Left out of the notes (not on the slide): slide 5, Extended JSON and --jsonArray; slide 7, why _id 23 was
+  chosen (the first book's long description does not fit); slide 8, that the solution of Άσκηση 1 misses the «internet» book (slide 16 shows it, and at slide 8
+  it would give away the trap before the exercise). The _id types line of slide 7 is now its «Αν ρωτήσουν».
+  CLAUDE.md updated to match: notes markup flag, review.py in the checks, README pointer to v14, setup.sh installs the font.
+REVIEW IMAGES: review.py -> review/<deck>/…png, each slide next to its notes as the presenter window shows them, 4 slides per image; it also checks that the
+  presenter shows every note of the deck ("notes shown: all"). Pilot: python3 review.py "$PWD/out/N2P1.html" ../review/N2P1/pilot.png 5,7,8
+CLOUD ENVIRONMENT: the decks load Commissioner from Google Fonts, which headless Chromium cannot reach there; without it every check runs on a fallback font
+  (Liberation Sans). setup.sh now installs Commissioner locally (static TTFs from the Google Fonts API in /usr/local/share/fonts, fc-cache) and pins the Python
+  playwright to the version of the global npm playwright, whose Chromium the cloud image already has (1.56 -> chromium-1194): the old unpinned upgrade moved
+  playwright past that Chromium and needed a browser download, which the cloud network refuses.
+
+==================== Αλλαγές από το παλαιότερο υλικό (kept out of the speaker notes; notes rule 4) ====================
+N2P1 slide 5: the older material also showed the reverse command, mongoexport (mongoexport --db=world --collection=country --out=country_export.json);
+  not needed for Εργασία 2.
+N2P1 slide 8: the older material used count(); it still works, with a DeprecationWarning. The deck uses countDocuments().

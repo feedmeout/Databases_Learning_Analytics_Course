@@ -350,7 +350,10 @@ Object.assign(R, {
 const dark = t => ['title', 'break', 'teaser', 'endslide'].includes(t);
 const slidesHtml = C.slides.map((s, i) => `<section class="slide t-${s.type} ${dark(s.type) ? 'dark' : ''}" data-i="${i}" aria-label="Διαφάνεια ${i + 1} από ${N}">${R[s.type](s)}
 <footer class="foot"><p class="src">${s.src ? esc(s.src) : ''}</p><span class="pn">${i + 1}</span></footer></section>`).join('\n');
-const notesData = C.slides.map(s => ({ title: s.title, mins: s.mins, skippable: !!s.skippable, notes: s.notes || [], type: s.type }));
+// opt-in (meta.notesMarkup): in the speaker notes **item** -> bold, `code` -> code; decks without the flag keep plain-text notes
+const noteHtml = t => esc(t).replace(/`([^`]+)`/g, (m, c) => '<code>' + c.replace(/\*/g, '&#42;') + '</code>').replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+const notesData = C.slides.map(s => Object.assign({ title: s.title, mins: s.mins, skippable: !!s.skippable, notes: s.notes || [], type: s.type },
+  C.meta.notesMarkup ? { notesHtml: (s.notes || []).map(noteHtml) } : {}));
 const css = fs.readFileSync(__dirname + '/deck2.css', 'utf8'), js = fs.readFileSync(__dirname + '/deck.client.js', 'utf8');
 fs.writeFileSync(outPath, `<!DOCTYPE html><html lang="${C.meta.lang}"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(C.meta.part)} | ${esc(C.meta.deckTitle)}</title>

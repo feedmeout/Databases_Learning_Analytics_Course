@@ -5,7 +5,7 @@ Course material for «Βάσεις Δεδομένων & Ανάλυση Δεδο�
 - Learning Analytics: 3 weeks × 3 parts (W1P1 … W3P3), with lab sheets and answer keys.
 - NoSQL/MongoDB: 2 evenings × 3 parts (N1P1–N1P3, N2P1–N2P3), following his colleague's decks in `build_kit/sources_nosql/`.
 
-Everything is built from sources in `build_kit/`. `build_kit/README.txt` is the full history and the rules: read it before any change (latest sections v13 to v13.6).
+Everything is built from sources in `build_kit/`. `build_kit/README.txt` is the full history and the rules: read it before any change (latest sections v13 to v14, and the list «Αλλαγές από το παλαιότερο υλικό» at its end).
 
 ## How it is built
 - Sources: `build_kit/content/*.json`, one per deck. The NoSQL JSON files are written by `build_kit/nosql/make_*.py`; their mongosh outputs come from real runs, stored in `nosql/e2p*_outputs.json` (`run_e2p*.py`).
@@ -16,6 +16,7 @@ Everything is built from sources in `build_kit/`. `build_kit/README.txt` is the 
   - `python3 nosql/check_pre.py "$PWD/out/N2P1.html"` → `clipped code: none`
   - `python3 topdf_deck.py "$PWD/out/N2P1.html" "$PWD/out/N2P1_student.pdf"` (student PDF, one slide per page)
   - A4 documents: `python3 lab1/topdf.py <html> <pdf>` → `pages overflowing: none`
+  - Notes and review images: `python3 review.py "$PWD/out/N2P1.html" ../review/N2P1/pilot.png 5,7,8` → `notes shown: all`
 - Never hand-edit HTML in `out/`: change the JSON or its generator and rebuild.
 - Engine changes are opt-in (a new flag or markup). After any engine change, every earlier deck must rebuild with identical slide HTML: compare the part between `<div id="stage">` and `<nav class="ctl"` before and after. Check a new CSS class name with grep before using it (`.wkc` already exists).
 - Legacy one-off scripts with absolute paths from an old sandbox (`audit/`, `lab1/check.py`, `workbook/make_wb.py`): ignore unless asked.
@@ -38,14 +39,14 @@ The notes are what he reads while the slide is on screen.
 5. 2 to 4 notes per slide, short sentences.
 6. If a slide line is not worth a note, or a key item is hard to see, propose the slide change and wait.
 
-Notes are plain text today (`deck.client.js`, `li.textContent`). Bold in the notes, and the optional "spotlight" (clicking a note lights up its item on the shared slide), need an opt-in change in the engine; decks that do not use it must behave exactly as before.
+Notes take markup when the deck opts in with `'notesMarkup': True` in its meta (set in the deck's generator, as in `nosql/make_n2p1.py`): `**item**` → bold, `` `code` `` → code (README v14). Decks without the flag keep plain-text notes, exactly as before. The optional "spotlight" (clicking a note lights up its item on the shared slide) is not built; it needs its own opt-in change.
 
 ## Working with the lecturer
 - He reads short messages only: English in chat, Greek in the material.
-- He approves by looking at images: for every changed deck, save PNG review images (each slide next to its notes, 4 slides per image) in `review/<deck>/` and commit them.
+- He approves by looking at images: for every changed deck, save PNG review images (each slide next to its notes, 4 slides per image) in `review/<deck>/` with `build_kit/review.py`, and commit them.
 - One branch per deck (`notes/<deck>`). Never rewrite history or delete files unless he asks.
 - Decide sensible details yourself; ask at most one short question when something is truly his call.
 - Order of work: N2P1, N2P2, N2P3 (taught next), then W1P1 to W3P3.
 
 ## Environment
-Run `./setup.sh` once per session (Playwright Chromium, poppler-utils, Pillow, the Node package `docx`). If the browser cannot be installed, the cloud environment needs network access set to Full; otherwise stop and tell him.
+Run `./setup.sh` once per session (Playwright Chromium, poppler-utils, Pillow, the Node package `docx`, the deck font Commissioner). If the browser cannot be installed, the cloud environment needs network access set to Full; otherwise stop and tell him.
