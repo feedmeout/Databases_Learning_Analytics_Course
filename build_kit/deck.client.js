@@ -113,6 +113,7 @@
       'h1{font-size:26px;line-height:1.2;margin:4px 0 6px}.meta{color:#9FB2CE;font-size:15px;margin-bottom:14px}' +
       '.skip{display:inline-block;background:#F2A413;color:#12233F;font-weight:700;border-radius:999px;padding:2px 12px;font-size:14px;margin-left:8px}' +
       'ul{padding-left:22px}li{margin:0 0 12px;font-size:21px;line-height:1.42}' +
+      '#notes b{color:#FFC857}#notes code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em}' +
       '.nxt{margin-top:22px;color:#9FB2CE;font-size:16px}.btns{margin-top:18px;display:flex;gap:10px}' +
       'button{font:700 17px inherit;padding:12px 22px;border-radius:10px;border:0;background:#F2A413;color:#12233F;cursor:pointer}button.sec{background:#2A436C;color:#fff}' +
       'ol{list-style:none;margin:0;padding:0}ol li{font-size:14px;line-height:1.3;margin:0;padding:7px 8px;border-radius:8px;display:grid;grid-template-columns:48px 1fr;gap:6px;cursor:pointer;color:#C9D7EC}' +
@@ -138,7 +139,7 @@
     pd.getElementById('meta').innerHTML = hm(start + offs[cur]) + ' → ' + hm(start + offs[cur] + s.mins) + ' (' + s.mins + '′)' + (s.skippable ? '<span class="skip">Αν είστε πίσω, παραλείπεται</span>' : '');
     pd.getElementById('plan').textContent = hm(start + offs[cur]);
     var ul = pd.getElementById('notes'); ul.innerHTML = '';
-    s.notes.forEach(function (n) { var li = pd.createElement('li'); li.textContent = n; ul.appendChild(li); });
+    s.notes.forEach(function (n, i) { var li = pd.createElement('li'); if (s.notesHtml) li.innerHTML = s.notesHtml[i]; else li.textContent = n; ul.appendChild(li); });
     pd.getElementById('nxt').textContent = cur < N - 1 ? 'Επόμενη: ' + S[cur + 1].title : 'Τέλος μέρους.';
     [].forEach.call(pd.querySelectorAll('#sheet li'), function (li, i) { li.className = i === cur ? 'cur' : ''; if (i === cur) li.scrollIntoView({ block: 'nearest' }); });
   }
