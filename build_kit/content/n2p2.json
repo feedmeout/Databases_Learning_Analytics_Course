@@ -1,0 +1,272 @@
+{
+ "meta": {
+  "course": "Βάσεις Δεδομένων & Ανάλυση Δεδομένων Μάθησης",
+  "deckTitle": "Ομαδική άσκηση: από την SQL στη MongoDB",
+  "part": "Μη σχεσιακές βάσεις, Βραδιά 2, Μέρος 2",
+  "start": "19:15",
+  "lengthMin": 45,
+  "breakMin": 15,
+  "lang": "el"
+ },
+ "slides": [
+  {
+   "type": "listslide",
+   "mins": 1,
+   "title": "Ομαδική άσκηση: από την SQL στη MongoDB",
+   "items": [
+    "Μελετήστε τη σελίδα του εγχειριδίου που αντιστοιχίζει εντολές της SQL σε εντολές της MongoDB.",
+    "Σε ομάδες, λύστε τα 13 ζητούμενα του φύλλου στη συλλογή books.",
+    "Παρουσιάστε τα αποτελέσματα στην ολομέλεια."
+   ],
+   "foot": "Όλες οι αίθουσες έχουν την ίδια άσκηση· ο καθένας δουλεύει στο δικό του mongosh.",
+   "notes": [
+    "Η ομαδική άσκηση του παλαιότερου υλικού, όπως ήταν: μελέτη της σελίδας σύγκρισης SQL και MongoDB, ομάδες, παρουσίαση στην ολομέλεια. Οι προαιρετικές του ασκήσεις είναι τώρα τα 13 ζητούμενα του φύλλου.",
+    "Αναρτήστε τώρα το φύλλο στην πλατφόρμα του μαθήματος ή μοιραστείτε το στο chat του Zoom, μαζί με τον σύνδεσμο της σελίδας της επόμενης διαφάνειας."
+   ]
+  },
+  {
+   "type": "htable",
+   "mins": 2,
+   "compact": true,
+   "title": "Η σελίδα: SQL to MongoDB Mapping Chart",
+   "head": [
+    "SQL, πίνακας people",
+    "MongoDB, συλλογή people"
+   ],
+   "rows": [
+    [
+     "`WHERE status = 'A' AND age = 50`",
+     "`{ status: \"A\", age: 50 }`"
+    ],
+    [
+     "`WHERE status = 'A' OR age = 50`",
+     "`{ $or: [ { status: \"A\" }, { age: 50 } ] }`"
+    ],
+    [
+     "`WHERE age > 25 AND age <= 50`",
+     "`{ age: { $gt: 25, $lte: 50 } }`"
+    ],
+    [
+     "`WHERE user_id LIKE 'bc%'`",
+     "`{ user_id: /^bc/ }`"
+    ],
+    [
+     "`SELECT user_id, status`",
+     "`{ user_id: 1, status: 1, _id: 0 }`, δεύτερο όρισμα του find"
+    ],
+    [
+     "`ORDER BY user_id DESC`",
+     "`.sort({ user_id: -1 })`"
+    ],
+    [
+     "`LIMIT 5 SKIP 10`",
+     "`.limit(5).skip(10)`"
+    ],
+    [
+     "`SELECT COUNT(*) FROM people`",
+     "`db.people.countDocuments()`"
+    ]
+   ],
+   "foot": "[Η σελίδα στο εγχειρίδιο](https://www.mongodb.com/docs/manual/reference/sql-comparison/). Όπου γράφει `count()`, γράψτε `countDocuments()`.",
+   "src": "MongoDB Manual: SQL to MongoDB Mapping Chart (mongodb.com/docs/manual/reference/sql-comparison).",
+   "notes": [
+    "Παραδείγματα της ίδιας της σελίδας, με τον πίνακα people που χρησιμοποιεί. Στην SQL εδώ τα κείμενα γράφονται με απλά εισαγωγικά, όπως στο πρότυπο.",
+    "Η σελίδα γράφει ακόμη db.people.count() για το SELECT COUNT(*): στο σημερινό mongosh εμφανίζεται προειδοποίηση απόσυρσης.",
+    "Το παλαιότερο υλικό έδινε τη διεύθυνση docs.mongodb.com· η σημερινή είναι mongodb.com/docs."
+   ]
+  },
+  {
+   "type": "table",
+   "mins": 1,
+   "compact": true,
+   "title": "Πώς δουλεύουμε",
+   "rows": [
+    {
+     "h": "Ομάδες",
+     "t": "Περίπου τέσσερα άτομα σε κάθε αίθουσα του Zoom· όλες οι αίθουσες έχουν το ίδιο φύλλο."
+    },
+    {
+     "h": "Εργαλείο",
+     "t": "Ο καθένας στο δικό του mongosh, στη βάση library: `use library`."
+    },
+    {
+     "h": "Τι γράφετε",
+     "t": "Για κάθε ζητούμενο, το ερώτημα της MongoDB και το πλήθος των εγγράφων που επιστρέφει."
+    },
+    {
+     "h": "Χρόνος",
+     "t": "20 λεπτά στην αίθουσα· μετά δύο ομάδες παρουσιάζουν, 3 λεπτά η καθεμία."
+    },
+    {
+     "h": "Χωρίς τη συλλογή",
+     "t": "Όποιος δεν ολοκλήρωσε την εισαγωγή, δουλεύει με την οθόνη ενός μέλους της ομάδας."
+    }
+   ],
+   "notes": [
+    "Οι ίδιοι χρόνοι είναι γραμμένοι και στο φύλλο, ώστε κάθε αίθουσα να ξέρει τι κάνει χωρίς τις διαφάνειες.",
+    "Μία αίθουσα ανά ομάδα, όπως στα εργαστήρια της Μαθησιακής Αναλυτικής."
+   ]
+  },
+  {
+   "type": "shell",
+   "mins": 2,
+   "dense": true,
+   "title": "Ένα λυμένο παράδειγμα",
+   "sql": "SELECT title, pageCount FROM books\nWHERE status = 'MEAP' AND pageCount > 0\nORDER BY pageCount DESC\nLIMIT 3",
+   "sqlLabel": "SQL",
+   "cmd": "db.books.find(\n  { status: \"MEAP\", pageCount: { $gt: 0 } },\n  { title: 1, pageCount: 1, _id: 0 }\n).sort({ pageCount: -1 }).limit(3)",
+   "cmdLabel": "MongoDB",
+   "out": "[\n  { title: 'Groovy in Action, Second Edition', pageCount: 700 },\n  { title: 'F# in Action', pageCount: 425 },\n  { title: 'Distributed Agile in Action', pageCount: 325 }\n]",
+   "outLabel": "Αποτέλεσμα",
+   "points": [
+    "`WHERE` γίνεται φίλτρο: το `AND` είναι το κόμμα.",
+    "`SELECT title, pageCount` γίνεται προβολή.",
+    "`ORDER BY … DESC` γίνεται `sort` με -1· το `LIMIT` γίνεται `limit`."
+   ],
+   "notes": [
+    "Ένα ερώτημα που δεν υπάρχει στο φύλλο: βιβλία σε MEAP με γνωστό αριθμό σελίδων, τα τρία μεγαλύτερα.",
+    "Η σειρά μέσα στο mongosh: find(φίλτρο, προβολή), μετά sort, μετά limit. Η σειρά γραφής των sort και limit δεν αλλάζει το αποτέλεσμα."
+   ]
+  },
+  {
+   "type": "work",
+   "mins": 22,
+   "timerSec": 1200,
+   "title": "Στις αίθουσες",
+   "context": "Σε κάθε αίθουσα, με το φύλλο της άσκησης:",
+   "items": [
+    "Ο καθένας στο δικό του mongosh: `use library`.",
+    "Για κάθε ζητούμενο, το ερώτημα της MongoDB και το πλήθος, με `countDocuments` και το ίδιο φίλτρο.",
+    "Ένα μέλος κρατά τις απαντήσεις της ομάδας."
+   ],
+   "foot": "Βοήθημα: [SQL to MongoDB Mapping Chart](https://www.mongodb.com/docs/manual/reference/sql-comparison/), στο εγχειρίδιο της MongoDB.",
+   "notes": [
+    "Ανοίξτε τις αίθουσες (ομάδες των τεσσάρων περίπου) και ξεκινήστε το χρονόμετρο (πλήκτρο T) μόλις μπουν όλοι. Τα 22 λεπτά της διαφάνειας περιλαμβάνουν το άνοιγμα και το κλείσιμο των αιθουσών.",
+    "Μηνύματα προς όλες τις αίθουσες: στο 10ό λεπτό «Όποιος τελείωσε έως το 10, συνεχίζει στα 11 έως 13»· στο 18ο «Δύο λεπτά· σημειώστε τα πλήθη».",
+    "Οι απαντήσεις είναι στο αρχείο απαντήσεων (N2P2_answers)."
+   ]
+  },
+  {
+   "type": "work",
+   "mins": 6,
+   "timerSec": 180,
+   "title": "Δύο ομάδες παρουσιάζουν",
+   "context": "Δύο ομάδες, τρία λεπτά η καθεμία:",
+   "items": [
+    "Η πρώτη ομάδα: τα ζητούμενα 4 έως 8, με το ερώτημα και το πλήθος.",
+    "Η δεύτερη ομάδα: τα ζητούμενα 9 έως 13, με τον ίδιο τρόπο.",
+    "Οι υπόλοιπες ομάδες συγκρίνουν με τα δικά τους πλήθη."
+   ],
+   "notes": [
+    "Επιλέξτε δύο αίθουσες. Για τη δεύτερη ομάδα: μηδενισμός και νέα έναρξη του χρονομέτρου.",
+    "Αν τα πλήθη διαφέρουν, η εξήγηση βρίσκεται σχεδόν πάντα σε μία από τις επόμενες τέσσερις διαφάνειες."
+   ]
+  },
+  {
+   "type": "shell",
+   "mins": 2,
+   "title": "Java: 96, όχι 76 ούτε 97",
+   "dense": true,
+   "cmd": "db.books.countDocuments({ categories: \"Java\" })\ndb.books.countDocuments({ categories: [\"Java\"] })\ndb.books.countDocuments({ categories: \"java\" })\ndb.books.countDocuments({ categories: { $in: [\"Java\", \"java\"] } })",
+   "cmdLabel": "Εντολές",
+   "out": "96\n76\n1\n97",
+   "outLabel": "Αποτελέσματα",
+   "points": [
+    "Ζητούμενο 4 (πρώτη εντολή): 96 βιβλία.",
+    "Με αγκύλες, 76: μόνο όσα έχουν ως μοναδική κατηγορία τη Java.",
+    "Ένα βιβλίο έχει «java» με πεζά. Αν το θέλουμε κι αυτό, `$in` και τα δύο: 97."
+   ],
+   "notes": [
+    "Στην SQL του φύλλου, με μία κατηγορία ανά βιβλίο, το category = 'Java' είναι ακριβής ταύτιση· εδώ το categories είναι λίστα και η ισότητα σημαίνει «περιέχει».",
+    "Οι λύσεις του παλαιότερου υλικού για τα ζητούμενα 4 και 5 είχαν τυπογραφικά εισαγωγικά (“Java”): το mongosh απαντά SyntaxError: Unexpected character '“'. (1:27)",
+    "Το db.books.count() του ζητούμενου 1 λειτουργεί με προειδοποίηση απόσυρσης· σωστά db.books.countDocuments()."
+   ]
+  },
+  {
+   "type": "shell",
+   "mins": 2,
+   "title": "AND ή OR",
+   "dense": true,
+   "cmd": "db.books.countDocuments({ categories: \"Java\", status: \"PUBLISH\" })\ndb.books.countDocuments({ $or: [ { categories: \"Java\" },\n                                 { status: \"PUBLISH\" } ] })\ndb.books.countDocuments({ status: \"PUBLISH\" })\ndb.books.countDocuments({ categories: \"Java\", status: \"MEAP\" })",
+   "cmdLabel": "Εντολές",
+   "out": "95\n364\n363\n1",
+   "outLabel": "Αποτελέσματα",
+   "points": [
+    "Ζητούμενο 5, AND: 95 βιβλία Java που κυκλοφόρησαν.",
+    "Ζητούμενο 6, OR: 364, δηλαδή τα 363 που κυκλοφόρησαν και ένα βιβλίο Java σε MEAP.",
+    "Το «είτε… είτε» της εκφώνησης είναι OR: αρκεί μία από τις δύο συνθήκες."
+   ],
+   "notes": [
+    "Αν μια ομάδα βρήκε 95 στο ζητούμενο 6, έγραψε AND αντί για OR.",
+    "Στην SQL: WHERE category = 'Java' OR status = 'PUBLISH'."
+   ]
+  },
+  {
+   "type": "shell",
+   "mins": 2,
+   "skippable": true,
+   "title": "Ταξινόμηση κειμένου: τα πεζά στο τέλος",
+   "dense": true,
+   "cmd": "db.books.find({ categories: \"Java\" }, { title: 1, _id: 0 })\n  .sort({ title: -1 }).limit(3)\ndb.books.find({ categories: \"Java\" }, { title: 1, _id: 0 })\n  .sort({ title: -1 }).collation({ locale: \"en\" }).limit(3)",
+   "cmdLabel": "Εντολές",
+   "out": "[\n  { title: 'jQuery in Action, Second Edition' },\n  { title: 'iText in Action, Second Edition' },\n  { title: 'XML Parsing with Digester' }\n]\n[\n  { title: 'XML Parsing with Digester' },\n  { title: 'XDoclet in Action' },\n  { title: 'Working with the Logging and Discovery Components' }\n]",
+   "outLabel": "Αποτελέσματα",
+   "points": [
+    "Η MongoDB συγκρίνει τα κείμενα χαρακτήρα προς χαρακτήρα: όλα τα κεφαλαία πριν από τα πεζά. Το «jQuery» έρχεται μετά το «XML».",
+    "Με `collation` και `locale: \"en\"`, η σειρά γίνεται αλφαβητική, ανεξάρτητα από πεζά και κεφαλαία.",
+    "Ζητούμενο 9: στο τέλος της λίστας είναι τα 19 βιβλία Java με 0 σελίδες."
+   ],
+   "src": "MongoDB Manual: Comparison/Sort Order (Collation).",
+   "notes": [
+    "Οι δύο εντολές ταξινομούν φθίνουσα (-1), ώστε να φαίνεται το τέλος της αύξουσας λίστας του ζητούμενου 8.",
+    "Στην SQL, η σειρά εξαρτάται από τη συρραφή (collation) της βάσης· γι’ αυτό το ίδιο ORDER BY μπορεί να δώσει άλλη σειρά από τη MongoDB."
+   ]
+  },
+  {
+   "type": "shell",
+   "mins": 2,
+   "skippable": true,
+   "title": "Κείμενο: λέξη ή κομμάτι λέξης",
+   "dense": true,
+   "cmd": "db.books.countDocuments({ title: /Java/ })\ndb.books.countDocuments({ title: /\\bJava\\b/ })\ndb.books.countDocuments({ title: /^Java/ })\ndb.books.countDocuments({ title: /^Java\\b/ })",
+   "cmdLabel": "Εντολές",
+   "out": "38\n29\n14\n11",
+   "outLabel": "Αποτελέσματα",
+   "points": [
+    "Ζητούμενο 11: το `/Java/` βρίσκει 38 τίτλους, μαζί με JavaScript, JavaServer, JavaFX. Μόνο η λέξη Java: `\\b` πριν και μετά, 29.",
+    "Ζητούμενο 12: το `/^Java/` βρίσκει 14· οι 3 από αυτούς αρχίζουν με JavaServer, JavaFX, JavaScript.",
+    "Ζητούμενο 13: `/^.a.a/`, 19 τίτλοι· η `.` της regex αντιστοιχεί στο `_` του LIKE της SQL."
+   ],
+   "src": "MongoDB Manual: $regex.",
+   "notes": [
+    "Στην SQL το ζητούμενο 13 γράφεται LIKE '_a_a%'. Το \\b σημαίνει «όριο λέξης»: ανάμεσα σε γράμμα και σε κενό, σημείο στίξης ή αρχή και τέλος του κειμένου.",
+    "Οι τρεις τίτλοι που αρχίζουν από Java χωρίς να είναι η λέξη Java: JavaServer Faces in Action, JavaFX in Action, JavaScript Application Design."
+   ]
+  },
+  {
+   "type": "remember",
+   "mins": 1,
+   "kicker": "Να θυμάστε",
+   "title": "Τρία σημεία από το Μέρος 2",
+   "items": [
+    "SQL και MongoDB λένε το ίδιο με άλλη σύνταξη: το WHERE γίνεται φίλτρο, το SELECT προβολή, το ORDER BY sort, το LIMIT limit.",
+    "Όπου η SQL θα είχε μία τιμή, η MongoDB μπορεί να έχει λίστα: εκεί η ισότητα σημαίνει «περιέχει».",
+    "Τα κείμενα συγκρίνονται χαρακτήρα προς χαρακτήρα: Java, java και JavaScript δίνουν τρία διαφορετικά αποτελέσματα."
+   ],
+   "notes": [
+    "Διαβάστε τα τρία σημεία. Τίποτε άλλο.",
+    "Αν απομένει χρόνος, δεν προστίθεται ύλη· το διάλειμμα ξεκινά νωρίτερα."
+   ]
+  },
+  {
+   "type": "break",
+   "mins": 2,
+   "title": "Διάλειμμα",
+   "next": "Στο Μέρος 3: ενημέρωση, διαγραφή και συνάθροιση, και η Εργασία 2 ενότητα προς ενότητα.",
+   "notes": [
+    "Σταματήστε ακριβώς στην ώρα. Αν χρειαστεί χρόνος, παραλείπονται οι διαφάνειες 9 και 10.",
+    "Αφήστε τη διαφάνεια στην οθόνη σε όλο το διάλειμμα: η αντίστροφη μέτρηση δείχνει πότε ξεκινάμε."
+   ]
+  }
+ ]
+}

@@ -1,0 +1,696 @@
+<!DOCTYPE html><html lang="el"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Μη σχεσιακές βάσεις, Βραδιά 1, Μέρος 1 | Γιατί NoSQL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;700;800&display=swap" rel="stylesheet"><style>:root{--ink:#12233F;--paper:#fff;--mist:#EEF3FA;--line:#D3DDEB;--blue:#1565C0;--deep:#0D47A1;--muted:#55657C;--body:#33445E;
+--green:#2E9E5B;--amber:#F2A413;--amber-ink:#8A5A00;--amber-bg:#FFF4DA;--red:#D8433B;--red-ink:#A92C25;--red-bg:#FCE9E7;--ghost:#C9D4E3;
+--font:'Commissioner','Segoe UI','Helvetica Neue',Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0B1628;overflow:hidden;font-family:var(--font);color:var(--ink)}
+#viewport{position:fixed;inset:0}#stage{position:absolute;width:1600px;height:900px;transform-origin:0 0}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;background:var(--paper);padding:56px 88px 26px;overflow:hidden;font-size:30px;line-height:1.36}
+.slide.on{display:flex}.slide.dark{background:var(--ink);color:#fff}
+.head{margin-bottom:26px;flex:none}
+h2{font-size:52px;line-height:1.1;font-weight:800;letter-spacing:-.012em}h2.long{font-size:44px}
+h3{font-size:31px;line-height:1.2;font-weight:700}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center}
+.body.bottom{justify-content:flex-end}
+.foot{flex:none;display:flex;justify-content:space-between;align-items:flex-end;gap:40px;min-height:30px;margin-top:14px}
+.src{font-size:17.5px;line-height:1.3;color:var(--muted)}.pn{font-size:17px;color:var(--muted);font-variant-numeric:tabular-nums}
+.dark .pn{color:#7F95B5}
+strong.em-blue{color:var(--deep);font-weight:700}strong.em-amber{color:var(--amber-ink);font-weight:700}
+.muted{color:var(--muted)}
+.lamp{display:inline-block;width:22px;height:22px;border-radius:50%;margin-right:14px;vertical-align:-2px;flex:none}
+.lamp-amber{background:var(--amber);box-shadow:0 0 0 7px rgba(242,164,19,.22)}.lamp-red{background:var(--red);box-shadow:0 0 0 7px rgba(216,67,59,.2)}.lamp-green{background:var(--green);box-shadow:0 0 0 7px rgba(46,158,91,.22)}
+.kicker{font-size:27px;font-weight:700;margin-bottom:16px}
+.footline{font-size:31px;font-weight:500;margin-top:38px}.footline.sm{font-size:25px;font-weight:400;color:var(--body);margin-top:26px}.footline.muted{font-weight:400;font-size:28px}
+.num{font-weight:800;line-height:1;color:var(--deep);letter-spacing:-.025em;font-variant-numeric:tabular-nums;display:block}
+.num.xl{font-size:150px}.num.word{font-size:74px;letter-spacing:-.02em;line-height:1.05}
+
+/* title, break, teaser */
+.title-wrap{flex:1;display:flex;flex-direction:column}.course{font-size:27px;color:#AFC3E2;font-weight:500}
+.t-title h1{font-size:138px;line-height:1;font-weight:800;letter-spacing:-.025em;margin-top:74px}
+.subtitle{font-size:52px;color:#DCE7F7;margin-top:22px}.trace{width:1424px;height:102px;margin-top:66px}.trace .bars rect{fill:#3E5F94}
+.l-g{fill:var(--green)}.l-a{fill:var(--amber)}.l-r{fill:var(--red)}
+.who{margin-top:auto;font-size:25px;line-height:1.45;color:#C9D7EC}.who .author{font-size:32px;font-weight:700;color:#fff}
+.brk,.teaser{flex:1;display:flex;flex-direction:column;justify-content:center}
+.brk h2{font-size:150px;letter-spacing:-.025em}.back{font-size:72px;font-weight:500;margin-top:18px;color:#DCE7F7}.back span{font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
+.count{font-size:40px;color:#AFC3E2;margin-top:10px;min-height:54px;font-variant-numeric:tabular-nums}.next{font-size:32px;color:#AFC3E2;margin-top:70px}
+.teaser h2{font-size:104px;line-height:1.08;letter-spacing:-.02em;max-width:1350px}.teaser p{font-size:34px;color:#C9D7EC;margin-top:48px;max-width:1150px}
+
+/* plan, lists */
+.plan{list-style:none;display:grid;gap:26px}
+.plan li{display:grid;grid-template-columns:200px 1fr;align-items:baseline;padding:42px 44px;border-radius:18px;background:var(--mist);font-size:38px}
+.plan li.now{background:var(--deep);color:#fff}.ptime,.plabel{font-weight:700;font-variant-numeric:tabular-nums}
+.lead{font-size:32px;margin-bottom:30px}
+.numlist{list-style:none;counter-reset:n;display:grid;gap:26px}
+.numlist li{counter-increment:n;display:grid;grid-template-columns:74px 1fr;font-size:35px;line-height:1.3;align-items:start}
+.numlist li::before{content:counter(n);width:50px;height:50px;border-radius:50%;background:var(--ink);color:#fff;font-size:26px;font-weight:700;display:grid;place-items:center;margin-top:1px}
+.numlist.big{gap:46px}.numlist.big li{font-size:44px;line-height:1.26;font-weight:500;grid-template-columns:96px 1fr}.numlist.big li::before{width:64px;height:64px;font-size:32px;background:var(--green)}
+
+/* big numbers */
+.bigs{display:grid;grid-template-columns:auto 1fr;gap:90px;align-items:start}.bigs p{font-size:31px;margin-top:14px;max-width:760px}
+.keyline{font-size:36px;font-weight:500;line-height:1.3;margin-top:60px;max-width:1350px}
+
+/* definition */
+.defq{font-size:48px;line-height:1.3;font-weight:500}.defq cite{display:block;font-style:normal;font-size:23px;color:var(--muted);margin-top:18px;font-weight:400}
+.callouts{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:50px}.callout{border-radius:18px;padding:30px 34px}.callout p{font-size:29px;margin-top:8px}
+.c-blue{background:var(--mist)}.c-blue h3{color:var(--deep)}.c-amber{background:var(--amber-bg)}.c-amber h3{color:var(--amber-ink)}
+
+/* three cards */
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.item{background:var(--mist);border-radius:18px;padding:38px 36px;min-height:330px}.item h3{font-size:35px}.item p{font-size:31px;margin-top:18px}
+
+/* four questions */
+.quadb{display:grid;grid-template-columns:620px 1fr;gap:64px;align-items:stretch;min-height:560px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.tile{border-radius:20px;padding:26px 28px;display:flex;flex-direction:column;justify-content:space-between;background:var(--mist)}
+.tile .qq{font-size:66px;font-weight:800;letter-spacing:-.02em;line-height:1;color:var(--deep)}.tile .ql{font-size:24px;font-weight:600;line-height:1.2}
+.tile.cur{background:var(--deep);color:#fff}.tile.cur .qq{color:#fff}
+.tile.ghost{background:transparent;border:3px dashed var(--ghost);color:#9AA9BD}.tile.ghost .qq{color:var(--ghost)}
+.detail{display:flex;flex-direction:column;justify-content:center;gap:30px}
+.grp h3{font-size:34px;color:var(--deep);margin-bottom:12px}
+.grp ul{list-style:none;display:grid;gap:12px}.grp ul.cols2{gap:16px}
+.grp li{font-size:31px;line-height:1.28;padding-left:32px;position:relative}
+.grp li::before{content:"";position:absolute;left:4px;top:16px;width:12px;height:12px;border-radius:50%;background:var(--ink)}
+.dfoot{font-size:29px;font-weight:500;background:var(--amber-bg);border-radius:16px;padding:22px 26px}
+.quadf{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.qf{display:grid;grid-template-columns:230px 1fr;align-items:center;background:var(--mist);border-radius:20px;padding:34px 36px;min-height:215px}
+.qf .qq{font-size:74px;font-weight:800;color:var(--deep);letter-spacing:-.02em}.qf h3{font-size:32px}.qf p{font-size:27px;color:var(--body);margin-top:8px}
+
+/* cycle */
+.cyc{display:grid;grid-template-columns:760px 1fr;gap:76px;align-items:center}
+.loop{position:relative;width:760px;height:520px}.loop svg{position:absolute;inset:0;width:100%;height:100%}
+.arw{stroke:var(--deep);stroke-width:5}.arw.ghost{stroke:var(--ghost);stroke-dasharray:4 12}.arw.weak{stroke:#C2362F;stroke-dasharray:14 10}
+.node{position:absolute;width:280px;height:150px;border-radius:20px;display:grid;place-items:center;text-align:center;font-size:29px;font-weight:700;line-height:1.2;padding:0 18px}
+.node.on{background:var(--deep);color:#fff}.node.cur{background:var(--ink);color:#fff;box-shadow:0 0 0 8px rgba(242,164,19,.55)}
+.node.ghost{background:#fff;border:3px dashed var(--ghost);color:#9AA9BD}
+.node.weaknode{background:#fff;color:var(--red-ink);border:4px solid var(--red)}
+.node i{position:absolute;left:-16px;top:-16px;width:46px;height:46px;border-radius:50%;background:var(--amber);color:var(--ink);font-style:normal;font-size:24px;font-weight:800;display:grid;place-items:center}
+.n1{left:0;top:0}.n2{left:480px;top:0}.n3{left:480px;top:370px}.n4{left:0;top:370px}
+.weaklabel{position:absolute;left:172px;top:212px;width:270px;font-size:25px;line-height:1.25;font-weight:700;color:var(--red-ink)}
+.step-text{font-size:44px;line-height:1.28;font-weight:500}
+.airows{list-style:none;display:grid;gap:20px}.airows li{display:grid;grid-template-columns:64px 1fr;align-items:start}
+.airows .k{width:46px;height:46px;border-radius:50%;background:var(--amber);font-size:24px;font-weight:800;display:grid;place-items:center;margin-top:2px}
+.airows h3{font-size:28px;color:var(--deep)}.airows p{font-size:26px;line-height:1.3;margin-top:3px}
+
+/* staircase */
+.stairs{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:end;height:590px}
+.stairs.full{height:470px}
+.step{border-radius:20px 20px 0 0;padding:28px 26px;display:flex;flex-direction:column}
+.step .tool{font-size:23px;line-height:1.25;margin-top:8px;opacity:.85}.step .sq{display:block;width:auto;height:auto;background:none;box-shadow:none;border-radius:0;font-family:inherit;font-size:30px;line-height:1.3;font-weight:600;margin-top:auto;padding-top:18px}
+.s1{height:45%}.s2{height:63%}.s3{height:81%}.s4{height:100%}
+.step.on{background:#DCE8F8}.step.cur{background:var(--deep);color:#fff}
+.step.ghost{background:#fff;border:3px dashed var(--ghost);border-bottom:0;color:#9AA9BD}
+.stairs.full .step.on.s1{background:#DCE8F8}.stairs.full .step.on.s2{background:#B5D0F2}.stairs.full .step.on.s3{background:#2A72C9;color:#fff}.stairs.full .step.on.s4{background:var(--deep);color:#fff}
+.stairs.full .step .sq{font-size:24px}.stairs.full .step h3{font-size:28px}.stairs.full .step .tool{font-size:21px}
+.axes{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:10px}
+.axes span{text-align:center;font-size:23px;font-weight:700;padding:8px;border-radius:0 0 14px 14px}.axes .past{background:#EEF1F5;color:var(--muted)}.axes .future{background:var(--amber-bg);color:var(--amber-ink)}
+.axis{display:flex;align-items:center;gap:20px;font-size:24px;color:var(--muted);margin-top:16px}.axis svg{width:400px;height:20px}
+
+/* evidence */
+.fact{display:grid;grid-template-columns:520px 1fr;gap:70px;align-items:center}
+.fbig{background:var(--mist);border-radius:24px;padding:46px 40px;min-height:430px;display:flex;flex-direction:column;justify-content:center}
+.fbig p{font-size:27px;line-height:1.3;margin-top:22px;color:var(--body)}
+.statement{font-size:44px;line-height:1.24;font-weight:700;letter-spacing:-.005em}
+.points{list-style:none;display:grid;gap:18px;margin-top:34px}
+.points li{font-size:30px;line-height:1.32;padding-left:34px;position:relative}
+.points li::before{content:"";position:absolute;left:4px;top:16px;width:12px;height:12px;border-radius:50%;background:var(--ink)}
+.vrows{display:grid;gap:18px}.vrow{display:grid;grid-template-columns:330px 1fr;align-items:center;background:var(--mist);border-radius:16px;padding:26px 30px}
+.vh{font-size:31px;font-weight:700}.vv{font-size:30px;display:flex;align-items:center}
+.vnote{font-size:27px;line-height:1.32;margin-top:30px;color:var(--body)}
+
+/* poll */
+.act{display:grid;grid-template-columns:1fr 400px;gap:64px;align-items:center}
+.context{font-size:34px;line-height:1.32}
+.opts{list-style:none;display:grid;gap:16px;margin-top:36px}
+.opts li{display:grid;grid-template-columns:76px 1fr;align-items:center;font-size:36px;font-weight:600;background:var(--mist);border-radius:16px;padding:20px 26px}
+.opts li .ob{width:52px;height:52px;border-radius:50%;background:var(--ink);color:#fff;font-size:26px;display:grid;place-items:center}
+.timer{background:var(--amber-bg);border-radius:24px;padding:40px 28px;text-align:center}
+.timer-read{font-size:118px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.timer.done{background:var(--red)}.timer.done .timer-read{color:#fff}
+.timer-btns{display:flex;gap:10px;justify-content:center;margin-top:24px;flex-wrap:wrap}
+button{font-family:inherit;cursor:pointer}
+.timer button{font-size:20px;font-weight:700;border:2px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;padding:10px 20px}
+.timer .t-start{background:var(--ink);color:#fff}.timer.done button{border-color:#fff;color:#fff}.timer.done .t-start{background:#fff;color:var(--red-ink)}
+button:focus-visible{outline:4px solid var(--amber);outline-offset:3px}
+
+/* compare, reveal */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.cc{border-radius:22px;padding:34px 38px;min-height:400px}.cc.c-green{background:#E6F4EC}.cc.c-red{background:var(--red-bg)}
+.cc h3{font-size:36px;display:flex;align-items:center;margin-bottom:22px}
+.cc ul{list-style:none;display:grid;gap:18px}.cc li{font-size:29px;line-height:1.3;padding-left:32px;position:relative}
+.cc li::before{content:"";position:absolute;left:4px;top:15px;width:12px;height:12px;border-radius:50%;background:var(--ink)}
+.lesson{margin-top:28px;background:var(--ink);color:#fff;border-radius:18px;padding:26px 34px;font-size:33px;font-weight:600;line-height:1.28}
+.claim{font-size:40px;line-height:1.28;font-weight:600;background:var(--amber-bg);border-radius:18px;padding:30px 36px;margin-bottom:34px}
+.models{display:grid;gap:18px}
+.model{display:grid;grid-template-columns:330px auto 70px auto 1fr;gap:20px;align-items:center;font-size:29px}.model svg{width:70px;height:20px}
+.mlabel{font-weight:700}.mbox{border-radius:14px;padding:16px 24px;font-weight:500}
+.m-muted{color:#7C8AA0}.m-muted .mbox{background:#EEF1F5;text-decoration:line-through;text-decoration-thickness:2px}
+.m-red{color:var(--red-ink)}.m-red .mbox{background:var(--red-bg);color:var(--ink)}.m-red .mlabel{color:var(--ink)}
+
+/* challenges */
+.chal{display:grid;grid-template-columns:400px 1fr;gap:70px;align-items:center}
+.chidx{list-style:none;counter-reset:c;display:grid;gap:16px}
+.chidx li{counter-increment:c;font-size:27px;font-weight:600;line-height:1.2;padding:26px 26px 26px 78px;border-radius:18px;position:relative;color:#8795AA;border:3px dashed var(--ghost)}
+.chidx li::before{content:counter(c);position:absolute;left:22px;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:var(--ghost);color:#fff;display:grid;place-items:center;font-size:21px}
+.chidx li.cur{background:var(--ink);color:#fff;border-color:var(--ink)}.chidx li.cur::before{background:var(--amber);color:var(--ink)}
+
+/* roadmap */
+.thread{display:flex;align-items:center;gap:16px;font-size:26px;font-weight:700;margin-bottom:24px}
+.thread span{background:var(--ink);color:#fff;border-radius:999px;padding:8px 22px}.thread i{font-style:normal;color:var(--muted)}
+.map{display:grid;grid-template-columns:190px repeat(3,1fr);gap:14px}.wk{font-weight:700;font-size:26px;align-self:center}
+.cell{background:var(--mist);border-radius:16px;padding:20px 22px;font-size:24.5px;line-height:1.26;min-height:128px;display:flex;align-items:center}
+.cell.lab{background:var(--amber-bg)}.cell.here{background:var(--deep);color:#fff;font-weight:700}
+
+/* ---- part 2 layouts ---- */
+.body.fill{justify-content:stretch}
+.numlist.roomy{gap:34px}.numlist.roomy li{font-size:40px}
+.numlist.big.ink li::before{background:var(--ink)}
+.item.focus{background:var(--deep);color:#fff}ul.il{list-style:none;display:grid;gap:12px;margin-top:20px}
+.il li{font-size:28px;line-height:1.28;padding-left:28px;position:relative}.il li::before{content:"";position:absolute;left:2px;top:14px;width:11px;height:11px;border-radius:50%;background:currentColor;opacity:.75}
+.trows{display:grid;gap:14px}.trow{display:grid;grid-template-columns:470px 1fr;gap:30px;align-items:center;background:var(--mist);border-radius:16px;padding:24px 30px}
+.trows.tagged .trow{grid-template-columns:330px 1fr 230px}
+.trh{font-size:30px;font-weight:700;line-height:1.2}.trt{font-size:29px;line-height:1.3}
+.ttag{justify-self:end;font-size:22px;font-weight:700;border-radius:999px;padding:8px 20px;background:#DCE8F8;color:var(--deep)}.ttag.deep{background:var(--deep);color:#fff}
+.cols5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.c5{background:var(--mist);border-radius:18px;padding:30px 24px;min-height:400px}.c5 h3{font-size:30px;margin-top:20px}
+.c5n{width:52px;height:52px;border-radius:50%;background:var(--ink);color:#fff;font-size:26px;font-weight:700;display:grid;place-items:center}
+.c5 .il li{font-size:25px}.c5:last-child{background:#fff;border:3px dashed var(--ghost)}
+.stackrow{display:flex;align-items:stretch;gap:12px}.stg{flex:1;background:var(--mist);border-radius:16px;padding:24px 22px;min-height:190px}
+.stg h3{font-size:26px;color:var(--deep)}.stg p{font-size:23px;line-height:1.3;margin-top:10px;color:var(--body)}
+.stg:nth-child(7){background:var(--deep)}.stg:nth-child(7) h3,.stg:nth-child(7) p{color:#fff}
+.sarr{font-style:normal;font-size:34px;color:var(--muted);align-self:center;flex:none}
+.stack2{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-top:34px}
+.codelabel{font-size:23px;font-weight:700;margin-bottom:10px}
+.code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:23px;line-height:1.5;background:var(--ink);color:#E6EEF9;border-radius:16px;padding:22px 26px;white-space:pre;overflow:hidden}
+.ring{position:relative;width:760px;height:540px}.ring svg{position:absolute;inset:0;width:100%;height:100%}
+.dnode{position:absolute;width:200px;height:78px;border-radius:16px;display:grid;place-items:center;text-align:center;font-size:21.5px;font-weight:700;line-height:1.15;padding:0 10px}
+.dnode.on{background:#DCE8F8;color:var(--ink)}.dnode.cur{background:var(--deep);color:#fff}.dnode.ghost{background:#fff;border:3px dashed var(--ghost);color:#9AA9BD}
+.ringc{position:absolute;left:270px;top:226px;width:220px;height:84px;border-radius:16px;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:24px;font-weight:700;text-align:center}
+.chainrow{display:grid;grid-template-columns:1fr 150px 1fr 150px 1fr;align-items:center;gap:8px}
+.cbox{border-radius:20px;padding:30px 28px;min-height:210px;display:flex;flex-direction:column;justify-content:center;background:var(--mist)}
+.cbox.c1{background:var(--deep);color:#fff}.cbox.c2{background:#fff;border:3px dashed var(--ghost)}
+.ck{font-size:25px;font-weight:700;opacity:.8}.ct{font-size:34px;font-weight:700;line-height:1.2;margin-top:8px}
+.clink{display:grid;justify-items:center;gap:6px;font-size:24px;font-weight:700;color:var(--amber-ink)}.clink svg{width:120px;height:20px}
+.statement.wide{margin-top:54px;font-size:40px;text-align:justify}
+.levb{display:grid;grid-template-columns:300px 1fr;gap:64px;align-items:center}
+.ltiles{display:grid;gap:16px}.ltile{border-radius:18px;padding:30px 28px;font-size:31px;font-weight:700;background:var(--mist)}
+.ltile.cur{background:var(--deep);color:#fff}.ltile.ghost{background:#fff;border:3px dashed var(--ghost);color:#9AA9BD}
+.grp ul.plain li{padding-left:0}.grp ul.plain li::before{display:none}
+.levb .detail{gap:40px}
+.pipe{display:flex;align-items:center;gap:8px}
+.pchip{flex:1;border-radius:16px;padding:26px 10px;text-align:center;font-size:24px;font-weight:700;line-height:1.15;min-height:100px;display:grid;place-items:center}
+.pchip.on{background:#DCE8F8}.pchip.cur{background:var(--deep);color:#fff}.pchip.ghost{background:#fff;border:3px dashed var(--ghost);color:#9AA9BD}
+.pipe .sarr{font-size:28px}
+.pback{height:46px;margin:6px 80px 0;border:4px solid var(--amber);border-top:0;border-radius:0 0 22px 22px;display:grid;place-items:end center}
+.pback span{background:#fff;padding:0 16px;font-size:22px;font-weight:700;color:var(--amber-ink);transform:translateY(14px)}.pback.ghostb{border-color:transparent}
+.pdet{display:grid;grid-template-columns:1fr 1fr;gap:50px;margin-top:40px}.pdet+.dfoot{margin-top:30px}
+.shot{flex:1;min-height:0;display:flex;flex-direction:column;gap:18px}
+.shot .im{flex:1;min-height:0;display:flex;justify-content:center;align-items:center}
+.shot img{max-width:100%;max-height:100%;border-radius:12px;box-shadow:0 2px 18px rgba(18,35,63,.18)}
+.shot.natural img{width:1050px;height:auto;image-rendering:auto}
+.shot img.pr{display:none}
+.shotside .points li{text-align:left}
+.caption{font-size:28px;line-height:1.3;color:var(--body);flex:none}
+.shotside{display:grid;grid-template-columns:720px 1fr;gap:64px;align-items:center}.shotside img{width:720px;border-radius:16px}
+.shotside .points{margin-top:0}.shotside .points li{font-size:32px}
+.schema{display:grid;grid-template-columns:1fr 1.25fr;gap:34px}
+.scol{background:var(--mist);border-radius:22px;padding:26px 28px}.scol.stu{background:#DCE8F8}.scol h3{margin-bottom:16px}
+.tb{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:baseline;background:#fff;border-radius:12px;padding:14px 20px;margin-top:10px}
+.tn{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:25px;font-weight:700;color:var(--deep)}.tk{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:19px;color:var(--muted)}
+.tc{font-size:20px;font-weight:700;background:var(--amber-bg);color:var(--amber-ink);border-radius:999px;padding:4px 14px}
+
+/* ---- part 3 layouts ---- */
+.trows.compact{gap:10px}.trows.compact .trow{padding:15px 26px;grid-template-columns:330px 1fr}.trows.compact.tagged .trow{grid-template-columns:330px 1fr 190px}
+.trows.compact .trh{font-size:27px}.trows.compact .trt{font-size:26px;line-height:1.28}.trows.compact .ttag{font-size:20px;padding:6px 16px}
+.numlist.compact{gap:20px}.numlist.compact li{font-size:33px}
+.flowp .pchip{position:relative;padding-top:34px;min-height:120px;font-size:27px}.fn{position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:42px;height:42px;border-radius:50%;background:var(--amber);color:var(--ink);display:grid;place-items:center;font-size:22px}
+.gridn{display:grid;gap:20px}.gcard{background:var(--mist);border-radius:18px;padding:28px 30px;min-height:170px}.gcard h3{font-size:30px;color:var(--deep)}.gcard p{font-size:26px;line-height:1.3;margin-top:10px;color:var(--body)}
+.codes{display:grid;grid-template-columns:1.25fr 1fr;gap:56px;align-items:center}.code.big{font-size:27px;line-height:1.55;padding:34px 36px}
+.codes .points{margin-top:0}.codes .points li{text-align:left;font-size:29px}
+.ht{width:100%;border-collapse:separate;border-spacing:0 8px}.ht th{text-align:left;font-size:24px;font-weight:700;color:#fff;background:var(--ink);padding:14px 18px}
+.ht th:first-child{border-radius:12px 0 0 12px}.ht th:last-child{border-radius:0 12px 12px 0}
+.ht td{font-size:25px;line-height:1.28;padding:16px 18px;background:var(--mist);vertical-align:top}.ht td:first-child{font-weight:700;border-radius:12px 0 0 12px;white-space:nowrap}.ht td:last-child{border-radius:0 12px 12px 0}
+.prisma{display:grid;grid-template-columns:170px 1fr 56px 1fr;gap:22px 0;align-items:stretch}
+.pph{font-size:25px;font-weight:700;color:var(--deep);align-self:center}
+.pm,.ps{border-radius:14px;padding:16px 22px;font-size:25px;line-height:1.25;display:flex;flex-direction:column;justify-content:center;min-height:86px}
+.pm{background:var(--deep);color:#fff;position:relative}.pm:not(.last)::after{content:"↓";position:absolute;left:50%;bottom:-29px;transform:translateX(-50%);font-size:26px;font-weight:800;color:var(--deep);z-index:2;background:#fff;border-radius:50%;width:34px;height:34px;box-shadow:0 0 0 3px var(--deep);display:grid;place-items:center;line-height:1}
+.pm.last{background:var(--green)}.ps{background:var(--red-bg)}.parr{display:grid;place-items:center;font-size:30px;color:var(--muted)}
+.pn2{font-size:27px;font-variant-numeric:tabular-nums;white-space:nowrap}.psub{font-size:20px;opacity:.85;margin-top:4px}
+.rbar{display:flex;gap:6px;height:120px}.rseg{background:#DCE8F8;border-radius:12px;display:grid;place-items:center;font-size:30px;color:var(--ink)}.rseg.hot{background:var(--deep);color:#fff}
+.rleg{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 50px;margin-top:34px}
+.rl{display:grid;grid-template-columns:30px 1fr auto;gap:14px;align-items:center;font-size:28px}.rl i{width:24px;height:24px;border-radius:6px;background:#DCE8F8}.rl.hot i{background:var(--deep)}.rl.hot span{font-weight:700}
+
+/* running text is fully justified, as in the lecturer's own decks */
+.defq,.callout p,.grp ul.plain li,.dfoot,.points li,.vnote,.context,.cc li,.lesson,.claim,.keyline,.numlist li span,.teaser p,.footline,.caption,.trt,.statement.wide{text-align:justify;text-justify:inter-word;hyphens:manual}
+.count{font-size:64px;font-weight:700;color:#fff}
+
+/* chrome */
+.ctl{position:fixed;right:16px;top:12px;display:flex;gap:8px;opacity:.85;transition:opacity .25s}body.idle .ctl{opacity:0}body.idle{cursor:none}
+.ctl button{font-size:16px;font-weight:700;color:#fff;background:#1C3358;border:1px solid #3E5F94;border-radius:8px;padding:8px 14px}
+#progress{position:fixed;left:0;right:0;bottom:0;height:4px}#progress i{display:block;height:100%;width:0;background:var(--amber)}
+#help{position:fixed;inset:0;background:rgba(11,22,40,.82);display:grid;place-items:center;z-index:9}#help[hidden]{display:none}
+#help>div{background:#fff;border-radius:16px;padding:32px 38px;max-width:640px;font-size:17px;line-height:1.5}#help h3{font-size:22px;margin-bottom:12px}
+#help dl>div{display:grid;grid-template-columns:130px 1fr;gap:12px;padding:5px 0;border-bottom:1px solid var(--line)}#help dt{font-weight:700}#help p{margin-top:14px;color:var(--muted)}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--mist);padding:1px 6px;border-radius:5px}
+@media print{@page{size:1600px 900px;margin:0}html,body{overflow:visible;background:#fff;height:auto}#viewport{position:static}
+#stage{position:static;transform:none!important;width:1600px;height:auto}.slide{display:flex!important;position:relative;width:1600px;height:900px;break-after:page;page-break-after:always;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.ctl,#progress,#help,.timer-btns{display:none!important}.shot img.scr{display:none!important}.shot img.pr{display:block!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---- week 2 layouts ---- */
+.callout ul.il{margin-top:12px;gap:8px}.callout .il li{font-size:28px;line-height:1.3}
+.trows.wtag .trow,.trows.compact.tagged.wtag .trow{grid-template-columns:420px 1fr 310px}.trows.wtag .ttag{text-align:center;border-radius:14px;line-height:1.2}
+.sqrow{display:inline-flex;gap:8px;flex-wrap:wrap;vertical-align:middle}
+.sq{display:inline-grid;place-items:center;width:52px;height:52px;border-radius:12px;font-weight:800;font-size:28px;font-family:ui-monospace,Menlo,Consolas,monospace;flex:none}
+.sq.e{background:var(--red-bg);color:var(--red-ink);box-shadow:inset 0 0 0 2px rgba(216,67,59,.4)}
+.sq.s{background:#E6F4EC;color:#14532D;box-shadow:inset 0 0 0 2px rgba(46,158,91,.45)}
+.sq.a{background:#DCE8F8;color:var(--deep);box-shadow:inset 0 0 0 2px rgba(13,71,161,.3)}
+.sq.b{background:var(--amber-bg);color:var(--amber-ink);box-shadow:inset 0 0 0 2px rgba(242,164,19,.5)}
+.pseqs{display:grid;gap:12px;margin-top:26px}.pseq{display:grid;grid-template-columns:190px 1fr;align-items:center}
+.sfl{font-size:30px;font-weight:700}
+.t-poll .opts{margin-top:28px}
+/* grade table (lecturer's slide 7.3) */
+.gt{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}.gt.wide{grid-template-columns:1.22fr 1fr}
+.gcap{font-size:30px;font-weight:700;color:var(--deep);margin-bottom:12px}
+.gtw{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:stretch}
+.gtab{width:100%;border-collapse:separate;border-spacing:0 7px}
+.gtab th{background:var(--ink);color:#fff;font-size:23px;line-height:1.2;padding:13px 16px;text-align:center}
+.gtab th:first-child{border-radius:12px 0 0 12px}.gtab th:last-child{border-radius:0 12px 12px 0}
+.gtab td{background:var(--mist);font-size:31px;padding:11px 16px;text-align:center;font-variant-numeric:tabular-nums}
+.gtab td:first-child{font-weight:700;border-radius:12px 0 0 12px}.gtab td:last-child{border-radius:0 12px 12px 0}
+.gtab th.hi{background:var(--deep)}.gtab td.hi{background:var(--amber-bg);font-weight:700;color:var(--amber-ink)}
+.garrow{display:flex;flex-direction:column;align-items:center;font-size:24px;font-weight:700;color:var(--deep);padding:66px 0 6px}
+.gline{flex:1;width:4px;background:var(--deep);position:relative;margin:16px 0}
+.gline::before,.gline::after{content:"";position:absolute;left:-9px;border:11px solid transparent}
+.gline::before{top:-14px;border-bottom:16px solid var(--deep);border-top:0}.gline::after{bottom:-14px;border-top:16px solid var(--deep);border-bottom:0}
+.gside h3{font-size:30px;color:var(--deep);margin-bottom:16px}
+.exlist{list-style:none;display:grid;gap:11px}.exlist li{font-size:26px;line-height:1.3;background:var(--mist);border-radius:12px;padding:13px 20px}.exlist li b{color:var(--deep);margin-right:6px}
+.gquote{font-size:46px;line-height:1.22;font-weight:700;letter-spacing:-.005em}
+.gnote{font-size:30px;line-height:1.34;margin-top:26px;color:var(--body);text-align:justify}
+/* submission pipeline and sequences (lecturer's slide 7.4) */
+.sfpipe{display:grid;grid-template-columns:230px 1fr 430px 1fr 230px;align-items:center;row-gap:0}
+.sfbox{border-radius:16px;padding:24px 18px;text-align:center;font-size:28px;font-weight:700;background:var(--mist)}
+.sfbox.mid{background:var(--deep);color:#fff;text-align:left;font-weight:500;font-size:26px;line-height:1.45;padding:18px 26px;display:grid}.sfbox.mid b{font-weight:800;font-family:ui-monospace,Menlo,Consolas,monospace;margin-right:4px}
+.sfarr{display:grid;justify-items:center;gap:4px;font-size:23px;font-weight:700;color:var(--amber-ink)}.sfarr svg{width:150px;height:20px}
+.sfloop{grid-column:2/4;height:40px;margin:4px 215px 0 90px;border:3px dashed var(--muted);border-top:0;border-radius:0 0 18px 18px;position:relative;display:grid;place-items:end center}
+.sfloop::before{content:"";position:absolute;left:-10px;top:-12px;border:9px solid transparent;border-bottom:14px solid var(--muted);border-top:0}
+.sfloop span{background:#fff;padding:0 14px;font-size:21px;font-weight:700;color:var(--muted);transform:translateY(13px)}
+.sfh,.sfrow{display:grid;grid-template-columns:190px 380px 1fr 150px;gap:26px;align-items:center}
+.sfh{padding:0 26px;font-size:24px;font-weight:700;color:var(--deep);margin:44px 0 10px}
+.sfrows{display:grid;gap:14px}.sfrow{background:var(--mist);border-radius:16px;padding:17px 26px}
+.pairs{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:25px;letter-spacing:-.02em;white-space:nowrap}.pairs sub{font-size:.62em}
+.sftag{justify-self:end;font-size:22px;font-weight:700;border-radius:999px;padding:8px 20px;background:var(--red);color:#fff}
+/* two-state chain */
+.ch2{display:grid;grid-template-columns:840px 1fr;gap:50px;align-items:center}
+.chsvg{width:840px;height:420px;display:block}.chsvg .ar{fill:none;stroke:var(--deep);stroke-width:5}
+.chsvg .st.t-red{fill:var(--red)}.chsvg .st.t-green{fill:var(--green)}.chsvg .st.t-blue{fill:var(--deep)}.chsvg .st.t-amber{fill:var(--amber)}
+.chsvg text{font-family:var(--font);text-anchor:middle}
+.chsvg text.k{font-size:70px;font-weight:800;fill:#fff;dominant-baseline:central}.chsvg text.nm{font-size:23px;font-weight:700;fill:#fff}
+.chsvg text.k.amber,.chsvg text.nm.amber{fill:var(--ink)}
+.chsvg text.p{font-size:38px;font-weight:800;fill:var(--ink);paint-order:stroke;stroke:#fff;stroke-width:12px;stroke-linejoin:round;font-variant-numeric:tabular-nums}
+.ch2side .blk{margin-bottom:34px}.ch2side h3,.tml h3,.tmr h3{font-size:27px;color:var(--deep);margin-bottom:12px}
+.ch2side .statement{font-size:38px}.ch2side .points{margin-top:26px}
+.legend{list-style:none;display:grid;gap:12px;margin-top:30px}.legend li{display:grid;grid-template-columns:130px 1fr;align-items:center;font-size:29px;background:var(--mist);border-radius:12px;padding:12px 20px}
+.legend b{font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--deep)}
+/* worked example: counts, then probabilities */
+.tmx{display:grid;grid-template-columns:1fr auto;gap:60px;align-items:center}.tmx.step2{grid-template-columns:700px 1fr;gap:40px}
+.tmx .chsvg{width:700px;height:350px}.tml .blk{margin-bottom:36px}.tml .blk:last-child{margin-bottom:0}
+.pairchips{display:flex;flex-wrap:wrap;gap:12px;max-width:640px}.pc{display:inline-flex;padding:5px;border-radius:14px;background:#fff;box-shadow:inset 0 0 0 2px var(--line)}
+.pc .sqrow{gap:3px}.pc .sq{width:42px;height:42px;font-size:23px;border-radius:9px}
+.ctab{border-collapse:separate;border-spacing:8px;margin-left:-8px}.ctab th{font-size:24px;font-weight:700;color:var(--muted);padding:4px 12px;white-space:nowrap}
+.ctab td{width:176px;height:124px;border-radius:16px;background:var(--mist);text-align:center;font-size:56px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.05}
+.ctab td small{display:block;font-size:22px;font-weight:600;color:#DCE7F7;margin-top:6px}
+.ctab td.pr{background:var(--deep);color:#fff}.ctab td.sum{background:#fff;box-shadow:inset 0 0 0 3px var(--ghost);color:var(--muted);font-size:40px;width:124px}
+/* adjacency matrix of the eight-state machine */
+.adj{display:grid;grid-template-columns:auto 1fr;gap:46px;align-items:center}
+.amx{border-collapse:separate;border-spacing:5px}.amx th{font-size:23px;font-weight:700;white-space:nowrap}
+.amx thead th{text-align:center;padding-bottom:4px}.amx thead th.corner{text-align:right;padding-right:14px;font-size:18px;font-weight:600;color:var(--muted)}
+.amx tbody th{text-align:right;padding-right:6px}
+.amx th span{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;color:#fff;font-size:19px;margin-left:8px}.amx thead th span{margin:0}
+.amx .kS{background:var(--green)}.amx .kE{background:var(--red)}
+.amx td{width:76px;height:60px;border-radius:10px;background:#F1F4F8;text-align:center;font-size:22px;font-weight:800;font-family:ui-monospace,Menlo,Consolas,monospace}
+.amx td.toS{background:#CFEBDB;color:#14532D}.amx td.toE{background:#F9D5D2;color:var(--red-ink)}
+.amnote{font-size:23px;color:var(--body);margin-top:14px;max-width:760px}
+.asteps{list-style:none;counter-reset:a;display:grid;gap:16px}
+.asteps li{counter-increment:a;display:grid;grid-template-columns:62px 1fr;align-items:start}
+.asteps li::before{content:counter(a);width:44px;height:44px;border-radius:50%;background:var(--amber);color:var(--ink);font-size:23px;font-weight:800;display:grid;place-items:center;margin-top:2px}
+.asteps h3{font-size:29px;color:var(--deep)}.asteps p{font-size:26px;line-height:1.32;margin-top:2px;text-align:justify}
+/* anatomy of a prediction */
+.ana{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}.lane{display:grid;grid-template-columns:250px minmax(0,1fr) 250px;gap:24px;align-items:end}
+.lh{font-size:32px;font-weight:700;line-height:1.2;padding-bottom:10px}.lh small{display:block;font-size:23px;font-weight:500;color:var(--muted);margin-top:4px;line-height:1.25}
+.track{display:grid;gap:6px;position:relative;padding-top:56px}
+.wkc{height:104px;border-radius:12px;display:grid;place-items:center;font-size:29px;font-weight:700;font-variant-numeric:tabular-nums}
+.wkc.feat{background:var(--deep);color:#fff}.wkc.rest{background:#DCE8F8;color:var(--ink)}.wkc.fut{background:#fff;border:3px dashed var(--ghost);color:#9AA9BD}
+.ppoint{position:absolute;top:0;font-size:25px;font-weight:700;color:var(--amber-ink);transform:translateX(-50%);white-space:nowrap;line-height:1.2}
+.ppoint::after{content:"";position:absolute;left:50%;top:38px;width:5px;height:130px;background:var(--amber);transform:translateX(-50%);border-radius:3px}
+.endb{border-radius:14px;padding:12px 16px;font-size:27px;font-weight:700;text-align:center;line-height:1.2;height:104px;display:grid;place-items:center}
+.endb.known{background:var(--green);color:#fff}.endb.unk{background:#fff;border:3px dashed var(--ghost);color:#7C8AA0}
+.lane.mid{align-items:center;margin:14px 0}.lane.mid .sarr{font-size:34px}.midflow{display:flex;align-items:center;gap:14px;justify-content:center}
+.mchip{border-radius:14px;padding:16px 26px;font-size:28px;font-weight:700;background:var(--mist);line-height:1.2}
+.mchip{white-space:nowrap}.mchip.mdl{background:var(--ink);color:#fff}.mchip.actn{background:var(--amber-bg);color:var(--amber-ink)}
+.lane.ghosted .lh,.lane.ghosted .lh small{color:#9AA9BD}.lane.ghosted .wkc{background:#fff;border:3px dashed var(--ghost);color:#C2CDDC}
+.lane.ghosted .ppoint{color:#B9C4D4}.lane.ghosted .ppoint::after{background:var(--ghost)}
+.lane.ghosted .mchip{background:#fff;box-shadow:inset 0 0 0 3px var(--ghost);color:#9AA9BD}.lane.ghosted .sarr{color:var(--ghost)}
+.lane.ghosted .endb{color:#B9C4D4}
+/* shotside with caption */
+.ssfig{display:grid;gap:12px}.shotside.capd .caption{font-size:25px}
+.gnote,.amnote,.exlist li{hyphens:manual}
+
+.trows.compact.wtag .trow{padding:21px 28px}.trows.compact.wtag .trh{font-size:29px}.trows.compact.wtag .trt{font-size:27px}.trows.compact.wtag .ttag{font-size:21px}
+.cmp.left li{text-align:left}
+.shotside.capd{grid-template-columns:800px 1fr;gap:56px}.shotside.capd img{width:800px;border-radius:12px;box-shadow:0 2px 18px rgba(18,35,63,.18)}
+
+/* ---- lab layouts (week 2, part 2) ---- */
+.act.work{grid-template-columns:1fr 420px;gap:60px}.act.work .context{font-size:40px;font-weight:700;line-height:1.24;text-align:left}
+.numlist.wk{gap:22px;margin-top:38px}.numlist.wk li{font-size:35px}.act.work .footline.sm{margin-top:34px;font-size:27px}
+.timer-read{letter-spacing:-.02em}
+.dg{position:relative;display:grid;gap:9px;padding-top:44px}.dgr{display:grid;gap:6px;align-items:center}
+.dgw{text-align:center;font-size:22px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}.dgk{font-size:21px;font-weight:600;color:var(--muted)}
+.dgh{font-size:27px;font-weight:700;line-height:1.15;padding-right:14px}.dgh small{display:block;font-size:19.5px;font-weight:500;color:var(--muted);margin-top:3px;line-height:1.22}
+.dgc{height:60px;border-radius:10px;background:#F1F4F8}.dgc.on,.dgleg i.on{background:var(--deep)}.dgc.late,.dgleg i.late{background:#A9C8F0}
+.dgcut{position:absolute;top:34px;bottom:-6px;width:5px;background:var(--amber);border-radius:3px}
+.dgcut b{position:absolute;top:-36px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:23px;color:var(--amber-ink)}
+.dgleg{display:flex;gap:40px;margin-top:20px;font-size:23px;color:var(--body)}.dgleg i{display:inline-block;width:24px;height:24px;border-radius:6px;vertical-align:-5px;margin-right:10px}
+.dg+.dgleg+.footline{margin-top:26px}
+.bp .panels{display:flex;gap:24px;align-items:stretch}.bp.withside{display:grid;grid-template-columns:1.05fr 1fr;gap:54px;align-items:center}.bp.withside .points{margin-top:0}
+.panel{background:var(--mist);border-radius:20px;padding:24px 26px 20px;display:flex;flex-direction:column;min-width:0}
+.panel h3{font-size:27px;line-height:1.2;margin-bottom:12px}
+.pbody{display:flex;gap:34px;align-items:flex-end;justify-content:center;flex:1}.barrow{display:flex;gap:14px;align-items:flex-end;justify-content:center}
+.bar{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;width:112px}
+.bar i{display:block;width:100%;border-radius:9px 9px 0 0}.bar i.t-blue{background:var(--deep)}.bar i.t-red{background:var(--red)}.bar i.t-green{background:var(--green)}.bar i.t-amber{background:var(--amber)}.bar i.t-grey{background:#8795AA}.bar i.t-light{background:#A9C8F0}
+.bv{font-size:28px;font-weight:800;margin-bottom:6px;font-variant-numeric:tabular-nums}
+.bl{font-size:22px;font-weight:700;margin-top:0;text-align:center;line-height:1.15;border-top:3px solid var(--ink);width:calc(100% + 14px);padding-top:7px}
+.bn{font-size:18px;color:var(--muted);margin-top:2px}
+.bgrp{display:flex;flex-direction:column;align-items:center}.bgl{font-size:22px;font-weight:700;color:var(--deep);margin-top:8px}
+.panel.dense .bar{width:38px}.panel.dense .barrow{gap:7px}.panel.dense .bv{font-size:18px;margin-bottom:3px}.panel.dense .bl{font-size:18px;width:calc(100% + 7px)}
+.pnote{font-size:22px;color:var(--body);margin-top:12px;line-height:1.3}
+.bp+.lesson{margin-top:24px;font-size:30px}
+.dgp{position:relative;width:1424px;height:470px;margin-top:40px;flex:none}.dgp svg{position:absolute;inset:0;width:100%;height:100%}
+.da{stroke:var(--deep);stroke-width:4.5}.dl.sm{font-size:19px}.dl{font:800 27px var(--font);fill:var(--amber-ink);text-anchor:middle;paint-order:stroke;stroke:#fff;stroke-width:9px;stroke-linejoin:round}
+.dcol{position:absolute;top:-40px;font-size:22px;font-weight:700;color:var(--muted);text-align:center}
+.dn{position:absolute;height:84px;border-radius:16px;display:flex;flex-direction:column;justify-content:center;padding:0 22px;line-height:1.15}
+.dn b{font-size:27px}.dn small{font-size:19px;font-weight:600;margin-top:3px;opacity:.85}
+.dn.trc{background:#DCE8F8}.dn.trc.ghost{background:#fff;border:3px dashed var(--ghost);color:#9AA9BD}
+.dn.cause{background:var(--ink);color:#fff}.dn.cause.hidden{background:#fff;color:var(--ink);border:4px dashed var(--amber)}.dn.cause.hidden small{color:var(--amber-ink);opacity:1}
+.dn.outc{background:var(--red-bg);box-shadow:inset 0 0 0 3px rgba(216,67,59,.35)}
+.dnote{position:absolute;font-size:24px;line-height:1.28;font-weight:600;color:var(--body)}
+.cc.c-blue{background:var(--mist)}.cc.c-amber{background:var(--amber-bg)}.lamp-blue{background:var(--blue);box-shadow:0 0 0 7px rgba(21,101,192,.2)}
+
+.panels.p3 .bar{width:86px}.panels.p3 .barrow{gap:10px}.panels.p3 .bv{font-size:25px}.panels.p3 .bl{font-size:20px}.panels.p3 .panel.dense .bar{width:34px}.panels.p3 .panel.dense .bv,.panels.p3 .panel.dense .bl{font-size:17px}
+
+.dn.outc b{font-size:25px}
+
+/* ---- week 2, part 3 ---- */
+.smk{display:flex;flex-direction:column;align-items:center;gap:16px}.smkw{position:relative;display:inline-block;line-height:0;margin-top:14px}.smkw img{border-radius:16px;box-shadow:0 0 0 2px var(--line)}
+.smkw img{display:block;max-height:540px;max-width:1424px;width:auto;height:auto}
+.mkn{position:absolute;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;background:var(--amber);color:var(--ink);font:800 30px/54px var(--font);text-align:center;box-shadow:0 0 0 4px #fff,0 4px 14px rgba(0,0,0,.45)}
+.smk.smkq{display:grid;grid-template-columns:1fr 420px;gap:44px;align-items:center}.smk.smkq .smkw img{max-height:none;max-width:100%;width:100%}.smkl{min-width:0}
+.qside .context{font-size:29px;font-weight:700;line-height:1.24;text-align:left}.qside .numlist.wk{margin:16px 0 20px;gap:9px}.qside .numlist.wk li{font-size:24px}.qside .timer{width:100%;padding:20px 18px}.qside .timer-read{font-size:88px}.qside .timer-btns{margin-top:14px}.qside .timer button{font-size:18px;padding:8px 16px}
+.chz{display:grid;grid-template-columns:1fr 1fr;gap:24px;grid-auto-rows:1fr}.chq{background:var(--mist);border-radius:20px;padding:26px 30px;display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center;min-height:290px}
+.chq h3{font-size:36px;color:var(--deep);margin-bottom:8px}.chg{font-size:25px;color:var(--muted);line-height:1.25;margin-bottom:14px}.chx{font-size:28px;line-height:1.28;font-weight:600;text-align:left}
+.chico{display:flex;gap:14px}.chico figure{margin:0;text-align:center;width:128px}.chico figcaption{font-size:21px;line-height:1.15;color:var(--body);margin-top:6px;font-weight:600}
+.gly{width:100%;height:auto;background:#fff;border-radius:12px;padding:6px;fill:var(--deep)}.gly .gs{stroke:var(--deep);fill:none}.gly .g2{fill:var(--amber)}.gly .g3{fill:var(--red)}.gly .g4{fill:var(--green)}
+.mpics{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}.mpic{background:var(--mist);border-radius:20px;padding:22px 24px 24px;display:flex;flex-direction:column;gap:10px}
+.mpm{font-size:22px;font-weight:700;color:var(--muted)}.mpic .gly{width:100%;margin:4px 0 6px}.mpic h3{font-size:28px;color:var(--deep);line-height:1.15}.mpic p:last-child{font-size:23px;line-height:1.3;color:var(--body)}
+.mkd{border:3px solid var(--ink);border-radius:22px;overflow:hidden;background:#fff}.mkdh{background:var(--ink);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:14px 26px;font-size:27px}.mkdh span{opacity:.85;font-size:23px}
+.mkt{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:18px 22px 6px}.mktile{background:var(--mist);border-radius:14px;padding:12px 18px;display:flex;flex-direction:column}
+.mkv{font-size:52px;font-weight:800;line-height:1.05;font-variant-numeric:tabular-nums}.mkl{font-size:22px;color:var(--body);line-height:1.2;margin-top:2px}
+.mklist{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:12px 22px 16px}.mkli{border-radius:14px;padding:14px 18px;border-left:10px solid var(--deep);background:var(--mist)}
+.mkli.t-red{border-color:var(--red);background:var(--red-bg)}.mkli.t-amber{border-color:var(--amber);background:var(--amber-bg)}.mkli.t-grey{border-color:#8795AA;background:#F1F4F8}
+.mkli h3{font-size:29px;display:flex;justify-content:space-between;gap:10px;line-height:1.15}.mkli h3 em{font-style:normal;font-weight:800;font-variant-numeric:tabular-nums}
+.mkr{font-size:22px;color:var(--muted);margin:6px 0 12px;line-height:1.25}.mka{font-size:26px;line-height:1.28;font-weight:600}
+.mkf{background:var(--ink);color:#fff;font-size:25px;line-height:1.3;padding:10px 26px}
+.mkd+.footline{margin-top:22px}
+.fnl{display:grid;gap:12px}.fnr{display:grid;grid-template-columns:1fr 150px 330px;gap:22px;align-items:center;background:var(--mist);border-radius:16px;padding:22px 26px}
+.fnr code{background:transparent;padding:0;font:600 25px/1.3 ui-monospace,Menlo,Consolas,monospace;color:var(--ink);white-space:pre-wrap}.fnn{font-size:44px;font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
+.fnv{font-size:24px;font-weight:700;line-height:1.2}.fnv.red{color:#A92C25}.fnv.green{color:#14532D}.fnv.amber{color:var(--amber-ink)}
+
+.mkb{position:absolute;border:5px solid var(--amber);border-radius:10px;box-shadow:0 0 0 2px rgba(18,35,63,.55)}
+.gridn.tall .gcard{min-height:330px;padding:32px 30px}.gridn.tall .gcard h3{font-size:34px}.gridn.tall .gcard p{font-size:29px;line-height:1.32;margin-top:14px}
+.ht td code{font-size:.92em;white-space:nowrap}
+
+.qside .numlist.wk li span{text-align:left}
+
+/* Week 3, Part 1: people matrix (prefix ppl; no other rule uses it) */
+.ppl{display:grid;grid-template-columns:1fr 340px;gap:28px;align-items:stretch}
+.pplg{display:grid;grid-template-columns:190px 1fr 1fr;grid-template-rows:auto 1fr 1fr;gap:14px}
+.pplh{font-size:25px;font-weight:700;color:var(--muted);text-align:center;align-self:end;line-height:1.2}
+.pplr{display:flex;align-items:center;font-size:25px;font-weight:700;color:var(--muted);line-height:1.2}
+.pplc{border-radius:20px;padding:18px 26px 20px;border-left:12px solid var(--ghost);background:var(--mist)}
+.pplc.ppl-green{border-color:var(--green);background:#E6F4EC}.pplc.ppl-amber{border-color:var(--amber);background:var(--amber-bg)}.pplc.ppl-red{border-color:var(--red);background:var(--red-bg)}.pplc.ppl-grey{border-color:#8795AA;background:#F1F4F8}
+.ppln{font-size:66px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;display:block;color:var(--ink)}
+.pplc h3{font-size:29px;line-height:1.2;margin:6px 0 2px}.pplc p{font-size:24px;line-height:1.3;color:var(--body)}
+.ppls{display:grid;gap:14px;padding-top:44px}.pplm{background:var(--ink);color:#fff;border-radius:18px;padding:14px 22px;display:flex;flex-direction:column;justify-content:center}
+.pplv{font-size:50px;font-weight:800;line-height:1.05;font-variant-numeric:tabular-nums}.ppll{font-size:22px;line-height:1.25;opacity:.92}
+.ppl+.lesson{margin-top:22px;font-size:30px;padding:20px 30px}
+
+/* NoSQL: shell slide (command + output), prefix shl */
+.shl{display:grid;grid-template-columns:1fr 470px;gap:48px;align-items:center}.shl.wide{grid-template-columns:1fr}
+.shlc{display:grid;gap:16px}.shll{font-size:21px;font-weight:700;color:var(--muted);margin-bottom:6px}
+.shlx{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:23px;line-height:1.45;border-radius:14px;padding:18px 24px;white-space:pre;overflow:hidden}
+.shlx.c{background:var(--ink);color:#E6EEF9}.shlx.o{background:#F3F6FA;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)}
+.shl .points{margin-top:0}.shl .points li{text-align:left;font-size:28px}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="ah" markerUnits="userSpaceOnUse" markerWidth="26" markerHeight="26" refX="22" refY="13" orient="auto"><path d="M0,0 L26,13 L0,26 z" fill="#0D47A1"/></marker><marker id="ahr" markerUnits="userSpaceOnUse" markerWidth="26" markerHeight="26" refX="22" refY="13" orient="auto"><path d="M0,0 L26,13 L0,26 z" fill="#C2362F"/></marker><marker id="ahg" markerUnits="userSpaceOnUse" markerWidth="26" markerHeight="26" refX="22" refY="13" orient="auto"><path d="M0,0 L26,13 L0,26 z" fill="#C9D4E3"/></marker></defs></svg>
+<div id="viewport"><div id="stage">
+<section class="slide t-title dark" data-i="0" aria-label="Διαφάνεια 1 από 32"><div class="title-wrap"><p class="course">Βάσεις Δεδομένων &amp; Ανάλυση Δεδομένων Μάθησης</p><h1>Μη σχεσιακές βάσεις δεδομένων</h1><p class="subtitle">Από τους πίνακες στα έγγραφα</p>
+      <svg class="trace" viewBox="0 0 1400 100" aria-hidden="true"><g class="bars"><rect x="0" y="86" width="12" height="14" rx="3"/><rect x="22" y="55" width="12" height="45" rx="3"/><rect x="44" y="76" width="12" height="24" rx="3"/><rect x="66" y="78" width="12" height="22" rx="3"/><rect x="88" y="57" width="12" height="43" rx="3"/><rect x="110" y="63" width="12" height="37" rx="3"/><rect x="132" y="71" width="12" height="29" rx="3"/><rect x="154" y="51" width="12" height="49" rx="3"/><rect x="176" y="49" width="12" height="51" rx="3"/><rect x="198" y="58" width="12" height="42" rx="3"/><rect x="220" y="50" width="12" height="50" rx="3"/><rect x="242" y="51" width="12" height="49" rx="3"/><rect x="264" y="40" width="12" height="60" rx="3"/><rect x="286" y="72" width="12" height="28" rx="3"/><rect x="308" y="64" width="12" height="36" rx="3"/><rect x="330" y="43" width="12" height="57" rx="3"/><rect x="352" y="42" width="12" height="58" rx="3"/><rect x="374" y="83" width="12" height="17" rx="3"/><rect x="396" y="42" width="12" height="58" rx="3"/><rect x="418" y="55" width="12" height="45" rx="3"/><rect x="440" y="24" width="12" height="76" rx="3"/><rect x="462" y="31" width="12" height="69" rx="3"/><rect x="484" y="78" width="12" height="22" rx="3"/><rect x="506" y="51" width="12" height="49" rx="3"/><rect x="528" y="22" width="12" height="78" rx="3"/><rect x="550" y="38" width="12" height="62" rx="3"/><rect x="572" y="41" width="12" height="59" rx="3"/><rect x="594" y="46" width="12" height="54" rx="3"/><rect x="616" y="22" width="12" height="78" rx="3"/><rect x="638" y="23" width="12" height="77" rx="3"/><rect x="660" y="60" width="12" height="40" rx="3"/><rect x="682" y="63" width="12" height="37" rx="3"/><rect x="704" y="29" width="12" height="71" rx="3"/><rect x="726" y="64" width="12" height="36" rx="3"/><rect x="748" y="76" width="12" height="24" rx="3"/><rect x="770" y="66" width="12" height="34" rx="3"/><rect x="792" y="58" width="12" height="42" rx="3"/><rect x="814" y="67" width="12" height="33" rx="3"/><rect x="836" y="28" width="12" height="72" rx="3"/><rect x="858" y="52" width="12" height="48" rx="3"/><rect x="880" y="43" width="12" height="57" rx="3"/><rect x="902" y="35" width="12" height="65" rx="3"/><rect x="924" y="83" width="12" height="17" rx="3"/><rect x="946" y="71" width="12" height="29" rx="3"/><rect x="968" y="56" width="12" height="44" rx="3"/><rect x="990" y="60" width="12" height="40" rx="3"/><rect x="1012" y="65" width="12" height="35" rx="3"/><rect x="1034" y="77" width="12" height="23" rx="3"/><rect x="1056" y="45" width="12" height="55" rx="3"/><rect x="1078" y="84" width="12" height="16" rx="3"/><rect x="1100" y="71" width="12" height="29" rx="3"/><rect x="1122" y="73" width="12" height="27" rx="3"/><rect x="1144" y="62" width="12" height="38" rx="3"/><rect x="1166" y="55" width="12" height="45" rx="3"/></g><circle cx="1240" cy="68" r="26" class="l-g"/><circle cx="1308" cy="68" r="26" class="l-a"/><circle cx="1372" cy="68" r="26" class="l-r"/></svg>
+      <div class="who"><p class="author">Αθανάσιος Χριστόπουλος, Ph.D.</p><p>Αν. Καθηγητής, Τμήμα Φυσικών Επιστημών. Κέντρο Μαθησιακής Αναλυτικής, Πανεπιστήμιο του Τούρκου, Φινλανδία</p><p>atchri@utu.fi</p></div></div>
+<footer class="foot"><p class="src"></p><span class="pn">1</span></footer></section>
+<section class="slide t-plan " data-i="1" aria-label="Διαφάνεια 2 από 32"><header class="head"><h2 class="">Το πλάνο της βραδιάς</h2></header><div class="body "><ol class="plan"><li class="now"><span class="plabel">Μέρος 1</span><span>Γιατί NoSQL</span></li><li class=""><span class="plabel">Μέρος 2</span><span>Τέσσερα μοντέλα δεδομένων</span></li><li class=""><span class="plabel">Μέρος 3</span><span>Πρώτα βήματα στη MongoDB</span></li></ol></div>
+<footer class="foot"><p class="src"></p><span class="pn">2</span></footer></section>
+<section class="slide t-flow " data-i="2" aria-label="Διαφάνεια 3 από 32"><header class="head"><h2 class="">Πού βρισκόμαστε</h2></header><div class="body "><div class="pipe flowp"><div class="pchip on"><b class="fn">1</b>Σχεσιακές βάσεις δεδομένων</div><i class="sarr" aria-hidden="true">→</i><div class="pchip cur"><b class="fn">2</b>Μη σχεσιακές βάσεις δεδομένων</div><i class="sarr" aria-hidden="true">→</i><div class="pchip on"><b class="fn">3</b>Μαθησιακή Αναλυτική</div></div><div class="pdet"><div class="grp"><h3>Μέχρι τώρα</h3><ul><li>Σχεδίαση σχεσιακής βάσης: οντότητες, σχέσεις, πίνακες, κλειδιά.</li><li>Υλοποίηση και ερωτήματα σε SQL. Εργασία 1.</li></ul></div><div class="grp"><h3>Απόψε και στο επόμενο μάθημα</h3><ul><li>Πότε το σχεσιακό μοντέλο δυσκολεύεται, και τι προτείνουν τα συστήματα NoSQL.</li><li>MongoDB στην πράξη. Εργασία 2: μέρος της βάσης της Εργασίας 1, σε MongoDB.</li></ul></div></div></div>
+<footer class="foot"><p class="src"></p><span class="pn">3</span></footer></section>
+<section class="slide t-grid " data-i="3" aria-label="Διαφάνεια 4 από 32"><header class="head"><h2 class="">Τι κάνει καλά μια σχεσιακή βάση</h2></header><div class="body "><div class="gridn" style="grid-template-columns:repeat(3,1fr)"><div class="gcard"><h3>Σχήμα</h3><p>Η δομή ορίζεται πριν από τα δεδομένα. Κάθε γραμμή ενός πίνακα έχει τις ίδιες στήλες.</p></div><div class="gcard"><h3>Κανονικοποίηση</h3><p>Κάθε γεγονός αποθηκεύεται μία φορά: χωρίς επαναλήψεις, χωρίς αντιφάσεις.</p></div><div class="gcard"><h3>Σχέσεις με JOIN</h3><p>Οι πίνακες συνδέονται τη στιγμή του ερωτήματος, με όποιον συνδυασμό χρειαστεί.</p></div><div class="gcard"><h3>Ακεραιότητα</h3><p>Πρωτεύοντα και ξένα κλειδιά, περιορισμοί: η βάση απορρίπτει ό,τι παραβιάζει τους κανόνες.</p></div><div class="gcard"><h3>SQL</h3><p>Δηλωτική γλώσσα και διεθνές πρότυπο: δηλώνουμε τι θέλουμε, όχι πώς θα βρεθεί.</p></div><div class="gcard"><h3>Συναλλαγές ACID</h3><p>Μια ομάδα αλλαγών εκτελείται ολόκληρη ή καθόλου, ακόμη και όταν κάτι αστοχήσει.</p></div></div><p class="footline">Κάθε σύστημα NoSQL χαλαρώνει κάποια από αυτά, για να κερδίσει κάτι άλλο: ευελιξία, κλίμακα, ταχύτητα.</p></div>
+<footer class="foot"><p class="src"></p><span class="pn">4</span></footer></section>
+<section class="slide t-htable " data-i="4" aria-label="Διαφάνεια 5 από 32"><header class="head"><h2 class="">Το παράδειγμα της βραδιάς: μια πλατφόρμα μαθημάτων</h2></header><div class="body "><table class="ht"><thead><tr><th>Πίνακας</th><th>Στήλες</th><th>Κλειδιά</th></tr></thead><tbody><tr><td>Φοιτητές</td><td><code>student&#95;id</code>, ονοματεπώνυμο, έτος εισαγωγής</td><td>πρωτεύον: <code>student&#95;id</code></td></tr><tr><td>Μαθήματα</td><td><code>course&#95;id</code>, τίτλος, εξάμηνο</td><td>πρωτεύον: <code>course&#95;id</code></td></tr><tr><td>Εγγραφές</td><td><code>student&#95;id</code>, <code>course&#95;id</code>, βαθμός</td><td>σύνθετο πρωτεύον· δύο ξένα κλειδιά</td></tr><tr><td>Δραστηριότητα</td><td><code>event&#95;id</code>, <code>student&#95;id</code>, <code>course&#95;id</code>, χρόνος, είδος, λεπτομέρειες</td><td>πρωτεύον: <code>event&#95;id</code>· δύο ξένα κλειδιά</td></tr></tbody></table><p class="footline">Το ίδιο παράδειγμα συνοδεύει και τα τρία μέρη της βραδιάς. Ο τελευταίος πίνακας μεγαλώνει με κάθε κλικ.</p></div>
+<footer class="foot"><p class="src"></p><span class="pn">5</span></footer></section>
+<section class="slide t-cards3 " data-i="5" aria-label="Διαφάνεια 6 από 32"><header class="head"><h2 class="">Τρεις πιέσεις στο σχεσιακό μοντέλο</h2></header><div class="body "><div class="three"><div class="item"><h3>Ποικιλία</h3><p>Κάθε είδος δραστηριότητας έχει άλλα πεδία. Ένα κοινό σχήμα δεν τα χωρά άνετα.</p></div><div class="item"><h3>Όγκος και ρυθμός</h3><p>Εκατομμύρια εγγραφές, που συνεχίζουν να έρχονται. Κάποια στιγμή ένας διακομιστής (server) δεν αρκεί.</p></div><div class="item"><h3>Αναντιστοιχία με τον κώδικα</h3><p>Η εφαρμογή σκέφτεται σε αντικείμενα· η βάση σε γραμμές πινάκων.</p></div></div><p class="footline">Καμία από τις τρεις δεν «σπάει» μια σχεσιακή βάση. Την κάνει όμως ακριβότερη, πιο αργή ή δυσκολότερη στη συντήρηση.</p></div>
+<footer class="foot"><p class="src"></p><span class="pn">6</span></footer></section>
+<section class="slide t-htable " data-i="6" aria-label="Διαφάνεια 7 από 32"><header class="head"><h2 class="">Ποικιλία: κάθε δραστηριότητα έχει άλλα πεδία</h2></header><div class="body "><table class="ht"><thead><tr><th>Είδος</th><th>Βαθμός</th><th>Προσπάθεια</th><th>Θέση βίντεο</th><th>Ταχύτητα</th><th>Νήμα</th><th>Λέξεις</th></tr></thead><tbody><tr><td>Κουίζ</td><td>7,5</td><td>2</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>Βίντεο</td><td>—</td><td>—</td><td>12:40</td><td>1,5×</td><td>—</td><td>—</td></tr><tr><td>Φόρουμ</td><td>—</td><td>—</td><td>—</td><td>—</td><td>Εργασία 1</td><td>86</td></tr><tr><td>Άσκηση</td><td>9</td><td>3</td><td>—</td><td>—</td><td>—</td><td>—</td></tr></tbody></table><p class="footline">Λύσεις μέσα στη σχεσιακή βάση: πολλές κενές στήλες (NULL), ένας πίνακας ανά είδος, ή μία στήλη για «ό,τι περισσεύει». Το Moodle κάνει το τρίτο: κρατά σε μορφή JSON τα πεδία που διαφέρουν.</p></div>
+<footer class="foot"><p class="src">Moodle: πίνακας logstore_standard_log, πεδίο other· μορφή JSON από την έκδοση 3.7 (MDL-62907).</p><span class="pn">7</span></footer></section>
+<section class="slide t-bignum " data-i="7" aria-label="Διαφάνεια 8 από 32"><header class="head"><h2 class="">Όγκος: τα ίχνη μάθησης μεγαλώνουν γρήγορα</h2></header><div class="body "><div class="bigs"><div><span class="num xl">32.593</span><p>φοιτητές</p></div><div><span class="num xl">10.655.280</span><p>ημερήσιες εγγραφές δραστηριότητας στο εικονικό περιβάλλον μάθησης</p></div></div><p class="keyline">Ένα μόνο ανοιχτό σύνολο δεδομένων, από επτά μαθήματα (OULAD). Κάθε εγγραφή συνοψίζει τα κλικ ενός φοιτητή σε ένα υλικό μέσα σε μία ημέρα: μια πλατφόρμα που κρατά κάθε κλικ παράγει πολλαπλάσιο όγκο.</p></div>
+<footer class="foot"><p class="src">Kuzilek, Hlosta &amp; Zdrahal (2017), Scientific Data.</p><span class="pn">8</span></footer></section>
+<section class="slide t-compare " data-i="8" aria-label="Διαφάνεια 9 από 32"><header class="head"><h2 class="">Αναντιστοιχία αντικειμένου και πινάκων</h2></header><div class="body "><div class="cmp left"><div class="cc c-blue"><h3><span class="lamp lamp-blue" aria-hidden="true"></span>Στον κώδικα: ένα αντικείμενο</h3><ul><li>Ο φοιτητής, με ονοματεπώνυμο, έτος και τη λίστα των μαθημάτων του με τους βαθμούς.</li><li>Διαβάζεται και αποθηκεύεται ως ένα σύνολο.</li></ul></div><div class="cc c-amber"><h3><span class="lamp lamp-amber" aria-hidden="true"></span>Στη βάση: γραμμές σε τρεις πίνακες</h3><ul><li>Φοιτητές, Εγγραφές, Μαθήματα.</li><li>Αποθήκευση: το αντικείμενο διασπάται. Ανάγνωση: ανασυντίθεται με JOIN.</li></ul></div></div><p class="lesson">Η απόσταση αυτή λέγεται αναντιστοιχία αντικειμένου–σχέσης (object–relational impedance mismatch). Οι βιβλιοθήκες ORM τη γεφυρώνουν· οι βάσεις εγγράφων τη μικραίνουν.</p></div>
+<footer class="foot"><p class="src"></p><span class="pn">9</span></footer></section>
+<section class="slide t-definition " data-i="9" aria-label="Διαφάνεια 10 από 32"><header class="head"><h2 class="">NoSQL σημαίνει «Not only SQL»</h2></header><div class="body "><blockquote class="defq">Συστήματα διαχείρισης βάσεων δεδομένων που δεν οργανώνουν τα δεδομένα σε σχεσιακούς πίνακες, αλλά σε ζεύγη κλειδιού–τιμής, έγγραφα, οικογένειες στηλών ή γράφους.<cite>Ορισμός εργασίας του μαθήματος</cite></blockquote><div class="callouts"><div class="callout c-blue"><h3>«Not only», όχι «No»</h3><p>Πολλά συστήματα NoSQL προσφέρουν σήμερα γλώσσες ερωτημάτων που θυμίζουν την SQL. Το όνομα δηλώνει εναλλακτική, όχι άρνηση.</p></div><div class="callout c-amber"><h3>Οικογένεια, όχι πρότυπο</h3><p>Δεν υπάρχει ενιαία προδιαγραφή NoSQL, όπως για την SQL. Κάθε σύστημα ορίζει το δικό του μοντέλο και τη δική του γλώσσα.</p></div></div></div>
+<footer class="foot"><p class="src"></p><span class="pn">10</span></footer></section>
+<section class="slide t-htable " data-i="10" aria-label="Διαφάνεια 11 από 32"><header class="head"><h2 class="">Από πού προήλθαν</h2></header><div class="body "><table class="ht"><thead><tr><th>Έτος</th><th>Τι συνέβη</th><th>Η συμβολή</th></tr></thead><tbody><tr><td>1998</td><td>Ο όρος NoSQL ως όνομα μιας μικρής σχεσιακής βάσης χωρίς SQL (C. Strozzi).</td><td>ο όρος</td></tr><tr><td>2006</td><td>Bigtable (Google): δεδομένα κλίμακας petabyte, μοιρασμένα σε χιλιάδες διακομιστές.</td><td>κλίμακα</td></tr><tr><td>2007</td><td>Dynamo (Amazon): το καλάθι αγορών δέχεται εγγραφές ακόμη κι όταν αστοχούν διακομιστές.</td><td>διαθεσιμότητα</td></tr><tr><td>2009</td><td>Συνάντηση για κατανεμημένες μη σχεσιακές βάσεις στο Σαν Φρανσίσκο: ο όρος καθιερώνεται. Την ίδια χρονιά κυκλοφορεί η MongoDB.</td><td>το όνομα της κίνησης</td></tr></tbody></table></div>
+<footer class="foot"><p class="src">Chang et al. (2006), OSDI· DeCandia et al. (2007), SOSP.</p><span class="pn">11</span></footer></section>
+<section class="slide t-compare " data-i="11" aria-label="Διαφάνεια 12 από 32"><header class="head"><h2 class="">Σχήμα κατά την εγγραφή ή κατά την ανάγνωση</h2></header><div class="body "><div class="cmp left"><div class="cc c-blue"><h3><span class="lamp lamp-blue" aria-hidden="true"></span>Κατά την εγγραφή</h3><ul><li><strong class="em-amber">Schema-on-write</strong>: πρώτα ορίζεται το σχήμα, με <code>CREATE TABLE</code>.</li><li>Η βάση ελέγχει κάθε εγγραφή και απορρίπτει ό,τι δεν ταιριάζει.</li><li>Το ερώτημα ξέρει τις στήλες: <code>SELECT Name, Age</code>.</li></ul></div><div class="cc c-amber"><h3><span class="lamp lamp-amber" aria-hidden="true"></span>Κατά την ανάγνωση</h3><ul><li><strong class="em-amber">Schema-on-read</strong>: τα δεδομένα αποθηκεύονται όπως φτάνουν.</li><li>Την ερμηνεία τους την κάνει η εφαρμογή: <code>price - discount</code>.</li><li>Αν ένα πεδίο λείπει, η εφαρμογή πρέπει να το χειριστεί.</li></ul></div></div><p class="lesson">Το σχήμα δεν εξαφανίζεται. Μετακινείται από τη βάση στον κώδικα που διαβάζει τα δεδομένα.</p></div>
+<footer class="foot"><p class="src"></p><span class="pn">12</span></footer></section>
+<section class="slide t-codeslide " data-i="12" aria-label="Διαφάνεια 13 από 32"><header class="head"><p class="kicker"><span class="lamp lamp-amber" aria-hidden="true"></span>Προσοχή</p><h2 class="">Ευέλικτο σχήμα δεν σημαίνει «χωρίς σχήμα»</h2></header><div class="body "><div class="codes"><pre class="code big">db.createCollection("students", {
+  validator: { $jsonSchema: {
+    bsonType: "object",
+    required: ["student_id", "name"],
+    properties: {
+      name: { bsonType: "string" }
+    }
+  } },
+  validationAction: "error"
+})</pre><ul class="points"><li>Η MongoDB μπορεί να ελέγχει κάθε εισαγωγή και ενημέρωση με κανόνες JSON Schema.</li><li>Με <strong class="em-blue">error</strong> το έγγραφο απορρίπτεται· με <strong class="em-blue">warn</strong> γίνεται δεκτό και καταγράφεται.</li><li>Η ευελιξία είναι επιλογή του σχεδιαστή, όχι υποχρέωση.</li></ul></div></div>
+<footer class="foot"><p class="src">MongoDB Manual: Schema Validation.</p><span class="pn">13</span></footer></section>
+<section class="slide t-compare " data-i="13" aria-label="Διαφάνεια 14 από 32"><header class="head"><h2 class="">Κάθετη και οριζόντια κλιμάκωση</h2></header><div class="body "><div class="cmp left"><div class="cc c-blue"><h3><span class="lamp lamp-blue" aria-hidden="true"></span>Κάθετη (scale up)</h3><ul><li>Ισχυρότερος διακομιστής: περισσότεροι πυρήνες, μνήμη, δίσκοι.</li><li>Απλή λύση: η εφαρμογή δεν αλλάζει.</li><li>Έχει ανώτατο όριο, κόστος που αυξάνεται απότομα και ένα μοναδικό σημείο αστοχίας.</li></ul></div><div class="cc c-amber"><h3><span class="lamp lamp-amber" aria-hidden="true"></span>Οριζόντια (scale out)</h3><ul><li>Περισσότεροι κοινοί διακομιστές, που μοιράζονται δεδομένα και φόρτο.</li><li>Μεγαλώνει σταδιακά και αντέχει την αστοχία ενός κόμβου.</li><li>Κόστος: κατανεμημένο σύστημα, καθυστερήσεις δικτύου, δύσκολα JOIN.</li></ul></div></div><p class="lesson">Οι σχεσιακές βάσεις σχεδιάστηκαν αρχικά για έναν διακομιστή· τα περισσότερα συστήματα NoSQL, από την αρχή, για πολλούς.</p></div>
+<footer class="foot"><p class="src"></p><span class="pn">14</span></footer></section>
+<section class="slide t-definition " data-i="14" aria-label="Διαφάνεια 15 από 32"><header class="head"><h2 class="">Αντιγραφή (Replication)</h2></header><div class="body "><blockquote class="defq">Τα ίδια δεδομένα διατηρούνται σε περισσότερους από έναν διακομιστές. Στη MongoDB: σύνολο αντιγράφων (replica set).<cite>MongoDB Manual: Replication</cite></blockquote><div class="callouts"><div class="callout c-blue"><h3>Πώς λειτουργεί</h3><ul class="il"><li>Οι εγγραφές γίνονται στον κύριο κόμβο (primary).</li><li>Οι δευτερεύοντες (secondaries) εφαρμόζουν τις ίδιες αλλαγές, με μικρή καθυστέρηση.</li></ul></div><div class="callout c-amber"><h3>Τι κερδίζουμε</h3><ul class="il"><li>Αν ο κύριος αστοχήσει, οι υπόλοιποι εκλέγουν αυτόματα νέο κύριο.</li><li>Αντίγραφα σε άλλες περιοχές: ανοχή σε περιφερειακές αστοχίες.</li></ul></div></div></div>
+<footer class="foot"><p class="src"></p><span class="pn">15</span></footer></section>
+<section class="slide t-definition " data-i="15" aria-label="Διαφάνεια 16 από 32"><header class="head"><h2 class="">Κατάτμηση (Sharding)</h2></header><div class="body "><blockquote class="defq">Τα έγγραφα μιας συλλογής μοιράζονται σε περισσότερους διακομιστές (shards). Καθένας κρατά ένα μέρος τους και απαντά για αυτό.<cite>MongoDB Manual: Sharding</cite></blockquote><div class="callouts"><div class="callout c-blue"><h3>Το κλειδί κατάτμησης (shard key)</h3><p>Ένα πεδίο, π.χ. <code>student&#95;id</code>, ορίζει σε ποιο shard ανήκει κάθε έγγραφο. Από την επιλογή του εξαρτάται αν ο φόρτος μοιράζεται ομοιόμορφα.</p></div><div class="callout c-amber"><h3>Κατάτμηση και αντιγραφή μαζί</h3><p>Κάθε shard είναι σύνολο αντιγράφων. Η κατάτμηση δίνει κλίμακα· η αντιγραφή διαθεσιμότητα, όταν ένας διακομιστής αστοχεί.</p></div></div></div>
+<footer class="foot"><p class="src"></p><span class="pn">16</span></footer></section>
+<section class="slide t-fact " data-i="16" aria-label="Διαφάνεια 17 από 32"><header class="head"><h2 class="">Γιατί το JOIN δυσκολεύει σε πολλούς διακομιστές</h2></header><div class="body "><div class="fact"><div class="fbig"><span class="num word">JOIN</span><p>ανάμεσα σε δεδομένα που βρίσκονται σε διαφορετικά μηχανήματα</p></div><div class="fmain"><p class="statement">Όταν οι φοιτητές βρίσκονται σε ένα shard και οι εγγραφές τους στα μαθήματα σε άλλο, κάθε JOIN μεταφέρει δεδομένα μέσω δικτύου.</p><ul class="points"><li>Γι’ αυτό πολλά συστήματα NoSQL δεν προσφέρουν JOIN, ή το περιορίζουν.</li><li>Η απάντηση: αποθηκεύουμε μαζί ό,τι διαβάζεται μαζί (αποκανονικοποίηση).</li><li>Το τίμημα: επανάληψη δεδομένων και ενημέρωση σε περισσότερα από ένα σημεία.</li></ul></div></div></div>
+<footer class="foot"><p class="src"></p><span class="pn">17</span></footer></section>
+<section class="slide t-cards3 " data-i="17" aria-label="Διαφάνεια 18 από 32"><header class="head"><h2 class="">Το θεώρημα CAP</h2></header><div class="body "><div class="three"><div class="item"><h3>Συνέπεια (Consistency)</h3><p>Κάθε ανάγνωση βλέπει την πιο πρόσφατη εγγραφή, από όποιον κόμβο κι αν γίνει.</p></div><div class="item"><h3>Διαθεσιμότητα (Availability)</h3><p>Κάθε αίτημα προς κόμβο που λειτουργεί παίρνει απάντηση.</p></div><div class="item"><h3>Ανοχή σε διαμέριση (Partition tolerance)</h3><p>Το σύστημα συνεχίζει να λειτουργεί όταν χάνονται μηνύματα ανάμεσα στους κόμβους.</p></div></div><p class="footline">Όταν συμβεί διαμέριση, ένα κατανεμημένο σύστημα επιλέγει: συνέπεια ή διαθεσιμότητα. Το «δύο από τα τρία» ισχύει μόνο όσο διαρκεί η διαμέριση.</p></div>
+<footer class="foot"><p class="src">Brewer (2000), PODC· απόδειξη: Gilbert &amp; Lynch (2002), ACM SIGACT News, 33(2)· Brewer (2012), Computer, 45(2).</p><span class="pn">18</span></footer></section>
+<section class="slide t-compare " data-i="18" aria-label="Διαφάνεια 19 από 32"><header class="head"><h2 class="">Το C του CAP δεν είναι το C του ACID</h2></header><div class="body "><div class="cmp left"><div class="cc c-blue"><h3><span class="lamp lamp-blue" aria-hidden="true"></span>C του CAP</h3><ul><li>Όλοι οι κόμβοι δείχνουν την ίδια, πιο πρόσφατη τιμή.</li><li>Αφορά αντίγραφα σε πολλούς διακομιστές.</li></ul></div><div class="cc c-amber"><h3><span class="lamp lamp-amber" aria-hidden="true"></span>C του ACID</h3><ul><li>Κάθε συναλλαγή αφήνει τη βάση σε έγκυρη κατάσταση: κλειδιά, περιορισμοί, κανόνες.</li><li>Αφορά τους κανόνες των δεδομένων, ακόμη και σε έναν διακομιστή.</li></ul></div></div><p class="lesson">Ίδια λέξη, δύο έννοιες. Στις συζητήσεις για NoSQL, «συνέπεια» σημαίνει σχεδόν πάντα την πρώτη.</p></div>
+<footer class="foot"><p class="src"></p><span class="pn">19</span></footer></section>
+<section class="slide t-definition " data-i="19" aria-label="Διαφάνεια 20 από 32"><header class="head"><h2 class="">PACELC: και χωρίς διαμέριση υπάρχει επιλογή</h2></header><div class="body "><blockquote class="defq">Αν υπάρχει διαμέριση (P): διαθεσιμότητα (A) ή συνέπεια (C). Αλλιώς (E): χαμηλή καθυστέρηση (L) ή συνέπεια (C).<cite>Abadi (2012), Computer, 45(2), 37–42</cite></blockquote><div class="callouts"><div class="callout c-blue"><h3>Γιατί μετρά</h3><p>Οι διαμερίσεις είναι σπάνιες. Η αναμονή για επιβεβαίωση από τα αντίγραφα συμβαίνει σε κάθε εγγραφή.</p></div><div class="callout c-amber"><h3>Στη MongoDB</h3><p>Η επιλογή γίνεται ανά λειτουργία (write concern, read concern). Από την έκδοση 5.0, η εγγραφή επιβεβαιώνεται εξ ορισμού από την πλειονότητα των αντιγράφων.</p></div></div></div>
+<footer class="foot"><p class="src">MongoDB Manual: Write Concern.</p><span class="pn">20</span></footer></section>
+<section class="slide t-compare " data-i="20" aria-label="Διαφάνεια 21 από 32"><header class="head"><h2 class="">ACID και BASE</h2></header><div class="body "><div class="cmp left"><div class="cc c-blue"><h3><span class="lamp lamp-blue" aria-hidden="true"></span>ACID: οι σχεσιακές συναλλαγές</h3><ul><li><strong class="em-blue">A</strong>tomicity: όλα ή τίποτα.</li><li><strong class="em-blue">C</strong>onsistency: οι κανόνες των δεδομένων τηρούνται.</li><li><strong class="em-blue">I</strong>solation: οι ταυτόχρονες συναλλαγές δεν επηρεάζουν η μία την άλλη.</li><li><strong class="em-blue">D</strong>urability: ό,τι επιβεβαιώθηκε δεν χάνεται.</li></ul></div><div class="cc c-amber"><h3><span class="lamp lamp-amber" aria-hidden="true"></span>BASE: η εναλλακτική των μεγάλων ιστοτόπων</h3><ul><li><strong class="em-blue">B</strong>asically <strong class="em-blue">A</strong>vailable: το σύστημα απαντά, ακόμη και με μερικές αστοχίες.</li><li><strong class="em-blue">S</strong>oft state: η κατάσταση αλλάζει όσο συγχρονίζονται τα αντίγραφα.</li><li><strong class="em-blue">E</strong>ventual consistency: τα αντίγραφα κάποια στιγμή συμφωνούν.</li></ul></div></div><p class="lesson">Δύο άκρα ενός φάσματος. Τα σύγχρονα συστήματα επιτρέπουν συχνά την επιλογή ανά λειτουργία.</p></div>
+<footer class="foot"><p class="src">BASE: Pritchett (2008), ACM Queue, 6(3), 48–55.</p><span class="pn">21</span></footer></section>
+<section class="slide t-chain " data-i="21" aria-label="Διαφάνεια 22 από 32"><header class="head"><h2 class="">Τελική συνέπεια (eventual consistency)</h2></header><div class="body "><div class="chainrow"><div class="cbox c0"><span class="ck">Τη χρονική στιγμή 0</span><span class="ct">Εγγραφή στον κύριο κόμβο: 101 προβολές</span></div><div class="clink"><span>αντιγραφή σε εξέλιξη</span><svg viewBox="0 0 120 20" aria-hidden="true"><line x1="0" y1="10" x2="104" y2="10" stroke="#12233F" stroke-width="4"/><path d="M120,10 L100,1 L100,19 z" fill="#12233F"/></svg></div><div class="cbox c1"><span class="ck">Λίγο αργότερα</span><span class="ct">Ανάγνωση από δευτερεύοντα: 100 προβολές</span></div><div class="clink"><span>τέλος της αντιγραφής</span><svg viewBox="0 0 120 20" aria-hidden="true"><line x1="0" y1="10" x2="104" y2="10" stroke="#12233F" stroke-width="4"/><path d="M120,10 L100,1 L100,19 z" fill="#12233F"/></svg></div><div class="cbox c2"><span class="ck">Στο τέλος</span><span class="ct">Όλα τα αντίγραφα: 101 προβολές</span></div></div><p class="statement wide">Η τελική συνέπεια εγγυάται ότι τα αντίγραφα θα συμφωνήσουν, όχι πότε. Στο μεταξύ, μια ανάγνωση μπορεί να επιστρέψει παλαιότερη τιμή.</p></div>
+<footer class="foot"><p class="src">Bailis &amp; Ghodsi (2013), Communications of the ACM, 56(5), 55–63.</p><span class="pn">22</span></footer></section>
+<section class="slide t-poll " data-i="22" aria-label="Διαφάνεια 23 από 32"><header class="head"><p class="kicker"><span class="lamp lamp-amber" aria-hidden="true"></span>Ερώτημα</p><h2 class="">Πού αρκεί η τελική συνέπεια;</h2></header><div class="body "><div class="act"><div><p class="context">Η πλατφόρμα διαβάζει από δευτερεύοντα αντίγραφα. Πού είναι αποδεκτό να φανεί, για λίγα δευτερόλεπτα, παλαιότερη τιμή; Επιλέξτε όσα ισχύουν.</p><ol class="opts"><li><b class="ob">Α</b><span>Ο βαθμός της τελικής εξέτασης</span></li><li><b class="ob">Β</b><span>Το πλήθος προβολών ενός βίντεο</span></li><li><b class="ob">Γ</b><span>Μια υποβολή λίγο πριν από την προθεσμία</span></li><li><b class="ob">Δ</b><span>Η ένδειξη «συνδεδεμένος» στο φόρουμ</span></li></ol></div><div class="timer" data-sec="60"><div class="timer-read">01:00</div><div class="timer-btns"><button type="button" class="t-start">Έναρξη χρονομέτρου</button><button type="button" class="t-reset">Μηδενισμός</button></div></div></div></div>
+<footer class="foot"><p class="src"></p><span class="pn">23</span></footer></section>
+<section class="slide t-fact " data-i="23" aria-label="Διαφάνεια 24 από 32"><header class="head"><p class="kicker"><span class="lamp lamp-amber" aria-hidden="true"></span>Προσοχή</p><h2 class="">Οι βάσεις NoSQL «δεν εγγυώνται συναλλαγές»;</h2></header><div class="body "><div class="fact"><div class="fbig"><span class="num xl">4.0</span><p>η έκδοση της MongoDB (2018) με συναλλαγές ACID σε πολλά έγγραφα</p></div><div class="fmain"><p class="statement">Ο ισχυρισμός ίσχυε για τα πρώτα συστήματα NoSQL. Σήμερα δεν ισχύει γενικά.</p><ul class="points"><li>Στη MongoDB, κάθε λειτουργία σε ένα έγγραφο ήταν πάντα ατομική (atomic).</li><li>Από την 4.0 οι συναλλαγές καλύπτουν πολλά έγγραφα σε σύνολο αντιγράφων· από την 4.2 και σε κατατετμημένες συστοιχίες (sharded clusters).</li><li>Έχουν κόστος απόδοσης: με καλό σχεδιασμό εγγράφων σπάνια χρειάζονται.</li></ul></div></div></div>
+<footer class="foot"><p class="src">MongoDB Manual: Transactions.</p><span class="pn">24</span></footer></section>
+<section class="slide t-table " data-i="24" aria-label="Διαφάνεια 25 από 32"><header class="head"><h2 class="">Πότε ταιριάζει μια βάση NoSQL</h2></header><div class="body "><div class="trows  "><div class="trow"><span class="trh">Μεγάλος και αυξανόμενος όγκος</span><span class="trt">Καταγραφές δραστηριότητας, αισθητήρες, συμβάντα που έρχονται συνεχώς.</span></div><div class="trow"><span class="trh">Δεδομένα με μεταβαλλόμενη δομή</span><span class="trt">Διαφορετικά είδη δραστηριότητας, περιεχόμενο, προφίλ με προαιρετικά πεδία.</span></div><div class="trow"><span class="trh">Οριζόντια κλιμάκωση και διαθεσιμότητα</span><span class="trt">Η υπηρεσία πρέπει να μεγαλώνει με περισσότερους διακομιστές και να μη σταματά.</span></div><div class="trow"><span class="trh">Πρόσβαση με γνωστό τρόπο</span><span class="trt">Τα ερωτήματα είναι γνωστά από πριν: «ό,τι αφορά τον φοιτητή Χ», όχι αυθαίρετοι συνδυασμοί.</span></div></div><p class="footline">Η σύγκριση των μελετών δεν δείχνει λόγο για γενική μετάβαση από τις σχεσιακές βάσεις: η επιλογή ακολουθεί τις απαιτήσεις.</p></div>
+<footer class="foot"><p class="src">Khan, Kumar, Zhang, Raj, Roy &amp; Luo (2023), Big Data and Cognitive Computing, 7(2), 97.</p><span class="pn">25</span></footer></section>
+<section class="slide t-table " data-i="25" aria-label="Διαφάνεια 26 από 32"><header class="head"><h2 class="">Πότε η σχεσιακή βάση παραμένει η καλύτερη επιλογή</h2></header><div class="body "><div class="trows  "><div class="trow"><span class="trh">Πολλές σχέσεις, απρόβλεπτα ερωτήματα</span><span class="trt">Συνδυασμοί δεδομένων που δεν είναι γνωστοί κατά τον σχεδιασμό.</span></div><div class="trow"><span class="trh">Αυστηρή ακεραιότητα</span><span class="trt">Οικονομικά στοιχεία, βαθμολόγια, εγγραφές σε μαθήματα.</span></div><div class="trow"><span class="trh">Αναφορές και ανάλυση με SQL</span><span class="trt">Εργαλεία αναφορών που μιλούν SQL, ερωτήματα από μη προγραμματιστές.</span></div><div class="trow"><span class="trh">Σταθερή, γνωστή δομή</span><span class="trt">Όταν τα δεδομένα αλλάζουν σπάνια μορφή, η ευελιξία δεν κερδίζει τίποτε.</span></div></div><p class="footline">Το ερώτημα δεν είναι ποιο σύστημα είναι καλύτερο, αλλά ποιο ταιριάζει σε αυτά τα δεδομένα και σε αυτά τα ερωτήματα.</p></div>
+<footer class="foot"><p class="src">Khan et al. (2023), Big Data and Cognitive Computing, 7(2), 97.</p><span class="pn">26</span></footer></section>
+<section class="slide t-definition " data-i="26" aria-label="Διαφάνεια 27 από 32"><header class="head"><h2 class="">Όχι «ή το ένα ή το άλλο»</h2></header><div class="body "><blockquote class="defq">Πολυγλωσσική αποθήκευση (polyglot persistence): κάθε είδος δεδομένων σε σύστημα που του ταιριάζει, μέσα στην ίδια εφαρμογή.<cite>Sadalage &amp; Fowler (2012), NoSQL Distilled</cite></blockquote><div class="callouts"><div class="callout c-blue"><h3>Στην πλατφόρμα του μαθήματος</h3><ul class="il"><li>Φοιτητές, εγγραφές, βαθμοί: σχεσιακή βάση.</li><li>Καταγραφές δραστηριότητας: βάση εγγράφων.</li><li>Συνεδρίες των χρηστών: αποθήκη κλειδιού–τιμής.</li></ul></div><div class="callout c-amber"><h3>Και η σύγκλιση</h3><ul class="il"><li>Η PostgreSQL αποθηκεύει και έγγραφα JSON (τύπος jsonb).</li><li>Η MongoDB προσφέρει συναλλαγές, επικύρωση σχήματος και σύνδεση συλλογών ($lookup).</li></ul></div></div></div>
+<footer class="foot"><p class="src"></p><span class="pn">27</span></footer></section>
+<section class="slide t-bars " data-i="27" aria-label="Διαφάνεια 28 από 32"><header class="head"><h2 class="">Τι χρησιμοποιείται σήμερα</h2></header><div class="body "><div class="bp"><div class="panels p1"><div class="panel" style="flex:1"><h3>Βαθμολογία δημοτικότητας DB-Engines: τα δέκα πρώτα συστήματα</h3><div class="pbody"><div class="barrow"><div class="bar"><span class="bv">1122</span><i class="t-blue" style="height:240px"></i><span class="bl">Oracle</span></div><div class="bar"><span class="bv">845</span><i class="t-blue" style="height:181px"></i><span class="bl">MySQL</span></div><div class="bar"><span class="bv">699</span><i class="t-blue" style="height:150px"></i><span class="bl">SQL<br>Server</span></div><div class="bar"><span class="bv">683</span><i class="t-blue" style="height:146px"></i><span class="bl">PostgreSQL</span></div><div class="bar"><span class="bv">381</span><i class="t-amber" style="height:81px"></i><span class="bl">MongoDB</span></div><div class="bar"><span class="bv">212</span><i class="t-blue" style="height:45px"></i><span class="bl">Snowflake</span></div><div class="bar"><span class="bv">168</span><i class="t-grey" style="height:36px"></i><span class="bl">Databricks</span></div><div class="bar"><span class="bv">158</span><i class="t-amber" style="height:34px"></i><span class="bl">Redis</span></div><div class="bar"><span class="bv">111</span><i class="t-blue" style="height:24px"></i><span class="bl">IBM Db2</span></div><div class="bar"><span class="bv">97</span><i class="t-blue" style="height:21px"></i><span class="bl">SQLite</span></div></div></div></div></div></div><p class="lesson">Μπλε: σχεσιακά. Πορτοκαλί: μη σχεσιακά. Γκρι: πολλαπλών μοντέλων. Η MongoDB είναι το πρώτο μη σχεσιακό σύστημα, πέμπτο συνολικά.</p></div>
+<footer class="foot"><p class="src">DB-Engines Ranking (db-engines.com), μηνιαία κατάταξη. Η βαθμολογία μετρά δημοτικότητα: αναζητήσεις, συζητήσεις, αγγελίες εργασίας.</p><span class="pn">28</span></footer></section>
+<section class="slide t-bars " data-i="28" aria-label="Διαφάνεια 29 από 32"><header class="head"><h2 class="">Ποιοι ανεβαίνουν</h2></header><div class="body "><div class="bp"><div class="panels p1"><div class="panel" style="flex:1"><h3>Μεγαλύτερη αύξηση βαθμολογίας DB-Engines σε ένα εξάμηνο (μονάδες)</h3><div class="pbody"><div class="barrow"><div class="bar"><span class="bv">22</span><i class="t-blue" style="height:240px"></i><span class="bl">PostgreSQL</span></div><div class="bar"><span class="bv">16</span><i class="t-grey" style="height:175px"></i><span class="bl">Databricks</span></div><div class="bar"><span class="bv">11</span><i class="t-amber" style="height:120px"></i><span class="bl">MongoDB</span></div><div class="bar"><span class="bv">11</span><i class="t-blue" style="height:120px"></i><span class="bl">Microsoft<br>Fabric</span></div><div class="bar"><span class="bv">7</span><i class="t-blue" style="height:76px"></i><span class="bl">Snowflake</span></div></div></div></div></div></div><p class="lesson">Ανεβαίνουν μαζί σχεσιακά και μη σχεσιακά συστήματα, και πλατφόρμες ανάλυσης δεδομένων: η εικόνα δεν είναι «SQL έναντι NoSQL».</p></div>
+<footer class="foot"><p class="src">DB-Engines / Redgate, μεταβολή βαθμολογίας στο πρώτο εξάμηνο του έτους.</p><span class="pn">29</span></footer></section>
+<section class="slide t-htable " data-i="29" aria-label="Διαφάνεια 30 από 32"><header class="head"><h2 class="">Σύνοψη: σχεσιακές και NoSQL σε μία ματιά</h2></header><div class="body "><table class="ht"><thead><tr><th></th><th>Σχεσιακές βάσεις</th><th>Βάσεις NoSQL</th></tr></thead><tbody><tr><td>Σχήμα</td><td>ορίζεται πριν από τα δεδομένα</td><td>ευέλικτο· στην εφαρμογή ή με προαιρετική επικύρωση</td></tr><tr><td>Κλιμάκωση</td><td>κυρίως κάθετη</td><td>κυρίως οριζόντια, με κατάτμηση</td></tr><tr><td>Συνέπεια</td><td>ισχυρή, με συναλλαγές ACID</td><td>ρυθμιζόμενη· συχνά τελική</td></tr><tr><td>Ερωτήματα</td><td>SQL, διεθνές πρότυπο</td><td>ανά σύστημα: API ή δική του γλώσσα</td></tr><tr><td>Σχέσεις</td><td>JOIN τη στιγμή του ερωτήματος</td><td>ενσωμάτωση ή αναφορά, κατά τον σχεδιασμό</td></tr></tbody></table></div>
+<footer class="foot"><p class="src"></p><span class="pn">30</span></footer></section>
+<section class="slide t-remember " data-i="30" aria-label="Διαφάνεια 31 από 32"><header class="head"><p class="kicker"><span class="lamp lamp-green" aria-hidden="true"></span>Να θυμάστε</p><h2 class="">Τρία σημεία από το Μέρος 1</h2></header><div class="body "><ol class="numlist big"><li><span>Οι βάσεις NoSQL συμπληρώνουν τις σχεσιακές, όπου ο όγκος, η ποικιλία ή η κλίμακα τις πιέζουν. Δεν τις αντικαθιστούν.</span></li><li><span>Σε διαμέριση δικτύου, ένα κατανεμημένο σύστημα επιλέγει ανάμεσα σε συνέπεια και διαθεσιμότητα.</span></li><li><span>Ευέλικτο σχήμα σημαίνει ότι το σχήμα μετακινείται στην εφαρμογή. Και οι σύγχρονες βάσεις NoSQL προσφέρουν επικύρωση και συναλλαγές.</span></li></ol></div>
+<footer class="foot"><p class="src"></p><span class="pn">31</span></footer></section>
+<section class="slide t-break dark" data-i="31" aria-label="Διαφάνεια 32 από 32"><div class="brk"><h2>Διάλειμμα</h2><p class="back">Επιστρέφουμε σε <span>15′</span></p><p class="count" data-break="15">15:00</p><p class="next">Στο Μέρος 2: τέσσερα μοντέλα δεδομένων, στο ίδιο παράδειγμα.</p></div>
+<footer class="foot"><p class="src"></p><span class="pn">32</span></footer></section>
+</div></div>
+<nav class="ctl" aria-label="Πλοήγηση διαφανειών"><button type="button" id="bPrev" aria-label="Προηγούμενη διαφάνεια">‹</button><button type="button" id="bNext" aria-label="Επόμενη διαφάνεια">›</button><button type="button" id="bNotes" title="Σημειώσεις ομιλητή (N)">Σημειώσεις</button><button type="button" id="bHelp" title="Πλήκτρα (?)">?</button></nav>
+<div id="progress" aria-hidden="true"><i></i></div>
+<div id="help" hidden><div><h3>Πλήκτρα</h3><dl><div><dt>← →, Space</dt><dd>προηγούμενη, επόμενη διαφάνεια</dd></div><div><dt>N</dt><dd>παράθυρο σημειώσεων ομιλητή με ρολόι, ρυθμό και πλάνο</dd></div><div><dt>T</dt><dd>έναρξη ή παύση χρονομέτρου</dd></div><div><dt>F</dt><dd>πλήρης οθόνη</dd></div><div><dt>P</dt><dd>εκτύπωση ή αποθήκευση ως PDF, μία διαφάνεια ανά σελίδα</dd></div></dl><p>Άλλη ώρα έναρξης: προσθέστε <code>?start=15:15</code> στη διεύθυνση.</p></div></div>
+<script>window.DECK = {"meta":{"course":"Βάσεις Δεδομένων & Ανάλυση Δεδομένων Μάθησης","deckTitle":"Γιατί NoSQL","part":"Μη σχεσιακές βάσεις, Βραδιά 1, Μέρος 1","start":"18:15","lengthMin":45,"breakMin":15,"lang":"el"},"slides":[{"title":"Μη σχεσιακές βάσεις δεδομένων","mins":1,"skippable":false,"notes":["Σύνδεση με τα προηγούμενα μαθήματα σε μία πρόταση: «Σχεδιάσατε και υλοποιήσατε μια σχεσιακή βάση. Απόψε: τι αλλάζει όταν τα δεδομένα δεν χωρούν άνετα σε πίνακες.»","Στο Μέρος 3 οι πρώτες εντολές της MongoDB, με την πραγματική τους έξοδο: οι πρώτες που ζητά η Εργασία 2.","Ξεκινήστε ακριβώς στην ώρα."],"type":"title"},{"title":"Το πλάνο της βραδιάς","mins":1,"skippable":false,"notes":["Μία φράση ανά μέρος, όχι περισσότερο.","Το Μέρος 3 ανοίγει την Εργασία 2. Το επόμενο μάθημα την ολοκληρώνει."],"type":"plan"},{"title":"Πού βρισκόμαστε","mins":1,"skippable":false,"notes":["Το μάθημα έχει τρία σκέλη. Απόψε ανοίγει το δεύτερο.","Η Εργασία 2 στηρίζεται στη βάση που σχεδίασαν στην Εργασία 1: τίποτε δεν ξεκινά από το μηδέν."],"type":"flow"},{"title":"Τι κάνει καλά μια σχεσιακή βάση","mins":2,"skippable":false,"notes":["Ανακεφαλαίωση των προηγούμενων μαθημάτων, όχι νέα ύλη. Μία φράση ανά κάρτα.","Τέσσερις από τις έξι κάρτες επανέρχονται στη σύνοψη του τέλους: σχήμα, SQL, ACID, JOIN."],"type":"grid"},{"title":"Το παράδειγμα της βραδιάς: μια πλατφόρμα μαθημάτων","mins":3,"skippable":false,"notes":["Σκόπιμα απλό σχήμα, στα μέτρα της Εργασίας 1.","Οι τρεις πρώτοι πίνακες είναι τυπική σχεσιακή σχεδίαση. Ο τέταρτος είναι αυτός που πιέζει το μοντέλο: ποικιλία, όγκος, ρυθμός.","Στο Μέρος 3 τα ίδια δεδομένα γίνονται έγγραφα της MongoDB."],"type":"htable"},{"title":"Τρεις πιέσεις στο σχεσιακό μοντέλο","mins":1,"skippable":false,"notes":["Χάρτης των τριών επόμενων διαφανειών.","Ακρίβεια στη διατύπωση: οι σχεσιακές βάσεις αντιμετωπίζουν και τις τρεις πιέσεις, με κόστος. Το NoSQL μειώνει κάποια κόστη και αυξάνει άλλα."],"type":"cards3"},{"title":"Ποικιλία: κάθε δραστηριότητα έχει άλλα πεδία","mins":1,"skippable":false,"notes":["Τέσσερα είδη δραστηριότητας, έξι στήλες: κάθε γραμμή χρησιμοποιεί μόνο δύο.","Κάθε νέο είδος δραστηριότητας σημαίνει αλλαγή του σχήματος (ALTER TABLE) ή νέο πίνακα.","Στο Moodle, μια αναζήτηση στο φόρουμ καταγράφεται με κοινές στήλες συν ένα πεδίο other, π.χ. {\"searchterm\": \"…\"}. Ένα μικρό έγγραφο μέσα σε σχεσιακό πίνακα."],"type":"htable"},{"title":"Όγκος: τα ίχνη μάθησης μεγαλώνουν γρήγορα","mins":1,"skippable":false,"notes":["Το ίδιο σύνολο δεδομένων ανοίγει και τη Μαθησιακή Αναλυτική, στο τρίτο σκέλος του μαθήματος.","Όγκος χωρίς ρυθμό δεν αρκεί για να δικαιολογήσει NoSQL: δέκα εκατομμύρια γραμμές τις χειρίζεται άνετα και μια σχεσιακή βάση. Η πίεση έρχεται όταν ο όγκος μεγαλώνει συνεχώς και απαιτεί πολλούς διακομιστές."],"type":"bignum"},{"title":"Αναντιστοιχία αντικειμένου και πινάκων","mins":1,"skippable":false,"notes":["Όσοι έχουν γράψει κώδικα με ORM (π.χ. Hibernate, SQLAlchemy) έχουν ήδη συναντήσει το πρόβλημα, ίσως χωρίς να το ονομάσουν.","Η βάση εγγράφων αποθηκεύει τον φοιτητή όπως τον βλέπει η εφαρμογή. Αυτό θα φανεί στο Μέρος 3."],"type":"compare"},{"title":"NoSQL σημαίνει «Not only SQL»","mins":1,"skippable":false,"notes":["Ο όρος λέει τι δεν είναι τα συστήματα, όχι τι είναι. Γι’ αυτό τα τέσσερα μοντέλα του Μέρους 2 έχουν μεγαλύτερη σημασία από τον ορισμό.","Ο Carlo Strozzi, που χρησιμοποίησε πρώτος τη λέξη το 1998, σχολίασε αργότερα ότι «NoREL» θα ήταν ακριβέστερο: το ζήτημα είναι το σχεσιακό μοντέλο, όχι η γλώσσα."],"type":"definition"},{"title":"Από πού προήλθαν","mins":1,"skippable":false,"notes":["Και τα δύο συστήματα γεννήθηκαν από πρακτικό πρόβλημα κλίμακας μεγάλων εταιρειών, όχι από θεωρία.","Το 2009 η λέξη επιλέχθηκε ως σύντομη ετικέτα για μία συνάντηση, και έμεινε ως όνομα ολόκληρης της κατηγορίας."],"type":"htable"},{"title":"Σχήμα κατά την εγγραφή ή κατά την ανάγνωση","mins":1,"skippable":false,"notes":["Ρητορική ερώτηση: αν την εφαρμογή την ξαναγράψει άλλη ομάδα, πού είναι καταγεγραμμένο ποια πεδία υπάρχουν;","Το ίδιο ζεύγος παραδειγμάτων με το σχήμα του παλαιότερου υλικού: πελάτες με όνομα και ηλικία, προϊόν με τιμή και έκπτωση."],"type":"compare"},{"title":"Ευέλικτο σχήμα δεν σημαίνει «χωρίς σχήμα»","mins":1,"skippable":false,"notes":["Κάθε έγγραφο της συλλογής students πρέπει να έχει student_id και name, και το name να είναι συμβολοσειρά.","Δεν χρειάζεται να θυμούνται τη σύνταξη. Το μήνυμα είναι ότι το σχήμα μπορεί να επιστρέψει στη βάση, όταν το θέλουμε."],"type":"codeslide"},{"title":"Κάθετη και οριζόντια κλιμάκωση","mins":2,"skippable":false,"notes":["Αναλογία: ένα μεγαλύτερο φορτηγό ή περισσότερα φορτηγά. Το δεύτερο κλιμακώνεται, αλλά χρειάζεται συντονισμό.","Οι επόμενες δύο διαφάνειες δείχνουν πώς γίνεται η οριζόντια κλιμάκωση στη MongoDB: αντιγραφή και κατάτμηση."],"type":"compare"},{"title":"Αντιγραφή (Replication)","mins":1,"skippable":false,"notes":["Η συνηθισμένη διάταξη είναι τρία μέλη: ένας κύριος και δύο δευτερεύοντες.","Η αντιγραφή εξασφαλίζει διαθεσιμότητα· δεν μοιράζει τον όγκο. Αυτό το κάνει η κατάτμηση, στην επόμενη διαφάνεια."],"type":"definition"},{"title":"Κατάτμηση (Sharding)","mins":2,"skippable":false,"notes":["Ένας εξισορροπητής (balancer) μετακινεί τμήματα δεδομένων ανάμεσα στα shards, ώστε να έχουν περίπου τον ίδιο όγκο.","Κακή επιλογή κλειδιού: μια τιμή που αυξάνεται μονότονα, όπως ο χρόνος, στέλνει όλες τις νέες εγγραφές στο ίδιο shard.","Η παλαιά διατύπωση «αν αστοχήσει ένας διακομιστής, αντικαθίσταται αυτόματα» αφορά την αντιγραφή, όχι την κατάτμηση."],"type":"definition"},{"title":"Γιατί το JOIN δυσκολεύει σε πολλούς διακομιστές","mins":1,"skippable":false,"notes":["Εδώ βρίσκεται η ρίζα της διαφορετικής σχεδίασης: στη σχεσιακή βάση κανονικοποιούμε, στη βάση εγγράφων σχεδιάζουμε με βάση τα ερωτήματα.","Η MongoDB προσφέρει σύνδεση συλλογών ($lookup), αλλά ο καλός σχεδιασμός την κάνει σπάνια αναγκαία."],"type":"fact"},{"title":"Το θεώρημα CAP","mins":3,"skippable":false,"notes":["Η διαμέριση δεν είναι επιλογή: σε κάθε δίκτυο θα συμβεί κάποτε. Η πραγματική επιλογή είναι τι κάνει το σύστημα τότε.","Παράδειγμα: δύο κέντρα δεδομένων χάνουν την επικοινωνία τους. Είτε αρνούμαστε εγγραφές (συνέπεια) είτε τις δεχόμαστε και στα δύο, με κίνδυνο αντιφάσεων (διαθεσιμότητα).","Ο ίδιος ο Brewer, το 2012, σημείωσε ότι το σχήμα «διαλέγεις δύο από τα τρία» παραπλανά."],"type":"cards3"},{"title":"Το C του CAP δεν είναι το C του ACID","mins":1,"skippable":false,"notes":["Συχνή σύγχυση, και σε δημοσιευμένα κείμενα.","Μια βάση μπορεί να έχει τη μία χωρίς την άλλη: έναν διακομιστή με αυστηρούς κανόνες, ή αντίγραφα που συμφωνούν σε δεδομένα που δεν ελέγχει κανείς."],"type":"compare"},{"title":"PACELC: και χωρίς διαμέριση υπάρχει επιλογή","mins":1,"skippable":true,"notes":["Παραλείπεται αν ο χρόνος πιέζει.","Το CAP περιγράφει τη σπάνια περίπτωση. Το PACELC προσθέτει την καθημερινή: κάθε εγγραφή που περιμένει επιβεβαίωση από περισσότερα αντίγραφα είναι ασφαλέστερη και πιο αργή."],"type":"definition"},{"title":"ACID και BASE","mins":2,"skippable":false,"notes":["Το BASE επινοήθηκε ως αντίθεση προς το ACID: τα αρχικά είναι λογοπαίγνιο, οξύ και βάση.","Ο Pritchett το πρότεινε για αντίγραφα δεδομένων σε μεγάλους ιστοτόπους, όχι ως γενική αντικατάσταση των συναλλαγών."],"type":"compare"},{"title":"Τελική συνέπεια (eventual consistency)","mins":1,"skippable":false,"notes":["Στη MongoDB οι αναγνώσεις γίνονται εξ ορισμού από τον κύριο κόμβο, οπότε η εφαρμογή βλέπει τις δικές της εγγραφές. Η εικόνα αφορά αναγνώσεις από δευτερεύοντα αντίγραφα.","Στην πράξη η καθυστέρηση είναι συνήθως κλάσματα του δευτερολέπτου· σε αστοχίες του δικτύου μεγαλώνει."],"type":"chain"},{"title":"Πού αρκεί η τελική συνέπεια;","mins":2,"skippable":false,"notes":["Δημοσκόπηση Zoom με πολλαπλή επιλογή. Ξεκινήστε το χρονόμετρο (πλήκτρο T).","Αναμενόμενη απάντηση: Β και Δ. Στα Α και Γ κάποιος αποφασίζει με βάση την τιμή: ο φοιτητής βλέπει λάθος βαθμό ή νομίζει ότι η υποβολή του χάθηκε.","Οι επόμενες διαφάνειες δεν εξαρτώνται από το αποτέλεσμα."],"type":"poll"},{"title":"Οι βάσεις NoSQL «δεν εγγυώνται συναλλαγές»;","mins":2,"skippable":false,"notes":["Διορθώνει μια διατύπωση που κυκλοφορεί ακόμη σε σημειώσεις και εγχειρίδια: «οι βάσεις NoSQL δεν μπορούν να εγγυηθούν ότι οι διεργασίες θα γίνονται αξιόπιστα».","Το εγχειρίδιο της MongoDB σημειώνει ρητά ότι οι συναλλαγές δεν υποκαθιστούν τον καλό σχεδιασμό του σχήματος."],"type":"fact"},{"title":"Πότε ταιριάζει μια βάση NoSQL","mins":1,"skippable":false,"notes":["Κανένα από τα τέσσερα δεν αρκεί μόνο του· συνήθως συνυπάρχουν δύο ή τρία.","Η ανασκόπηση των Khan et al. (2023) καταλήγει ότι οι βάσεις NoSQL ταιριάζουν σε μεγάλο όγκο αδόμητων δεδομένων με απαίτηση υψηλής διαθεσιμότητας."],"type":"table"},{"title":"Πότε η σχεσιακή βάση παραμένει η καλύτερη επιλογή","mins":1,"skippable":false,"notes":["Κατά την ίδια ανασκόπηση, η σχεσιακή βάση προτιμάται όταν προτεραιότητα έχουν η τυποποίηση και η συνέπεια των δεδομένων.","Τα βαθμολόγια του μαθήματος είναι το χαρακτηριστικό παράδειγμα: σταθερή δομή, αυστηροί κανόνες, αναφορές."],"type":"table"},{"title":"Όχι «ή το ένα ή το άλλο»","mins":2,"skippable":false,"notes":["Τα όρια ανάμεσα στις δύο οικογένειες θολώνουν: σχεσιακές βάσεις με έγγραφα, βάσεις εγγράφων με συναλλαγές.","Η τρίτη γραμμή της αριστερής στήλης προαναγγέλλει το Μέρος 2: οι αποθήκες κλειδιού–τιμής είναι το πρώτο από τα τέσσερα μοντέλα."],"type":"definition"},{"title":"Τι χρησιμοποιείται σήμερα","mins":1,"skippable":false,"notes":["Τιμές Σεπτεμβρίου 2026. Ενημερώνονται από τη σελίδα db-engines.com/en/ranking πριν από κάθε νέα χρονιά.","Δημοτικότητα δεν σημαίνει μερίδιο αγοράς ούτε ποιότητα. Δείχνει όμως ότι οι σχεσιακές βάσεις δεν υποχωρούν."],"type":"bars"},{"title":"Ποιοι ανεβαίνουν","mins":1,"skippable":true,"notes":["Πρώτο εξάμηνο του 2026: PostgreSQL +21,97, Databricks +16,04, MongoDB +11,24, Microsoft Fabric +10,94, Snowflake +6,78 (στρογγυλοποιημένα στη διαφάνεια).","Παραλείπεται αν ο χρόνος πιέζει."],"type":"bars"},{"title":"Σύνοψη: σχεσιακές και NoSQL σε μία ματιά","mins":1,"skippable":false,"notes":["Η σύνοψη ξαναπιάνει τις κάρτες της αρχής του Μέρους 1 (σχήμα, SQL, ACID, JOIN) και προσθέτει την κλιμάκωση.","Η λέξη «κυρίως» μετρά: υπάρχουν σχεσιακά συστήματα που κλιμακώνονται οριζόντια και συστήματα NoSQL με ισχυρή συνέπεια."],"type":"htable"},{"title":"Τρία σημεία από το Μέρος 1","mins":1,"skippable":false,"notes":["Διαβάστε τα τρία σημεία. Τίποτε άλλο.","Αν απομένει χρόνος δεν προστίθεται ύλη· το διάλειμμα ξεκινά νωρίτερα."],"type":"remember"},{"title":"Διάλειμμα","mins":3,"skippable":false,"notes":["Σταματήστε ακριβώς στην ώρα. Αν χρειαστεί χρόνος, παραλείπονται οι διαφάνειες 20 και 29.","Αφήστε τη διαφάνεια στην οθόνη σε όλο το διάλειμμα: η αντίστροφη μέτρηση δείχνει πότε ξεκινάμε."],"type":"break"}]};</script><script>(function () {
+  var D = window.DECK, S = D.slides, N = S.length;
+  var stage = document.getElementById('stage');
+  var slides = [].slice.call(document.querySelectorAll('.slide'));
+  var cur = 0, pres = null;
+
+  // ---- clock times: everything derives from one start time (?start=HH:MM overrides) ----
+  var q = new URLSearchParams(location.search).get('start');
+  var st = (q && /^\d{1,2}:\d{2}$/.test(q) ? q : D.meta.start).split(':').map(Number);
+  var start = st[0] * 60 + st[1];
+  function hm(m) { m = ((m % 1440) + 1440) % 1440; return ('0' + Math.floor(m / 60)).slice(-2) + ':' + ('0' + (m % 60)).slice(-2); }
+  var offs = [], acc = 0; S.forEach(function (s) { offs.push(acc); acc += s.mins; });
+  var times = { back: hm(start + 60) };
+  for (var k = 0; k < 3; k++) { times['p' + k + 's'] = hm(start + 60 * k); times['p' + k + 'e'] = hm(start + 60 * k + 45); }
+  [].forEach.call(document.querySelectorAll('[data-time]'), function (el) { el.textContent = times[el.getAttribute('data-time')] || ''; });
+
+  // ---- fit the 1600x900 stage to the window ----
+  function fit() {
+    var s = Math.min(innerWidth / 1600, innerHeight / 900);
+    stage.style.transform = 'translate(' + (innerWidth - 1600 * s) / 2 + 'px,' + (innerHeight - 900 * s) / 2 + 'px) scale(' + s + ')';
+  }
+  addEventListener('resize', fit); fit();
+
+  // ---- navigation ----
+  function go(i) {
+    cur = Math.max(0, Math.min(N - 1, i));
+    slides.forEach(function (el, j) { el.classList.toggle('on', j === cur); });
+    document.querySelector('#progress i').style.width = (100 * (cur + 1) / N) + '%';
+    history.replaceState(null, '', location.pathname + location.search + '#' + (cur + 1));
+    sync();
+  }
+  document.getElementById('bPrev').onclick = function () { go(cur - 1); };
+  document.getElementById('bNext').onclick = function () { go(cur + 1); };
+  document.getElementById('bNotes').onclick = openPresenter;
+  var help = document.getElementById('help');
+  document.getElementById('bHelp').onclick = function () { help.hidden = !help.hidden; };
+  help.onclick = function () { help.hidden = true; };
+
+  addEventListener('keydown', function (e) {
+    if (e.target.tagName === 'INPUT') return;
+    var k = e.key;
+    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ') { e.preventDefault(); go(cur + 1); }
+    else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); go(cur - 1); }
+    else if (k === 'Home') go(0); else if (k === 'End') go(N - 1);
+    else if (/^[nν]$/i.test(k)) openPresenter();
+    else if (/^[tτ]$/i.test(k)) toggleTimer();
+    else if (/^[hη]$/i.test(k)) showHint();
+    else if (/^[fφ]$/i.test(k)) { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+    else if (/^[pπ]$/i.test(k)) print();
+    else if (k === '?' || k === 'Escape') help.hidden = k === 'Escape' ? true : !help.hidden;
+  });
+  // ---- mouse wheel / trackpad: one notch, one slide ----
+  var wAcc = 0, wLock = 0;
+  addEventListener('wheel', function (e) {
+    if (!help.hidden) return;                                   // the help overlay scrolls on its own
+    for (var el = e.target; el && el !== document.body; el = el.parentElement) {
+      if (el.scrollHeight - el.clientHeight > 4 && getComputedStyle(el).overflowY !== 'visible') return;
+    }
+    var now = Date.now();
+    if (now - wLock < 400) { e.preventDefault(); return; }      // one slide per gesture, not per event
+    wAcc += e.deltaY + e.deltaX;
+    if (Math.abs(wAcc) < 24) return;
+    e.preventDefault(); wLock = now; go(cur + (wAcc > 0 ? 1 : -1)); wAcc = 0;
+  }, { passive: false });
+
+  var tx = null;
+  addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; }, { passive: true });
+  addEventListener('touchend', function (e) { if (tx === null) return; var dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 60) go(cur + (dx < 0 ? 1 : -1)); tx = null; });
+
+  // ---- activity timers ----
+  var ticking = null;
+  function fmt(s) { return ('0' + Math.floor(s / 60)).slice(-2) + ':' + ('0' + (s % 60)).slice(-2); }
+  [].forEach.call(document.querySelectorAll('.timer'), function (t) {
+    var total = +t.getAttribute('data-sec'), left = total, read = t.querySelector('.timer-read'), b = t.querySelector('.t-start');
+    t._toggle = function () {
+      if (t._id) { clearInterval(t._id); t._id = null; b.textContent = 'Συνέχεια'; return; }
+      if (left <= 0) { left = total; t.classList.remove('done'); }
+      b.textContent = 'Παύση';
+      var end = Date.now() + left * 1000;
+      t._id = setInterval(function () {
+        left = Math.max(0, Math.round((end - Date.now()) / 1000)); read.textContent = fmt(left);
+        if (left === 0) { clearInterval(t._id); t._id = null; t.classList.add('done'); b.textContent = 'Ξανά'; }
+      }, 250);
+    };
+    b.onclick = t._toggle;
+    t.querySelector('.t-reset').onclick = function () { clearInterval(t._id); t._id = null; left = total; read.textContent = fmt(left); t.classList.remove('done'); b.textContent = 'Έναρξη χρονομέτρου'; };
+  });
+  function toggleTimer() { var t = slides[cur].querySelector('.timer'); if (t) t._toggle(); else if (brkEl()) brkStart = Date.now(); }
+  function showHint() { var h = slides[cur].querySelector('.hint[hidden]'); if (h) { h.hidden = false; var b = slides[cur].querySelector('.hint-btn'); if (b) b.remove(); } }
+  [].forEach.call(document.querySelectorAll('.hint-btn'), function (b) { b.onclick = showHint; });
+
+  // ---- break countdown: runs from the full break length, starting when the break slide is first shown ----
+  var brkStart = null;
+  function brkEl() { return slides[cur].querySelector('[data-break]'); }
+  setInterval(function () {
+    var el = brkEl(); if (!el) return;
+    if (brkStart === null) brkStart = Date.now();
+    var left = Math.max(0, Math.round(+el.getAttribute('data-break') * 60 - (Date.now() - brkStart) / 1000));
+    el.textContent = left > 0 ? fmt(left) : 'Ξεκινάμε.';
+  }, 500);
+
+  // ---- presenter window: notes, clock, pace, run sheet ----
+  function openPresenter() {
+    if (pres && !pres.closed) { pres.focus(); return; }
+    pres = window.open('', 'presenterNotes', 'width=980,height=760');
+    if (!pres) { alert('Ο browser μπλόκαρε το παράθυρο σημειώσεων. Επιτρέψτε τα αναδυόμενα παράθυρα για αυτή τη σελίδα.'); return; }
+    pres.document.write('<!DOCTYPE html><html lang="el"><head><meta charset="UTF-8"><title>Σημειώσεις ομιλητή</title><style>' +
+      'body{margin:0;font:18px/1.5 "Segoe UI","Helvetica Neue",Arial,sans-serif;background:#0B1628;color:#E8EEF8;display:grid;grid-template-columns:1fr 330px;height:100vh}' +
+      'main{padding:26px 30px;overflow:auto}aside{background:#12233F;padding:18px;overflow:auto;border-left:1px solid #2A436C}' +
+      '.bar{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}.box{background:#1C3358;border-radius:12px;padding:12px 16px}' +
+      '.box small{display:block;color:#9FB2CE;font-size:13px}.box b{font-size:34px;font-variant-numeric:tabular-nums}' +
+      '.pace.late{background:#A92C25}.pace.ok{background:#1F7A45}' +
+      'h1{font-size:26px;line-height:1.2;margin:4px 0 6px}.meta{color:#9FB2CE;font-size:15px;margin-bottom:14px}' +
+      '.skip{display:inline-block;background:#F2A413;color:#12233F;font-weight:700;border-radius:999px;padding:2px 12px;font-size:14px;margin-left:8px}' +
+      'ul{padding-left:22px}li{margin:0 0 12px;font-size:21px;line-height:1.42}' +
+      '.nxt{margin-top:22px;color:#9FB2CE;font-size:16px}.btns{margin-top:18px;display:flex;gap:10px}' +
+      'button{font:700 17px inherit;padding:12px 22px;border-radius:10px;border:0;background:#F2A413;color:#12233F;cursor:pointer}button.sec{background:#2A436C;color:#fff}' +
+      'ol{list-style:none;margin:0;padding:0}ol li{font-size:14px;line-height:1.3;margin:0;padding:7px 8px;border-radius:8px;display:grid;grid-template-columns:48px 1fr;gap:6px;cursor:pointer;color:#C9D7EC}' +
+      'ol li.cur{background:#F2A413;color:#12233F;font-weight:700}ol li .t{font-variant-numeric:tabular-nums}aside h2{font-size:14px;color:#9FB2CE;margin:0 0 8px;font-weight:600}' +
+      '</style></head><body><main><div class="bar"><div class="box"><small>Ώρα</small><b id="now"></b></div>' +
+      '<div class="box"><small>Πλάνο για αυτή τη διαφάνεια</small><b id="plan"></b></div><div class="box pace" id="paceBox"><small>Ρυθμός</small><b id="pace"></b></div></div>' +
+      '<h1 id="ttl"></h1><div class="meta" id="meta"></div><ul id="notes"></ul><div class="nxt" id="nxt"></div>' +
+      '<div class="btns"><button class="sec" id="pv">‹ Προηγούμενη</button><button id="nx">Επόμενη ›</button></div></main>' +
+      '<aside><h2>Πλάνο ' + hm(start) + '–' + hm(start + D.meta.lengthMin) + '</h2><ol id="sheet"></ol></aside></body></html>');
+    pres.document.close();
+    var pd = pres.document;
+    pd.getElementById('pv').onclick = function () { go(cur - 1); };
+    pd.getElementById('nx').onclick = function () { go(cur + 1); };
+    pres.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight' || e.key === ' ') go(cur + 1); if (e.key === 'ArrowLeft') go(cur - 1); });
+    var ol = pd.getElementById('sheet');
+    S.forEach(function (s, i) { var li = pd.createElement('li'); li.innerHTML = '<span class="t">' + hm(start + offs[i]) + '</span><span></span>'; li.lastChild.textContent = (i + 1) + '. ' + s.title + (s.skippable ? ' (παραλείπεται)' : ''); li.onclick = function () { go(i); }; ol.appendChild(li); });
+    sync();
+  }
+  function sync() {
+    if (!pres || pres.closed) return;
+    var pd = pres.document, s = S[cur];
+    pd.getElementById('ttl').textContent = (cur + 1) + '. ' + s.title;
+    pd.getElementById('meta').innerHTML = hm(start + offs[cur]) + ' → ' + hm(start + offs[cur] + s.mins) + ' (' + s.mins + '′)' + (s.skippable ? '<span class="skip">Αν είστε πίσω, παραλείπεται</span>' : '');
+    pd.getElementById('plan').textContent = hm(start + offs[cur]);
+    var ul = pd.getElementById('notes'); ul.innerHTML = '';
+    s.notes.forEach(function (n) { var li = pd.createElement('li'); li.textContent = n; ul.appendChild(li); });
+    pd.getElementById('nxt').textContent = cur < N - 1 ? 'Επόμενη: ' + S[cur + 1].title : 'Τέλος μέρους.';
+    [].forEach.call(pd.querySelectorAll('#sheet li'), function (li, i) { li.className = i === cur ? 'cur' : ''; if (i === cur) li.scrollIntoView({ block: 'nearest' }); });
+  }
+  setInterval(function () {
+    if (!pres || pres.closed) return;
+    var pd = pres.document, now = new Date(), nowMin = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+    pd.getElementById('now').textContent = hm(Math.floor(nowMin));
+    var late = Math.round(nowMin - (start + offs[cur] + S[cur].mins)), box = pd.getElementById('paceBox'), p = pd.getElementById('pace');
+    if (Math.abs(nowMin - start) > 180) { p.textContent = 'εκτός ώρας'; box.className = 'box pace'; }
+    else if (late > 0) { p.textContent = late + '′ πίσω'; box.className = 'box pace late'; }
+    else { p.textContent = 'εντός χρόνου'; box.className = 'box pace ok'; }
+  }, 1000);
+
+  // hide the controls while presenting from the keyboard; any mouse movement brings them back
+  var idleT; function wake() { document.body.classList.remove('idle'); clearTimeout(idleT); idleT = setTimeout(function () { document.body.classList.add('idle'); }, 2500); }
+  addEventListener('mousemove', wake); wake();
+
+  go(Math.max(0, (parseInt(location.hash.slice(1), 10) || 1) - 1));
+})();
+</script></body></html>

@@ -1,0 +1,78 @@
+{
+ "persons_load": [
+  "{\n  acknowledged: true,\n  insertedIds: {\n    '0': ObjectId('6ab42c36337843d01ed17eaf'),\n    '1': ObjectId('6ab42c36337843d01ed17eb0'),\n    '2': ObjectId('6ab42c36337843d01ed17eb1'),\n    '3': ObjectId('6ab42c36337843d01ed17eb2'),\n    '4': ObjectId('6ab42c36337843d01ed17eb3'),\n    '5': ObjectId('6ab42c36337843d01ed17eb4')\n  }\n}"
+ ],
+ "upd_set": [
+  "switched to db world",
+  "{\n  acknowledged: true,\n  insertedId: null,\n  matchedCount: 1,\n  modifiedCount: 1,\n  upsertedCount: 0\n}"
+ ],
+ "upd_again": [
+  "{\n  acknowledged: true,\n  insertedId: null,\n  matchedCount: 1,\n  modifiedCount: 0,\n  upsertedCount: 0\n}"
+ ],
+ "upd_incpush": [
+  "{\n  acknowledged: true,\n  insertedId: null,\n  matchedCount: 1,\n  modifiedCount: 1,\n  upsertedCount: 0\n}",
+  "{\n  name: 'Greece',\n  euSince: 1981,\n  population: 10400000,\n  capital: { name: 'Athens', timezone: 'Europe/Athens' },\n  languages: [ 'Greek' ],\n  visits: 1\n}"
+ ],
+ "upd_unset": [
+  "{\n  acknowledged: true,\n  insertedId: null,\n  matchedCount: 1,\n  modifiedCount: 1,\n  upsertedCount: 0\n}"
+ ],
+ "upd_one_first": [
+  "{\n  acknowledged: true,\n  insertedId: null,\n  matchedCount: 1,\n  modifiedCount: 1,\n  upsertedCount: 0\n}",
+  "1"
+ ],
+ "upd_many_founder": [
+  "{\n  acknowledged: true,\n  insertedId: null,\n  matchedCount: 2,\n  modifiedCount: 1,\n  upsertedCount: 0\n}"
+ ],
+ "upd_many_books": [
+  "switched to db library",
+  "{\n  acknowledged: true,\n  insertedId: null,\n  matchedCount: 166,\n  modifiedCount: 166,\n  upsertedCount: 0\n}",
+  "166"
+ ],
+ "upsert": [
+  "switched to db world",
+  "{\n  acknowledged: true,\n  insertedId: ObjectId('6ab42c38413cb46e99da303c'),\n  matchedCount: 0,\n  modifiedCount: 0,\n  upsertedCount: 1\n}",
+  "{ name: 'Cyprus', population: 980000 }"
+ ],
+ "poll": [
+  "Uncaught \nMongoInvalidArgumentError: Update document requires atomic operators"
+ ],
+ "count_first": [
+  "1"
+ ],
+ "delmany": [
+  "{ acknowledged: true, deletedCount: 1 }"
+ ],
+ "agg_total": [
+  "[ { _id: null, totalPopulation: 162600000 } ]"
+ ],
+ "agg_status": [
+  "switched to db library",
+  "[ { _id: 'PUBLISH', books: 363 }, { _id: 'MEAP', books: 68 } ]"
+ ],
+ "agg_java": [
+  "[\n  { _id: 'MEAP', books: 1, avgPages: 700, maxPages: 700 },\n  {\n    _id: 'PUBLISH',\n    books: 95,\n    avgPages: 511.4868421052632,\n    maxPages: 1088\n  }\n]"
+ ],
+ "agg_unwind": [
+  "[\n  { _id: 'Java', books: 96 },\n  { _id: 'Internet', books: 41 },\n  { _id: 'Microsoft .NET', books: 34 },\n  { _id: 'Web Development', books: 17 },\n  { _id: 'Software Engineering', books: 16 }\n]"
+ ],
+ "agg_having": [
+  "[\n  { _id: 'Java', books: 96 },\n  { _id: 'Internet', books: 41 },\n  { _id: 'Microsoft .NET', books: 34 },\n  { _id: 'Web Development', books: 17 },\n  { _id: 'Software Engineering', books: 16 },\n  { _id: 'Business', books: 12 },\n  { _id: 'Programming', books: 12 }\n]"
+ ],
+ "agg_project": [
+  "[\n  { books: 1, status: 'MEAP', avgPages: 700 },\n  { books: 95, status: 'PUBLISH', avgPages: 511 }\n]"
+ ],
+ "persons_pipeline": [
+  "book-filtered-top-subset",
+  "",
+  "[\n  {\n    person_id: '7363626383',\n    firstname: 'Carl',\n    lastname: 'Simmons',\n    dateofbirth: ISODate('1998-12-26T13:13:55.000Z')\n  },\n  {\n    person_id: '1723338115',\n    firstname: 'Olive',\n    lastname: 'Ranieri',\n    dateofbirth: ISODate('1985-05-12T23:14:30.000Z'),\n    gender: 'FEMALE'\n  },\n  {\n    person_id: '6392529400',\n    firstname: 'Elise',\n    lastname: 'Smith',\n    dateofbirth: ISODate('1972-01-13T09:32:07.000Z')\n  }\n]"
+ ],
+ "persons_project": [
+  "[\n  {\n    person_id: '7363626383',\n    firstname: 'Carl',\n    lastname: 'Simmons',\n    dateofbirth: ISODate('1998-12-26T13:13:55.000Z')\n  },\n  {\n    person_id: '1723338115',\n    firstname: 'Olive',\n    lastname: 'Ranieri',\n    dateofbirth: ISODate('1985-05-12T23:14:30.000Z'),\n    gender: 'FEMALE'\n  },\n  {\n    person_id: '6392529400',\n    firstname: 'Elise',\n    lastname: 'Smith',\n    dateofbirth: ISODate('1972-01-13T09:32:07.000Z')\n  }\n]"
+ ],
+ "persons_find": [
+  "[\n  {\n    person_id: '7363626383',\n    firstname: 'Carl',\n    lastname: 'Simmons',\n    dateofbirth: ISODate('1998-12-26T13:13:55.000Z')\n  },\n  {\n    person_id: '1723338115',\n    firstname: 'Olive',\n    lastname: 'Ranieri',\n    dateofbirth: ISODate('1985-05-12T23:14:30.000Z'),\n    gender: 'FEMALE'\n  },\n  {\n    person_id: '6392529400',\n    firstname: 'Elise',\n    lastname: 'Smith',\n    dateofbirth: ISODate('1972-01-13T09:32:07.000Z')\n  }\n]"
+ ],
+ "persons_group": [
+  "[\n  {\n    _id: 'ENGINEER',\n    people: 4,\n    oldest: ISODate('1959-07-06T17:35:45.000Z')\n  },\n  {\n    _id: 'FLORIST',\n    people: 1,\n    oldest: ISODate('1941-04-07T22:11:52.000Z')\n  },\n  {\n    _id: 'POLITICIAN',\n    people: 1,\n    oldest: ISODate('1991-11-23T16:53:56.000Z')\n  }\n]"
+ ]
+}

@@ -1,0 +1,10 @@
+use library
+db.books.countDocuments({ categories: { $size: 2 } })
+db.books.find({ categories: "Perl" }, { title: 1, categories: 1, _id: 0 })
+db.books.countDocuments({ title: /in Action$/ })
+db.books.countDocuments({ categories: /^internet$/i, pageCount: { $gte: 400, $lte: 500 } })
+db.books.find({ categories: "internet" }, { title: 1, pageCount: 1, categories: 1, _id: 0 })
+db.books.countDocuments({ status: "MEAP", pageCount: 0 })
+db.books.countDocuments({ status: "PUBLISH" })
+db.books.findOne({ _id: 23 })
+db.books.find({ categories: "Python" }, { title: 1, pageCount: 1 })

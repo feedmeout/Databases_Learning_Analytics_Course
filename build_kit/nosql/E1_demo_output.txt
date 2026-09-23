@@ -1,0 +1,62 @@
+test> test
+test> admin   40.00 KiB
+config  12.00 KiB
+local   40.00 KiB
+test> switched to db world
+world> 
+world> {
+  acknowledged: true,
+  insertedId: ObjectId('6ab3d2b0ff0f72f28211357d')
+}
+world> admin   40.00 KiB
+config  12.00 KiB
+local   40.00 KiB
+world    8.00 KiB
+world> { acknowledged: true, insertedId: 2 }
+world> ... ... ... ... ... {
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6ab3d2b0ff0f72f28211357e'),
+    '1': ObjectId('6ab3d2b0ff0f72f28211357f')
+  }
+}
+world> {
+  _id: ObjectId('6ab3d2b0ff0f72f28211357d'),
+  name: 'Greece',
+  euSince: 1981,
+  population: 10400000
+}
+world> [
+  {
+    _id: ObjectId('6ab3d2b0ff0f72f28211357d'),
+    name: 'Greece',
+    euSince: 1981,
+    population: 10400000
+  }
+]
+world> [
+  {
+    _id: ObjectId('6ab3d2b0ff0f72f28211357e'),
+    name: 'France',
+    euSince: 1958,
+    population: 68600000,
+    capital: { name: 'Paris', timezone: 'Europe/Paris' }
+  }
+]
+world> 4
+world> 2
+world> {
+  acknowledged: true,
+  insertedId: ObjectId('6ab3d2b0ff0f72f282113580')
+}
+world> {
+  _id: ObjectId('6ab3d2b0ff0f72f282113580'),
+  name: 'Italy',
+  'capital.name': 'Rome'
+}
+world> 
+world> { acknowledged: true, deletedCount: 1 }
+world> { acknowledged: true, deletedCount: 1 }
+world> 
+world> 3
+world> 

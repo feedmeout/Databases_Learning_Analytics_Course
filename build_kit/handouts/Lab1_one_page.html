@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!-- Lab 1 one-page worksheet. Approved by the instructor as an image on 20 Sept 2026.
+     Every number verified against the old Lab1_pack.pdf. Do not change numbers.
+     Draft styling; restyle with the kit's pack CSS. Rendered with: wkhtmltopdf, A4,
+     margins top 11mm, bottom 9mm, left/right 13mm; CSS zoom 1.23 fills exactly one page. -->
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<title>Εργαστήριο 1 · Φύλλο εργασίας</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; } body { zoom: 1.23; }
+  body { font-family: "Carlito", "Liberation Sans", "DejaVu Sans", sans-serif; color: #1b2a41; font-size: 10.4pt; line-height: 1.32; }
+  .strip { width: 100%; border-bottom: 1.2pt solid #1b2a41; padding-bottom: 3pt; margin-bottom: 7pt; font-size: 8.6pt; color: #4a5a70; }
+  .strip td { padding: 0; }
+  .strip .r { text-align: right; }
+  h1 { font-size: 19pt; margin: 0; font-weight: bold; letter-spacing: -0.2pt; }
+  h1 span { color: #1f5fa8; }
+  .sub { font-size: 12.5pt; color: #1f5fa8; margin: 1pt 0 7pt 0; font-weight: bold; }
+  p { margin: 0 0 6pt 0; text-align: justify; }
+  h2 { font-size: 10.6pt; margin: 8pt 0 3pt 0; color: #1b2a41; border-left: 3pt solid #1f5fa8; padding-left: 5pt; }
+  table.data { width: 100%; border-collapse: collapse; font-size: 9.3pt; }
+  table.data th { background: #1b2a41; color: #fff; font-weight: bold; padding: 3.5pt 4pt; text-align: center; vertical-align: bottom; font-size: 8.4pt; line-height: 1.18; }
+  table.data th.l { text-align: left; }
+  table.data td { padding: 3.2pt 4pt; border-bottom: 0.6pt solid #c9d2de; text-align: center; vertical-align: middle; }
+  table.data td.l { text-align: left; }
+  table.data td .rule { color: #4a5a70; font-size: 8.4pt; }
+  table.data td.acc { font-weight: bold; }
+  table.data tr.base td { border-bottom: none; color: #4a5a70; font-size: 8.8pt; padding-top: 4pt; }
+  .note { font-size: 8.3pt; color: #4a5a70; text-align: justify; margin-top: 3pt; line-height: 1.25; }
+  table.charts { width: 100%; border-collapse: collapse; margin-top: 1pt; }
+  table.charts td { vertical-align: top; padding: 0; text-align: center; }
+  .ctitle { font-size: 8.8pt; font-weight: bold; text-align: center; margin-bottom: 1pt; }
+  .facts { font-size: 8.8pt; text-align: justify; margin-top: 2pt; }
+  .qbox { border: 1.2pt solid #1f5fa8; margin-top: 8pt; padding: 6pt 8pt 5pt 8pt; background: #f2f6fb; }
+  .qbox .qt { font-weight: bold; color: #1f5fa8; font-size: 10.6pt; margin-bottom: 3pt; }
+  table.q { width: 100%; border-collapse: collapse; }
+  table.q td { vertical-align: top; padding: 2pt 0; text-align: justify; font-size: 10pt; }
+  table.q td.n { width: 15pt; font-weight: bold; color: #1f5fa8; font-size: 10pt; }
+  .how { font-size: 9pt; margin-top: 6pt; text-align: justify; }
+  .foot { width: 100%; border-top: 0.8pt solid #1b2a41; margin-top: 7pt; padding-top: 3pt; font-size: 8pt; color: #4a5a70; }
+  .foot td { padding: 0; }
+  .foot .r { text-align: right; }
+</style>
+</head>
+<body>
+
+<table class="strip"><tr>
+  <td>Βάσεις Δεδομένων &amp; Ανάλυση Δεδομένων Μάθησης · Εβδομάδα 2, Μέρος 2</td>
+  <td class="r">Προσομοιωμένα δεδομένα</td>
+</tr></table>
+
+<h1>Εργαστήριο 1 <span>·</span> Φύλλο εργασίας</h1>
+<div class="sub">Ποιους φοιτητές ειδοποιούμε την εβδομάδα 4;</div>
+
+<p>Σε ένα ελληνικό πανεπιστήμιο, το εισαγωγικό μάθημα προγραμματισμού του πρώτου εξαμήνου είχε πέρυσι 312 φοιτητές, από τους οποίους πέρασαν οι 145. Φέτος η διδακτική ομάδα θέλει, στο τέλος της εβδομάδας 4, να επικοινωνήσει με όσους κινδυνεύουν να μην περάσουν, όσο υπάρχει ακόμη χρόνος. Ο πίνακας δείχνει τι θα είχε συμβεί αν καθένας από τους έξι κανόνες επισήμανσης είχε εφαρμοστεί στους περσινούς φοιτητές, των οποίων η έκβαση είναι γνωστή. Δεν γράφετε κώδικα και δεν αλλάζετε τα κατώφλια των κανόνων: επιλέγετε δείκτες.</p>
+
+<h2>Έξι δείκτες, έξι κανόνες επισήμανσης</h2>
+<table class="data">
+  <tr>
+    <th class="l" style="width:35%">Δείκτης και κανόνας</th>
+    <th style="width:17%">Πότε είναι διαθέσιμος</th>
+    <th style="width:11%">Επισημαί-<br>νονται</th>
+    <th style="width:13%">Από όσους επισημαίνονται, δεν πέρασαν</th>
+    <th style="width:13%">Από όσους δεν πέρασαν, επισημαίνονται</th>
+    <th style="width:11%">Ορθή κατάταξη</th>
+  </tr>
+  <tr><td class="l">Συνδέσεις στο eclass, εβδομάδες 1–4<br><span class="rule">επισήμανση: έως 8 συνδέσεις</span></td><td>εβδομάδα 4</td><td>34%</td><td>68%</td><td>44%</td><td class="acc">59%</td></tr>
+  <tr><td class="l">Πλήθος υποβολών κώδικα, εβδομάδες 1–4<br><span class="rule">επισήμανση: έως 15 υποβολές</span></td><td>εβδομάδα 4</td><td>27%</td><td>68%</td><td>34%</td><td class="acc">56%</td></tr>
+  <tr><td class="l">P(E→S), εβδομάδες 1–4<br><span class="rule">επισήμανση: κάτω από 0,35</span></td><td>εβδομάδα 4<br><span class="rule">για 231 από τους 312</span></td><td>28%</td><td>80%</td><td>41%</td><td class="acc">63%</td></tr>
+  <tr><td class="l">Φύλλα ασκήσεων εμπρόθεσμα, εβδομάδες 1–4<br><span class="rule">επισήμανση: έως 2 από 4</span></td><td>εβδομάδα 4</td><td>45%</td><td>65%</td><td>54%</td><td class="acc">60%</td></tr>
+  <tr><td class="l">Φύλλα ασκήσεων, όλο το εξάμηνο<br><span class="rule">επισήμανση: έως 6 από 12</span></td><td>τέλος εξαμήνου</td><td>42%</td><td>82%</td><td>65%</td><td class="acc">74%</td></tr>
+  <tr><td class="l">Βαθμός προόδου<br><span class="rule">επισήμανση: κάτω από 5 ή απουσία</span></td><td>εβδομάδα 8</td><td>55%</td><td>76%</td><td>78%</td><td class="acc">75%</td></tr>
+  <tr class="base"><td class="l" colspan="5">Για σύγκριση: αν επισημανθούν απλώς όλοι οι φοιτητές</td><td class="acc">54%</td></tr>
+</table>
+<div class="note"><b>Πώς διαβάζονται οι στήλες.</b> «Επισημαίνονται»: ποσοστό των φοιτητών με τους οποίους θα επικοινωνούσε η διδακτική ομάδα. «Από όσους επισημαίνονται, δεν πέρασαν»: πόσο συχνά η επισήμανση επιβεβαιώνεται. «Από όσους δεν πέρασαν, επισημαίνονται»: πόσους από όσους χρειάζονταν βοήθεια εντοπίζει ο κανόνας. «Ορθή κατάταξη»: ποσοστό όλων των φοιτητών για τους οποίους ο κανόνας έκρινε σωστά. <b>P(E→S)</b>, όπως στο Μέρος 1: από όλες τις μεταβάσεις με αφετηρία σφάλμα μεταγλώττισης (E), το ποσοστό που καταλήγει σε υποβολή χωρίς σφάλμα (S)· υπολογίζεται μόνο όταν υπάρχουν τέσσερις τουλάχιστον τέτοιες μεταβάσεις, και όσοι δεν τις έχουν δεν επισημαίνονται.</div>
+
+<h2>Συνδέσεις στο eclass, εβδομάδες 1 έως 4: ποσοστό επιτυχίας ανά πλήθος συνδέσεων</h2>
+<table class="charts"><tr>
+  <td style="width:40%">
+    <div class="ctitle">Όλοι οι φοιτητές (312)</div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="270" height="128" viewBox="0 0 270 128">
+      <line x1="18" y1="98" x2="258" y2="98" stroke="#1b2a41" stroke-width="1"/>
+      <rect x="40"  y="70.5" width="50" height="27.5" fill="#1f5fa8"/>
+      <rect x="113" y="53.3" width="50" height="44.7" fill="#1f5fa8"/>
+      <rect x="186" y="47.3" width="50" height="50.7" fill="#1f5fa8"/>
+      <g font-family="Carlito, Liberation Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="bold" fill="#1b2a41" text-anchor="middle">
+        <text x="65" y="66">32%</text><text x="138" y="49">52%</text><text x="211" y="43">59%</text>
+      </g>
+      <g font-family="Carlito, Liberation Sans, DejaVu Sans, sans-serif" font-size="10.5" fill="#1b2a41" text-anchor="middle">
+        <text x="65" y="111">0–8</text><text x="138" y="111">9–13</text><text x="211" y="111">14+</text>
+      </g>
+      <g font-family="Carlito, Liberation Sans, DejaVu Sans, sans-serif" font-size="9.5" fill="#4a5a70" text-anchor="middle">
+        <text x="65" y="123">n = 107</text><text x="138" y="123">n = 75</text><text x="211" y="123">n = 130</text>
+      </g>
+    </svg>
+  </td>
+  <td style="width:60%">
+    <div class="ctitle">Οι ίδιοι φοιτητές, ανά κατάσταση εγγραφής</div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="400" height="128" viewBox="0 0 400 128">
+      <line x1="10" y1="98" x2="390" y2="98" stroke="#1b2a41" stroke-width="1"/>
+      <line x1="200" y1="14" x2="200" y2="126" stroke="#c9d2de" stroke-width="1" stroke-dasharray="3,3"/>
+      <rect x="35"  y="55"   width="50" height="43"   fill="#1f5fa8"/>
+      <rect x="112" y="49.8" width="50" height="48.2" fill="#1f5fa8"/>
+      <rect x="238" y="74.8" width="50" height="23.2" fill="#c0504d"/>
+      <rect x="315" y="74.8" width="50" height="23.2" fill="#c0504d"/>
+      <g font-family="Carlito, Liberation Sans, DejaVu Sans, sans-serif" font-size="12" font-weight="bold" fill="#1b2a41" text-anchor="middle">
+        <text x="60" y="51">50%</text><text x="137" y="46">56%</text><text x="263" y="71">27%</text><text x="340" y="71">27%</text>
+      </g>
+      <g font-family="Carlito, Liberation Sans, DejaVu Sans, sans-serif" font-size="10.5" fill="#1b2a41" text-anchor="middle">
+        <text x="60" y="111">0–8</text><text x="137" y="111">9+</text><text x="263" y="111">0–8</text><text x="340" y="111">9+</text>
+      </g>
+      <g font-family="Carlito, Liberation Sans, DejaVu Sans, sans-serif" font-size="9.5" fill="#4a5a70" text-anchor="middle">
+        <text x="60" y="123">n = 22</text><text x="137" y="123">n = 194</text><text x="263" y="123">n = 85</text><text x="340" y="123">n = 11</text>
+      </g>
+      <g font-family="Carlito, Liberation Sans, DejaVu Sans, sans-serif" font-size="10.5" font-weight="bold" text-anchor="middle">
+        <text x="98" y="12" fill="#1f5fa8">πρώτη εγγραφή (216)</text>
+        <text x="301" y="12" fill="#c0504d">επανεγγραφή (96)</text>
+      </g>
+    </svg>
+  </td>
+</tr></table>
+<div class="facts"><b>Πρώτη εγγραφή:</b> 216 φοιτητές, 15,1 συνδέσεις κατά μέσο όρο, πέρασε το 55%. <b>Επανεγγραφή</b> (το μάθημα οφείλεται από προηγούμενο έτος): 96 φοιτητές, 5,4 συνδέσεις κατά μέσο όρο, πέρασε το 27%. Η κατάσταση εγγραφής προέρχεται από το μητρώο και είναι γνωστή από την εβδομάδα 1.</div>
+
+<div class="qbox">
+  <div class="qt">Τα τρία ερωτήματα της ομάδας</div>
+  <table class="q">
+    <tr><td class="n">1</td><td>Ποιους δύο δείκτες προτείνετε στη διδακτική ομάδα για το τέλος της εβδομάδας 4; Μία πρόταση αιτιολόγησης για τον καθένα.</td></tr>
+    <tr><td class="n">2</td><td>Ποιον δείκτη απορρίπτετε, και για ποιον λόγο;</td></tr>
+    <tr><td class="n">3</td><td>Στο διάγραμμα των συνδέσεων: τι αλλάζει όταν οι φοιτητές χωριστούν ανά κατάσταση εγγραφής; Αν η διδακτική ομάδα συμβούλευε τους φοιτητές «να συνδέονται συχνότερα», θα άλλαζε το ποσοστό επιτυχίας;</td></tr>
+  </table>
+</div>
+
+<div class="how"><b>Πώς δουλεύετε.</b> <b>18 λεπτά</b> στην αίθουσα: διαβάζετε το φύλλο και απαντάτε στα τρία ερωτήματα· κρατήστε τα <b>τελευταία 3 λεπτά</b> για να συμφωνήσετε τις τρεις προτάσεις σας. Κατόπιν, στην ολομέλεια, <b>3 λεπτά ανά ομάδα</b> που παρουσιάζει. Ορίζετε συντονιστή, που κρατά τον χρόνο, και εισηγητή, που σημειώνει μία πρόταση για κάθε ερώτημα. Όλες οι ομάδες εργάζονται στο ίδιο φύλλο και στα ίδια ερωτήματα. Στην ολομέλεια, δύο ομάδες απαντούν πλήρως· οι υπόλοιπες αναφέρουν μόνο σε τι διαφωνούν.</div>
+
+<table class="foot"><tr>
+  <td>Σχεδιασμένη μελέτη περίπτωσης με προσομοιωμένα δεδομένα · οι 312 περσινοί φοιτητές</td>
+  <td class="r">Εργαστήριο 1</td>
+</tr></table>
+
+</body>
+</html>

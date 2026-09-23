@@ -1,0 +1,638 @@
+<!DOCTYPE html><html lang="el"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Εβδομάδα 3, Μέρος 2 | Εργαστήριο 2: κατώφλι, δικαιοσύνη, παρέμβαση</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;700;800&display=swap" rel="stylesheet"><style>:root{--ink:#12233F;--paper:#fff;--mist:#EEF3FA;--line:#D3DDEB;--blue:#1565C0;--deep:#0D47A1;--muted:#55657C;--body:#33445E;
+--green:#2E9E5B;--amber:#F2A413;--amber-ink:#8A5A00;--amber-bg:#FFF4DA;--red:#D8433B;--red-ink:#A92C25;--red-bg:#FCE9E7;--ghost:#C9D4E3;
+--font:'Commissioner','Segoe UI','Helvetica Neue',Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0B1628;overflow:hidden;font-family:var(--font);color:var(--ink)}
+#viewport{position:fixed;inset:0}#stage{position:absolute;width:1600px;height:900px;transform-origin:0 0}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;background:var(--paper);padding:56px 88px 26px;overflow:hidden;font-size:30px;line-height:1.36}
+.slide.on{display:flex}.slide.dark{background:var(--ink);color:#fff}
+.head{margin-bottom:26px;flex:none}
+h2{font-size:52px;line-height:1.1;font-weight:800;letter-spacing:-.012em}h2.long{font-size:44px}
+h3{font-size:31px;line-height:1.2;font-weight:700}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center}
+.body.bottom{justify-content:flex-end}
+.foot{flex:none;display:flex;justify-content:space-between;align-items:flex-end;gap:40px;min-height:30px;margin-top:14px}
+.src{font-size:17.5px;line-height:1.3;color:var(--muted)}.pn{font-size:17px;color:var(--muted);font-variant-numeric:tabular-nums}
+.dark .pn{color:#7F95B5}
+strong.em-blue{color:var(--deep);font-weight:700}strong.em-amber{color:var(--amber-ink);font-weight:700}
+.muted{color:var(--muted)}
+.lamp{display:inline-block;width:22px;height:22px;border-radius:50%;margin-right:14px;vertical-align:-2px;flex:none}
+.lamp-amber{background:var(--amber);box-shadow:0 0 0 7px rgba(242,164,19,.22)}.lamp-red{background:var(--red);box-shadow:0 0 0 7px rgba(216,67,59,.2)}.lamp-green{background:var(--green);box-shadow:0 0 0 7px rgba(46,158,91,.22)}
+.kicker{font-size:27px;font-weight:700;margin-bottom:16px}
+.footline{font-size:31px;font-weight:500;margin-top:38px}.footline.sm{font-size:25px;font-weight:400;color:var(--body);margin-top:26px}.footline.muted{font-weight:400;font-size:28px}
+.num{font-weight:800;line-height:1;color:var(--deep);letter-spacing:-.025em;font-variant-numeric:tabular-nums;display:block}
+.num.xl{font-size:150px}.num.word{font-size:74px;letter-spacing:-.02em;line-height:1.05}
+
+/* title, break, teaser */
+.title-wrap{flex:1;display:flex;flex-direction:column}.course{font-size:27px;color:#AFC3E2;font-weight:500}
+.t-title h1{font-size:138px;line-height:1;font-weight:800;letter-spacing:-.025em;margin-top:74px}
+.subtitle{font-size:52px;color:#DCE7F7;margin-top:22px}.trace{width:1424px;height:102px;margin-top:66px}.trace .bars rect{fill:#3E5F94}
+.l-g{fill:var(--green)}.l-a{fill:var(--amber)}.l-r{fill:var(--red)}
+.who{margin-top:auto;font-size:25px;line-height:1.45;color:#C9D7EC}.who .author{font-size:32px;font-weight:700;color:#fff}
+.brk,.teaser{flex:1;display:flex;flex-direction:column;justify-content:center}
+.brk h2{font-size:150px;letter-spacing:-.025em}.back{font-size:72px;font-weight:500;margin-top:18px;color:#DCE7F7}.back span{font-weight:800;color:#fff;font-variant-numeric:tabular-nums}
+.count{font-size:40px;color:#AFC3E2;margin-top:10px;min-height:54px;font-variant-numeric:tabular-nums}.next{font-size:32px;color:#AFC3E2;margin-top:70px}
+.teaser h2{font-size:104px;line-height:1.08;letter-spacing:-.02em;max-width:1350px}.teaser p{font-size:34px;color:#C9D7EC;margin-top:48px;max-width:1150px}
+
+/* plan, lists */
+.plan{list-style:none;display:grid;gap:26px}
+.plan li{display:grid;grid-template-columns:200px 1fr;align-items:baseline;padding:42px 44px;border-radius:18px;background:var(--mist);font-size:38px}
+.plan li.now{background:var(--deep);color:#fff}.ptime,.plabel{font-weight:700;font-variant-numeric:tabular-nums}
+.lead{font-size:32px;margin-bottom:30px}
+.numlist{list-style:none;counter-reset:n;display:grid;gap:26px}
+.numlist li{counter-increment:n;display:grid;grid-template-columns:74px 1fr;font-size:35px;line-height:1.3;align-items:start}
+.numlist li::before{content:counter(n);width:50px;height:50px;border-radius:50%;background:var(--ink);color:#fff;font-size:26px;font-weight:700;display:grid;place-items:center;margin-top:1px}
+.numlist.big{gap:46px}.numlist.big li{font-size:44px;line-height:1.26;font-weight:500;grid-template-columns:96px 1fr}.numlist.big li::before{width:64px;height:64px;font-size:32px;background:var(--green)}
+
+/* big numbers */
+.bigs{display:grid;grid-template-columns:auto 1fr;gap:90px;align-items:start}.bigs p{font-size:31px;margin-top:14px;max-width:760px}
+.keyline{font-size:36px;font-weight:500;line-height:1.3;margin-top:60px;max-width:1350px}
+
+/* definition */
+.defq{font-size:48px;line-height:1.3;font-weight:500}.defq cite{display:block;font-style:normal;font-size:23px;color:var(--muted);margin-top:18px;font-weight:400}
+.callouts{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:50px}.callout{border-radius:18px;padding:30px 34px}.callout p{font-size:29px;margin-top:8px}
+.c-blue{background:var(--mist)}.c-blue h3{color:var(--deep)}.c-amber{background:var(--amber-bg)}.c-amber h3{color:var(--amber-ink)}
+
+/* three cards */
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.item{background:var(--mist);border-radius:18px;padding:38px 36px;min-height:330px}.item h3{font-size:35px}.item p{font-size:31px;margin-top:18px}
+
+/* four questions */
+.quadb{display:grid;grid-template-columns:620px 1fr;gap:64px;align-items:stretch;min-height:560px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.tile{border-radius:20px;padding:26px 28px;display:flex;flex-direction:column;justify-content:space-between;background:var(--mist)}
+.tile .qq{font-size:66px;font-weight:800;letter-spacing:-.02em;line-height:1;color:var(--deep)}.tile .ql{font-size:24px;font-weight:600;line-height:1.2}
+.tile.cur{background:var(--deep);color:#fff}.tile.cur .qq{color:#fff}
+.tile.ghost{background:transparent;border:3px dashed var(--ghost);color:#9AA9BD}.tile.ghost .qq{color:var(--ghost)}
+.detail{display:flex;flex-direction:column;justify-content:center;gap:30px}
+.grp h3{font-size:34px;color:var(--deep);margin-bottom:12px}
+.grp ul{list-style:none;display:grid;gap:12px}.grp ul.cols2{gap:16px}
+.grp li{font-size:31px;line-height:1.28;padding-left:32px;position:relative}
+.grp li::before{content:"";position:absolute;left:4px;top:16px;width:12px;height:12px;border-radius:50%;background:var(--ink)}
+.dfoot{font-size:29px;font-weight:500;background:var(--amber-bg);border-radius:16px;padding:22px 26px}
+.quadf{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.qf{display:grid;grid-template-columns:230px 1fr;align-items:center;background:var(--mist);border-radius:20px;padding:34px 36px;min-height:215px}
+.qf .qq{font-size:74px;font-weight:800;color:var(--deep);letter-spacing:-.02em}.qf h3{font-size:32px}.qf p{font-size:27px;color:var(--body);margin-top:8px}
+
+/* cycle */
+.cyc{display:grid;grid-template-columns:760px 1fr;gap:76px;align-items:center}
+.loop{position:relative;width:760px;height:520px}.loop svg{position:absolute;inset:0;width:100%;height:100%}
+.arw{stroke:var(--deep);stroke-width:5}.arw.ghost{stroke:var(--ghost);stroke-dasharray:4 12}.arw.weak{stroke:#C2362F;stroke-dasharray:14 10}
+.node{position:absolute;width:280px;height:150px;border-radius:20px;display:grid;place-items:center;text-align:center;font-size:29px;font-weight:700;line-height:1.2;padding:0 18px}
+.node.on{background:var(--deep);color:#fff}.node.cur{background:var(--ink);color:#fff;box-shadow:0 0 0 8px rgba(242,164,19,.55)}
+.node.ghost{background:#fff;border:3px dashed var(--ghost);color:#9AA9BD}
+.node.weaknode{background:#fff;color:var(--red-ink);border:4px solid var(--red)}
+.node i{position:absolute;left:-16px;top:-16px;width:46px;height:46px;border-radius:50%;background:var(--amber);color:var(--ink);font-style:normal;font-size:24px;font-weight:800;display:grid;place-items:center}
+.n1{left:0;top:0}.n2{left:480px;top:0}.n3{left:480px;top:370px}.n4{left:0;top:370px}
+.weaklabel{position:absolute;left:172px;top:212px;width:270px;font-size:25px;line-height:1.25;font-weight:700;color:var(--red-ink)}
+.step-text{font-size:44px;line-height:1.28;font-weight:500}
+.airows{list-style:none;display:grid;gap:20px}.airows li{display:grid;grid-template-columns:64px 1fr;align-items:start}
+.airows .k{width:46px;height:46px;border-radius:50%;background:var(--amber);font-size:24px;font-weight:800;display:grid;place-items:center;margin-top:2px}
+.airows h3{font-size:28px;color:var(--deep)}.airows p{font-size:26px;line-height:1.3;margin-top:3px}
+
+/* staircase */
+.stairs{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:end;height:590px}
+.stairs.full{height:470px}
+.step{border-radius:20px 20px 0 0;padding:28px 26px;display:flex;flex-direction:column}
+.step .tool{font-size:23px;line-height:1.25;margin-top:8px;opacity:.85}.step .sq{display:block;width:auto;height:auto;background:none;box-shadow:none;border-radius:0;font-family:inherit;font-size:30px;line-height:1.3;font-weight:600;margin-top:auto;padding-top:18px}
+.s1{height:45%}.s2{height:63%}.s3{height:81%}.s4{height:100%}
+.step.on{background:#DCE8F8}.step.cur{background:var(--deep);color:#fff}
+.step.ghost{background:#fff;border:3px dashed var(--ghost);border-bottom:0;color:#9AA9BD}
+.stairs.full .step.on.s1{background:#DCE8F8}.stairs.full .step.on.s2{background:#B5D0F2}.stairs.full .step.on.s3{background:#2A72C9;color:#fff}.stairs.full .step.on.s4{background:var(--deep);color:#fff}
+.stairs.full .step .sq{font-size:24px}.stairs.full .step h3{font-size:28px}.stairs.full .step .tool{font-size:21px}
+.axes{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:10px}
+.axes span{text-align:center;font-size:23px;font-weight:700;padding:8px;border-radius:0 0 14px 14px}.axes .past{background:#EEF1F5;color:var(--muted)}.axes .future{background:var(--amber-bg);color:var(--amber-ink)}
+.axis{display:flex;align-items:center;gap:20px;font-size:24px;color:var(--muted);margin-top:16px}.axis svg{width:400px;height:20px}
+
+/* evidence */
+.fact{display:grid;grid-template-columns:520px 1fr;gap:70px;align-items:center}
+.fbig{background:var(--mist);border-radius:24px;padding:46px 40px;min-height:430px;display:flex;flex-direction:column;justify-content:center}
+.fbig p{font-size:27px;line-height:1.3;margin-top:22px;color:var(--body)}
+.statement{font-size:44px;line-height:1.24;font-weight:700;letter-spacing:-.005em}
+.points{list-style:none;display:grid;gap:18px;margin-top:34px}
+.points li{font-size:30px;line-height:1.32;padding-left:34px;position:relative}
+.points li::before{content:"";position:absolute;left:4px;top:16px;width:12px;height:12px;border-radius:50%;background:var(--ink)}
+.vrows{display:grid;gap:18px}.vrow{display:grid;grid-template-columns:330px 1fr;align-items:center;background:var(--mist);border-radius:16px;padding:26px 30px}
+.vh{font-size:31px;font-weight:700}.vv{font-size:30px;display:flex;align-items:center}
+.vnote{font-size:27px;line-height:1.32;margin-top:30px;color:var(--body)}
+
+/* poll */
+.act{display:grid;grid-template-columns:1fr 400px;gap:64px;align-items:center}
+.context{font-size:34px;line-height:1.32}
+.opts{list-style:none;display:grid;gap:16px;margin-top:36px}
+.opts li{display:grid;grid-template-columns:76px 1fr;align-items:center;font-size:36px;font-weight:600;background:var(--mist);border-radius:16px;padding:20px 26px}
+.opts li .ob{width:52px;height:52px;border-radius:50%;background:var(--ink);color:#fff;font-size:26px;display:grid;place-items:center}
+.timer{background:var(--amber-bg);border-radius:24px;padding:40px 28px;text-align:center}
+.timer-read{font-size:118px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.timer.done{background:var(--red)}.timer.done .timer-read{color:#fff}
+.timer-btns{display:flex;gap:10px;justify-content:center;margin-top:24px;flex-wrap:wrap}
+button{font-family:inherit;cursor:pointer}
+.timer button{font-size:20px;font-weight:700;border:2px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;padding:10px 20px}
+.timer .t-start{background:var(--ink);color:#fff}.timer.done button{border-color:#fff;color:#fff}.timer.done .t-start{background:#fff;color:var(--red-ink)}
+button:focus-visible{outline:4px solid var(--amber);outline-offset:3px}
+
+/* compare, reveal */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.cc{border-radius:22px;padding:34px 38px;min-height:400px}.cc.c-green{background:#E6F4EC}.cc.c-red{background:var(--red-bg)}
+.cc h3{font-size:36px;display:flex;align-items:center;margin-bottom:22px}
+.cc ul{list-style:none;display:grid;gap:18px}.cc li{font-size:29px;line-height:1.3;padding-left:32px;position:relative}
+.cc li::before{content:"";position:absolute;left:4px;top:15px;width:12px;height:12px;border-radius:50%;background:var(--ink)}
+.lesson{margin-top:28px;background:var(--ink);color:#fff;border-radius:18px;padding:26px 34px;font-size:33px;font-weight:600;line-height:1.28}
+.claim{font-size:40px;line-height:1.28;font-weight:600;background:var(--amber-bg);border-radius:18px;padding:30px 36px;margin-bottom:34px}
+.models{display:grid;gap:18px}
+.model{display:grid;grid-template-columns:330px auto 70px auto 1fr;gap:20px;align-items:center;font-size:29px}.model svg{width:70px;height:20px}
+.mlabel{font-weight:700}.mbox{border-radius:14px;padding:16px 24px;font-weight:500}
+.m-muted{color:#7C8AA0}.m-muted .mbox{background:#EEF1F5;text-decoration:line-through;text-decoration-thickness:2px}
+.m-red{color:var(--red-ink)}.m-red .mbox{background:var(--red-bg);color:var(--ink)}.m-red .mlabel{color:var(--ink)}
+
+/* challenges */
+.chal{display:grid;grid-template-columns:400px 1fr;gap:70px;align-items:center}
+.chidx{list-style:none;counter-reset:c;display:grid;gap:16px}
+.chidx li{counter-increment:c;font-size:27px;font-weight:600;line-height:1.2;padding:26px 26px 26px 78px;border-radius:18px;position:relative;color:#8795AA;border:3px dashed var(--ghost)}
+.chidx li::before{content:counter(c);position:absolute;left:22px;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:var(--ghost);color:#fff;display:grid;place-items:center;font-size:21px}
+.chidx li.cur{background:var(--ink);color:#fff;border-color:var(--ink)}.chidx li.cur::before{background:var(--amber);color:var(--ink)}
+
+/* roadmap */
+.thread{display:flex;align-items:center;gap:16px;font-size:26px;font-weight:700;margin-bottom:24px}
+.thread span{background:var(--ink);color:#fff;border-radius:999px;padding:8px 22px}.thread i{font-style:normal;color:var(--muted)}
+.map{display:grid;grid-template-columns:190px repeat(3,1fr);gap:14px}.wk{font-weight:700;font-size:26px;align-self:center}
+.cell{background:var(--mist);border-radius:16px;padding:20px 22px;font-size:24.5px;line-height:1.26;min-height:128px;display:flex;align-items:center}
+.cell.lab{background:var(--amber-bg)}.cell.here{background:var(--deep);color:#fff;font-weight:700}
+
+/* ---- part 2 layouts ---- */
+.body.fill{justify-content:stretch}
+.numlist.roomy{gap:34px}.numlist.roomy li{font-size:40px}
+.numlist.big.ink li::before{background:var(--ink)}
+.item.focus{background:var(--deep);color:#fff}ul.il{list-style:none;display:grid;gap:12px;margin-top:20px}
+.il li{font-size:28px;line-height:1.28;padding-left:28px;position:relative}.il li::before{content:"";position:absolute;left:2px;top:14px;width:11px;height:11px;border-radius:50%;background:currentColor;opacity:.75}
+.trows{display:grid;gap:14px}.trow{display:grid;grid-template-columns:470px 1fr;gap:30px;align-items:center;background:var(--mist);border-radius:16px;padding:24px 30px}
+.trows.tagged .trow{grid-template-columns:330px 1fr 230px}
+.trh{font-size:30px;font-weight:700;line-height:1.2}.trt{font-size:29px;line-height:1.3}
+.ttag{justify-self:end;font-size:22px;font-weight:700;border-radius:999px;padding:8px 20px;background:#DCE8F8;color:var(--deep)}.ttag.deep{background:var(--deep);color:#fff}
+.cols5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.c5{background:var(--mist);border-radius:18px;padding:30px 24px;min-height:400px}.c5 h3{font-size:30px;margin-top:20px}
+.c5n{width:52px;height:52px;border-radius:50%;background:var(--ink);color:#fff;font-size:26px;font-weight:700;display:grid;place-items:center}
+.c5 .il li{font-size:25px}.c5:last-child{background:#fff;border:3px dashed var(--ghost)}
+.stackrow{display:flex;align-items:stretch;gap:12px}.stg{flex:1;background:var(--mist);border-radius:16px;padding:24px 22px;min-height:190px}
+.stg h3{font-size:26px;color:var(--deep)}.stg p{font-size:23px;line-height:1.3;margin-top:10px;color:var(--body)}
+.stg:nth-child(7){background:var(--deep)}.stg:nth-child(7) h3,.stg:nth-child(7) p{color:#fff}
+.sarr{font-style:normal;font-size:34px;color:var(--muted);align-self:center;flex:none}
+.stack2{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-top:34px}
+.codelabel{font-size:23px;font-weight:700;margin-bottom:10px}
+.code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:23px;line-height:1.5;background:var(--ink);color:#E6EEF9;border-radius:16px;padding:22px 26px;white-space:pre;overflow:hidden}
+.ring{position:relative;width:760px;height:540px}.ring svg{position:absolute;inset:0;width:100%;height:100%}
+.dnode{position:absolute;width:200px;height:78px;border-radius:16px;display:grid;place-items:center;text-align:center;font-size:21.5px;font-weight:700;line-height:1.15;padding:0 10px}
+.dnode.on{background:#DCE8F8;color:var(--ink)}.dnode.cur{background:var(--deep);color:#fff}.dnode.ghost{background:#fff;border:3px dashed var(--ghost);color:#9AA9BD}
+.ringc{position:absolute;left:270px;top:226px;width:220px;height:84px;border-radius:16px;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:24px;font-weight:700;text-align:center}
+.chainrow{display:grid;grid-template-columns:1fr 150px 1fr 150px 1fr;align-items:center;gap:8px}
+.cbox{border-radius:20px;padding:30px 28px;min-height:210px;display:flex;flex-direction:column;justify-content:center;background:var(--mist)}
+.cbox.c1{background:var(--deep);color:#fff}.cbox.c2{background:#fff;border:3px dashed var(--ghost)}
+.ck{font-size:25px;font-weight:700;opacity:.8}.ct{font-size:34px;font-weight:700;line-height:1.2;margin-top:8px}
+.clink{display:grid;justify-items:center;gap:6px;font-size:24px;font-weight:700;color:var(--amber-ink)}.clink svg{width:120px;height:20px}
+.statement.wide{margin-top:54px;font-size:40px;text-align:justify}
+.levb{display:grid;grid-template-columns:300px 1fr;gap:64px;align-items:center}
+.ltiles{display:grid;gap:16px}.ltile{border-radius:18px;padding:30px 28px;font-size:31px;font-weight:700;background:var(--mist)}
+.ltile.cur{background:var(--deep);color:#fff}.ltile.ghost{background:#fff;border:3px dashed var(--ghost);color:#9AA9BD}
+.grp ul.plain li{padding-left:0}.grp ul.plain li::before{display:none}
+.levb .detail{gap:40px}
+.pipe{display:flex;align-items:center;gap:8px}
+.pchip{flex:1;border-radius:16px;padding:26px 10px;text-align:center;font-size:24px;font-weight:700;line-height:1.15;min-height:100px;display:grid;place-items:center}
+.pchip.on{background:#DCE8F8}.pchip.cur{background:var(--deep);color:#fff}.pchip.ghost{background:#fff;border:3px dashed var(--ghost);color:#9AA9BD}
+.pipe .sarr{font-size:28px}
+.pback{height:46px;margin:6px 80px 0;border:4px solid var(--amber);border-top:0;border-radius:0 0 22px 22px;display:grid;place-items:end center}
+.pback span{background:#fff;padding:0 16px;font-size:22px;font-weight:700;color:var(--amber-ink);transform:translateY(14px)}.pback.ghostb{border-color:transparent}
+.pdet{display:grid;grid-template-columns:1fr 1fr;gap:50px;margin-top:40px}.pdet+.dfoot{margin-top:30px}
+.shot{flex:1;min-height:0;display:flex;flex-direction:column;gap:18px}
+.shot .im{flex:1;min-height:0;display:flex;justify-content:center;align-items:center}
+.shot img{max-width:100%;max-height:100%;border-radius:12px;box-shadow:0 2px 18px rgba(18,35,63,.18)}
+.shot.natural img{width:1050px;height:auto;image-rendering:auto}
+.shot img.pr{display:none}
+.shotside .points li{text-align:left}
+.caption{font-size:28px;line-height:1.3;color:var(--body);flex:none}
+.shotside{display:grid;grid-template-columns:720px 1fr;gap:64px;align-items:center}.shotside img{width:720px;border-radius:16px}
+.shotside .points{margin-top:0}.shotside .points li{font-size:32px}
+.schema{display:grid;grid-template-columns:1fr 1.25fr;gap:34px}
+.scol{background:var(--mist);border-radius:22px;padding:26px 28px}.scol.stu{background:#DCE8F8}.scol h3{margin-bottom:16px}
+.tb{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:baseline;background:#fff;border-radius:12px;padding:14px 20px;margin-top:10px}
+.tn{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:25px;font-weight:700;color:var(--deep)}.tk{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:19px;color:var(--muted)}
+.tc{font-size:20px;font-weight:700;background:var(--amber-bg);color:var(--amber-ink);border-radius:999px;padding:4px 14px}
+
+/* ---- part 3 layouts ---- */
+.trows.compact{gap:10px}.trows.compact .trow{padding:15px 26px;grid-template-columns:330px 1fr}.trows.compact.tagged .trow{grid-template-columns:330px 1fr 190px}
+.trows.compact .trh{font-size:27px}.trows.compact .trt{font-size:26px;line-height:1.28}.trows.compact .ttag{font-size:20px;padding:6px 16px}
+.numlist.compact{gap:20px}.numlist.compact li{font-size:33px}
+.flowp .pchip{position:relative;padding-top:34px;min-height:120px;font-size:27px}.fn{position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:42px;height:42px;border-radius:50%;background:var(--amber);color:var(--ink);display:grid;place-items:center;font-size:22px}
+.gridn{display:grid;gap:20px}.gcard{background:var(--mist);border-radius:18px;padding:28px 30px;min-height:170px}.gcard h3{font-size:30px;color:var(--deep)}.gcard p{font-size:26px;line-height:1.3;margin-top:10px;color:var(--body)}
+.codes{display:grid;grid-template-columns:1.25fr 1fr;gap:56px;align-items:center}.code.big{font-size:27px;line-height:1.55;padding:34px 36px}
+.codes .points{margin-top:0}.codes .points li{text-align:left;font-size:29px}
+.ht{width:100%;border-collapse:separate;border-spacing:0 8px}.ht th{text-align:left;font-size:24px;font-weight:700;color:#fff;background:var(--ink);padding:14px 18px}
+.ht th:first-child{border-radius:12px 0 0 12px}.ht th:last-child{border-radius:0 12px 12px 0}
+.ht td{font-size:25px;line-height:1.28;padding:16px 18px;background:var(--mist);vertical-align:top}.ht td:first-child{font-weight:700;border-radius:12px 0 0 12px;white-space:nowrap}.ht td:last-child{border-radius:0 12px 12px 0}
+.prisma{display:grid;grid-template-columns:170px 1fr 56px 1fr;gap:22px 0;align-items:stretch}
+.pph{font-size:25px;font-weight:700;color:var(--deep);align-self:center}
+.pm,.ps{border-radius:14px;padding:16px 22px;font-size:25px;line-height:1.25;display:flex;flex-direction:column;justify-content:center;min-height:86px}
+.pm{background:var(--deep);color:#fff;position:relative}.pm:not(.last)::after{content:"↓";position:absolute;left:50%;bottom:-29px;transform:translateX(-50%);font-size:26px;font-weight:800;color:var(--deep);z-index:2;background:#fff;border-radius:50%;width:34px;height:34px;box-shadow:0 0 0 3px var(--deep);display:grid;place-items:center;line-height:1}
+.pm.last{background:var(--green)}.ps{background:var(--red-bg)}.parr{display:grid;place-items:center;font-size:30px;color:var(--muted)}
+.pn2{font-size:27px;font-variant-numeric:tabular-nums;white-space:nowrap}.psub{font-size:20px;opacity:.85;margin-top:4px}
+.rbar{display:flex;gap:6px;height:120px}.rseg{background:#DCE8F8;border-radius:12px;display:grid;place-items:center;font-size:30px;color:var(--ink)}.rseg.hot{background:var(--deep);color:#fff}
+.rleg{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 50px;margin-top:34px}
+.rl{display:grid;grid-template-columns:30px 1fr auto;gap:14px;align-items:center;font-size:28px}.rl i{width:24px;height:24px;border-radius:6px;background:#DCE8F8}.rl.hot i{background:var(--deep)}.rl.hot span{font-weight:700}
+
+/* running text is fully justified, as in the lecturer's own decks */
+.defq,.callout p,.grp ul.plain li,.dfoot,.points li,.vnote,.context,.cc li,.lesson,.claim,.keyline,.numlist li span,.teaser p,.footline,.caption,.trt,.statement.wide{text-align:justify;text-justify:inter-word;hyphens:manual}
+.count{font-size:64px;font-weight:700;color:#fff}
+
+/* chrome */
+.ctl{position:fixed;right:16px;top:12px;display:flex;gap:8px;opacity:.85;transition:opacity .25s}body.idle .ctl{opacity:0}body.idle{cursor:none}
+.ctl button{font-size:16px;font-weight:700;color:#fff;background:#1C3358;border:1px solid #3E5F94;border-radius:8px;padding:8px 14px}
+#progress{position:fixed;left:0;right:0;bottom:0;height:4px}#progress i{display:block;height:100%;width:0;background:var(--amber)}
+#help{position:fixed;inset:0;background:rgba(11,22,40,.82);display:grid;place-items:center;z-index:9}#help[hidden]{display:none}
+#help>div{background:#fff;border-radius:16px;padding:32px 38px;max-width:640px;font-size:17px;line-height:1.5}#help h3{font-size:22px;margin-bottom:12px}
+#help dl>div{display:grid;grid-template-columns:130px 1fr;gap:12px;padding:5px 0;border-bottom:1px solid var(--line)}#help dt{font-weight:700}#help p{margin-top:14px;color:var(--muted)}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--mist);padding:1px 6px;border-radius:5px}
+@media print{@page{size:1600px 900px;margin:0}html,body{overflow:visible;background:#fff;height:auto}#viewport{position:static}
+#stage{position:static;transform:none!important;width:1600px;height:auto}.slide{display:flex!important;position:relative;width:1600px;height:900px;break-after:page;page-break-after:always;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.ctl,#progress,#help,.timer-btns{display:none!important}.shot img.scr{display:none!important}.shot img.pr{display:block!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---- week 2 layouts ---- */
+.callout ul.il{margin-top:12px;gap:8px}.callout .il li{font-size:28px;line-height:1.3}
+.trows.wtag .trow,.trows.compact.tagged.wtag .trow{grid-template-columns:420px 1fr 310px}.trows.wtag .ttag{text-align:center;border-radius:14px;line-height:1.2}
+.sqrow{display:inline-flex;gap:8px;flex-wrap:wrap;vertical-align:middle}
+.sq{display:inline-grid;place-items:center;width:52px;height:52px;border-radius:12px;font-weight:800;font-size:28px;font-family:ui-monospace,Menlo,Consolas,monospace;flex:none}
+.sq.e{background:var(--red-bg);color:var(--red-ink);box-shadow:inset 0 0 0 2px rgba(216,67,59,.4)}
+.sq.s{background:#E6F4EC;color:#14532D;box-shadow:inset 0 0 0 2px rgba(46,158,91,.45)}
+.sq.a{background:#DCE8F8;color:var(--deep);box-shadow:inset 0 0 0 2px rgba(13,71,161,.3)}
+.sq.b{background:var(--amber-bg);color:var(--amber-ink);box-shadow:inset 0 0 0 2px rgba(242,164,19,.5)}
+.pseqs{display:grid;gap:12px;margin-top:26px}.pseq{display:grid;grid-template-columns:190px 1fr;align-items:center}
+.sfl{font-size:30px;font-weight:700}
+.t-poll .opts{margin-top:28px}
+/* grade table (lecturer's slide 7.3) */
+.gt{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}.gt.wide{grid-template-columns:1.22fr 1fr}
+.gcap{font-size:30px;font-weight:700;color:var(--deep);margin-bottom:12px}
+.gtw{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:stretch}
+.gtab{width:100%;border-collapse:separate;border-spacing:0 7px}
+.gtab th{background:var(--ink);color:#fff;font-size:23px;line-height:1.2;padding:13px 16px;text-align:center}
+.gtab th:first-child{border-radius:12px 0 0 12px}.gtab th:last-child{border-radius:0 12px 12px 0}
+.gtab td{background:var(--mist);font-size:31px;padding:11px 16px;text-align:center;font-variant-numeric:tabular-nums}
+.gtab td:first-child{font-weight:700;border-radius:12px 0 0 12px}.gtab td:last-child{border-radius:0 12px 12px 0}
+.gtab th.hi{background:var(--deep)}.gtab td.hi{background:var(--amber-bg);font-weight:700;color:var(--amber-ink)}
+.garrow{display:flex;flex-direction:column;align-items:center;font-size:24px;font-weight:700;color:var(--deep);padding:66px 0 6px}
+.gline{flex:1;width:4px;background:var(--deep);position:relative;margin:16px 0}
+.gline::before,.gline::after{content:"";position:absolute;left:-9px;border:11px solid transparent}
+.gline::before{top:-14px;border-bottom:16px solid var(--deep);border-top:0}.gline::after{bottom:-14px;border-top:16px solid var(--deep);border-bottom:0}
+.gside h3{font-size:30px;color:var(--deep);margin-bottom:16px}
+.exlist{list-style:none;display:grid;gap:11px}.exlist li{font-size:26px;line-height:1.3;background:var(--mist);border-radius:12px;padding:13px 20px}.exlist li b{color:var(--deep);margin-right:6px}
+.gquote{font-size:46px;line-height:1.22;font-weight:700;letter-spacing:-.005em}
+.gnote{font-size:30px;line-height:1.34;margin-top:26px;color:var(--body);text-align:justify}
+/* submission pipeline and sequences (lecturer's slide 7.4) */
+.sfpipe{display:grid;grid-template-columns:230px 1fr 430px 1fr 230px;align-items:center;row-gap:0}
+.sfbox{border-radius:16px;padding:24px 18px;text-align:center;font-size:28px;font-weight:700;background:var(--mist)}
+.sfbox.mid{background:var(--deep);color:#fff;text-align:left;font-weight:500;font-size:26px;line-height:1.45;padding:18px 26px;display:grid}.sfbox.mid b{font-weight:800;font-family:ui-monospace,Menlo,Consolas,monospace;margin-right:4px}
+.sfarr{display:grid;justify-items:center;gap:4px;font-size:23px;font-weight:700;color:var(--amber-ink)}.sfarr svg{width:150px;height:20px}
+.sfloop{grid-column:2/4;height:40px;margin:4px 215px 0 90px;border:3px dashed var(--muted);border-top:0;border-radius:0 0 18px 18px;position:relative;display:grid;place-items:end center}
+.sfloop::before{content:"";position:absolute;left:-10px;top:-12px;border:9px solid transparent;border-bottom:14px solid var(--muted);border-top:0}
+.sfloop span{background:#fff;padding:0 14px;font-size:21px;font-weight:700;color:var(--muted);transform:translateY(13px)}
+.sfh,.sfrow{display:grid;grid-template-columns:190px 380px 1fr 150px;gap:26px;align-items:center}
+.sfh{padding:0 26px;font-size:24px;font-weight:700;color:var(--deep);margin:44px 0 10px}
+.sfrows{display:grid;gap:14px}.sfrow{background:var(--mist);border-radius:16px;padding:17px 26px}
+.pairs{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:25px;letter-spacing:-.02em;white-space:nowrap}.pairs sub{font-size:.62em}
+.sftag{justify-self:end;font-size:22px;font-weight:700;border-radius:999px;padding:8px 20px;background:var(--red);color:#fff}
+/* two-state chain */
+.ch2{display:grid;grid-template-columns:840px 1fr;gap:50px;align-items:center}
+.chsvg{width:840px;height:420px;display:block}.chsvg .ar{fill:none;stroke:var(--deep);stroke-width:5}
+.chsvg .st.t-red{fill:var(--red)}.chsvg .st.t-green{fill:var(--green)}.chsvg .st.t-blue{fill:var(--deep)}.chsvg .st.t-amber{fill:var(--amber)}
+.chsvg text{font-family:var(--font);text-anchor:middle}
+.chsvg text.k{font-size:70px;font-weight:800;fill:#fff;dominant-baseline:central}.chsvg text.nm{font-size:23px;font-weight:700;fill:#fff}
+.chsvg text.k.amber,.chsvg text.nm.amber{fill:var(--ink)}
+.chsvg text.p{font-size:38px;font-weight:800;fill:var(--ink);paint-order:stroke;stroke:#fff;stroke-width:12px;stroke-linejoin:round;font-variant-numeric:tabular-nums}
+.ch2side .blk{margin-bottom:34px}.ch2side h3,.tml h3,.tmr h3{font-size:27px;color:var(--deep);margin-bottom:12px}
+.ch2side .statement{font-size:38px}.ch2side .points{margin-top:26px}
+.legend{list-style:none;display:grid;gap:12px;margin-top:30px}.legend li{display:grid;grid-template-columns:130px 1fr;align-items:center;font-size:29px;background:var(--mist);border-radius:12px;padding:12px 20px}
+.legend b{font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--deep)}
+/* worked example: counts, then probabilities */
+.tmx{display:grid;grid-template-columns:1fr auto;gap:60px;align-items:center}.tmx.step2{grid-template-columns:700px 1fr;gap:40px}
+.tmx .chsvg{width:700px;height:350px}.tml .blk{margin-bottom:36px}.tml .blk:last-child{margin-bottom:0}
+.pairchips{display:flex;flex-wrap:wrap;gap:12px;max-width:640px}.pc{display:inline-flex;padding:5px;border-radius:14px;background:#fff;box-shadow:inset 0 0 0 2px var(--line)}
+.pc .sqrow{gap:3px}.pc .sq{width:42px;height:42px;font-size:23px;border-radius:9px}
+.ctab{border-collapse:separate;border-spacing:8px;margin-left:-8px}.ctab th{font-size:24px;font-weight:700;color:var(--muted);padding:4px 12px;white-space:nowrap}
+.ctab td{width:176px;height:124px;border-radius:16px;background:var(--mist);text-align:center;font-size:56px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.05}
+.ctab td small{display:block;font-size:22px;font-weight:600;color:#DCE7F7;margin-top:6px}
+.ctab td.pr{background:var(--deep);color:#fff}.ctab td.sum{background:#fff;box-shadow:inset 0 0 0 3px var(--ghost);color:var(--muted);font-size:40px;width:124px}
+/* adjacency matrix of the eight-state machine */
+.adj{display:grid;grid-template-columns:auto 1fr;gap:46px;align-items:center}
+.amx{border-collapse:separate;border-spacing:5px}.amx th{font-size:23px;font-weight:700;white-space:nowrap}
+.amx thead th{text-align:center;padding-bottom:4px}.amx thead th.corner{text-align:right;padding-right:14px;font-size:18px;font-weight:600;color:var(--muted)}
+.amx tbody th{text-align:right;padding-right:6px}
+.amx th span{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;color:#fff;font-size:19px;margin-left:8px}.amx thead th span{margin:0}
+.amx .kS{background:var(--green)}.amx .kE{background:var(--red)}
+.amx td{width:76px;height:60px;border-radius:10px;background:#F1F4F8;text-align:center;font-size:22px;font-weight:800;font-family:ui-monospace,Menlo,Consolas,monospace}
+.amx td.toS{background:#CFEBDB;color:#14532D}.amx td.toE{background:#F9D5D2;color:var(--red-ink)}
+.amnote{font-size:23px;color:var(--body);margin-top:14px;max-width:760px}
+.asteps{list-style:none;counter-reset:a;display:grid;gap:16px}
+.asteps li{counter-increment:a;display:grid;grid-template-columns:62px 1fr;align-items:start}
+.asteps li::before{content:counter(a);width:44px;height:44px;border-radius:50%;background:var(--amber);color:var(--ink);font-size:23px;font-weight:800;display:grid;place-items:center;margin-top:2px}
+.asteps h3{font-size:29px;color:var(--deep)}.asteps p{font-size:26px;line-height:1.32;margin-top:2px;text-align:justify}
+/* anatomy of a prediction */
+.ana{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}.lane{display:grid;grid-template-columns:250px minmax(0,1fr) 250px;gap:24px;align-items:end}
+.lh{font-size:32px;font-weight:700;line-height:1.2;padding-bottom:10px}.lh small{display:block;font-size:23px;font-weight:500;color:var(--muted);margin-top:4px;line-height:1.25}
+.track{display:grid;gap:6px;position:relative;padding-top:56px}
+.wkc{height:104px;border-radius:12px;display:grid;place-items:center;font-size:29px;font-weight:700;font-variant-numeric:tabular-nums}
+.wkc.feat{background:var(--deep);color:#fff}.wkc.rest{background:#DCE8F8;color:var(--ink)}.wkc.fut{background:#fff;border:3px dashed var(--ghost);color:#9AA9BD}
+.ppoint{position:absolute;top:0;font-size:25px;font-weight:700;color:var(--amber-ink);transform:translateX(-50%);white-space:nowrap;line-height:1.2}
+.ppoint::after{content:"";position:absolute;left:50%;top:38px;width:5px;height:130px;background:var(--amber);transform:translateX(-50%);border-radius:3px}
+.endb{border-radius:14px;padding:12px 16px;font-size:27px;font-weight:700;text-align:center;line-height:1.2;height:104px;display:grid;place-items:center}
+.endb.known{background:var(--green);color:#fff}.endb.unk{background:#fff;border:3px dashed var(--ghost);color:#7C8AA0}
+.lane.mid{align-items:center;margin:14px 0}.lane.mid .sarr{font-size:34px}.midflow{display:flex;align-items:center;gap:14px;justify-content:center}
+.mchip{border-radius:14px;padding:16px 26px;font-size:28px;font-weight:700;background:var(--mist);line-height:1.2}
+.mchip{white-space:nowrap}.mchip.mdl{background:var(--ink);color:#fff}.mchip.actn{background:var(--amber-bg);color:var(--amber-ink)}
+.lane.ghosted .lh,.lane.ghosted .lh small{color:#9AA9BD}.lane.ghosted .wkc{background:#fff;border:3px dashed var(--ghost);color:#C2CDDC}
+.lane.ghosted .ppoint{color:#B9C4D4}.lane.ghosted .ppoint::after{background:var(--ghost)}
+.lane.ghosted .mchip{background:#fff;box-shadow:inset 0 0 0 3px var(--ghost);color:#9AA9BD}.lane.ghosted .sarr{color:var(--ghost)}
+.lane.ghosted .endb{color:#B9C4D4}
+/* shotside with caption */
+.ssfig{display:grid;gap:12px}.shotside.capd .caption{font-size:25px}
+.gnote,.amnote,.exlist li{hyphens:manual}
+
+.trows.compact.wtag .trow{padding:21px 28px}.trows.compact.wtag .trh{font-size:29px}.trows.compact.wtag .trt{font-size:27px}.trows.compact.wtag .ttag{font-size:21px}
+.cmp.left li{text-align:left}
+.shotside.capd{grid-template-columns:800px 1fr;gap:56px}.shotside.capd img{width:800px;border-radius:12px;box-shadow:0 2px 18px rgba(18,35,63,.18)}
+
+/* ---- lab layouts (week 2, part 2) ---- */
+.act.work{grid-template-columns:1fr 420px;gap:60px}.act.work .context{font-size:40px;font-weight:700;line-height:1.24;text-align:left}
+.numlist.wk{gap:22px;margin-top:38px}.numlist.wk li{font-size:35px}.act.work .footline.sm{margin-top:34px;font-size:27px}
+.timer-read{letter-spacing:-.02em}
+.dg{position:relative;display:grid;gap:9px;padding-top:44px}.dgr{display:grid;gap:6px;align-items:center}
+.dgw{text-align:center;font-size:22px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}.dgk{font-size:21px;font-weight:600;color:var(--muted)}
+.dgh{font-size:27px;font-weight:700;line-height:1.15;padding-right:14px}.dgh small{display:block;font-size:19.5px;font-weight:500;color:var(--muted);margin-top:3px;line-height:1.22}
+.dgc{height:60px;border-radius:10px;background:#F1F4F8}.dgc.on,.dgleg i.on{background:var(--deep)}.dgc.late,.dgleg i.late{background:#A9C8F0}
+.dgcut{position:absolute;top:34px;bottom:-6px;width:5px;background:var(--amber);border-radius:3px}
+.dgcut b{position:absolute;top:-36px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:23px;color:var(--amber-ink)}
+.dgleg{display:flex;gap:40px;margin-top:20px;font-size:23px;color:var(--body)}.dgleg i{display:inline-block;width:24px;height:24px;border-radius:6px;vertical-align:-5px;margin-right:10px}
+.dg+.dgleg+.footline{margin-top:26px}
+.bp .panels{display:flex;gap:24px;align-items:stretch}.bp.withside{display:grid;grid-template-columns:1.05fr 1fr;gap:54px;align-items:center}.bp.withside .points{margin-top:0}
+.panel{background:var(--mist);border-radius:20px;padding:24px 26px 20px;display:flex;flex-direction:column;min-width:0}
+.panel h3{font-size:27px;line-height:1.2;margin-bottom:12px}
+.pbody{display:flex;gap:34px;align-items:flex-end;justify-content:center;flex:1}.barrow{display:flex;gap:14px;align-items:flex-end;justify-content:center}
+.bar{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;width:112px}
+.bar i{display:block;width:100%;border-radius:9px 9px 0 0}.bar i.t-blue{background:var(--deep)}.bar i.t-red{background:var(--red)}.bar i.t-green{background:var(--green)}.bar i.t-amber{background:var(--amber)}.bar i.t-grey{background:#8795AA}.bar i.t-light{background:#A9C8F0}
+.bv{font-size:28px;font-weight:800;margin-bottom:6px;font-variant-numeric:tabular-nums}
+.bl{font-size:22px;font-weight:700;margin-top:0;text-align:center;line-height:1.15;border-top:3px solid var(--ink);width:calc(100% + 14px);padding-top:7px}
+.bn{font-size:18px;color:var(--muted);margin-top:2px}
+.bgrp{display:flex;flex-direction:column;align-items:center}.bgl{font-size:22px;font-weight:700;color:var(--deep);margin-top:8px}
+.panel.dense .bar{width:38px}.panel.dense .barrow{gap:7px}.panel.dense .bv{font-size:18px;margin-bottom:3px}.panel.dense .bl{font-size:18px;width:calc(100% + 7px)}
+.pnote{font-size:22px;color:var(--body);margin-top:12px;line-height:1.3}
+.bp+.lesson{margin-top:24px;font-size:30px}
+.dgp{position:relative;width:1424px;height:470px;margin-top:40px;flex:none}.dgp svg{position:absolute;inset:0;width:100%;height:100%}
+.da{stroke:var(--deep);stroke-width:4.5}.dl.sm{font-size:19px}.dl{font:800 27px var(--font);fill:var(--amber-ink);text-anchor:middle;paint-order:stroke;stroke:#fff;stroke-width:9px;stroke-linejoin:round}
+.dcol{position:absolute;top:-40px;font-size:22px;font-weight:700;color:var(--muted);text-align:center}
+.dn{position:absolute;height:84px;border-radius:16px;display:flex;flex-direction:column;justify-content:center;padding:0 22px;line-height:1.15}
+.dn b{font-size:27px}.dn small{font-size:19px;font-weight:600;margin-top:3px;opacity:.85}
+.dn.trc{background:#DCE8F8}.dn.trc.ghost{background:#fff;border:3px dashed var(--ghost);color:#9AA9BD}
+.dn.cause{background:var(--ink);color:#fff}.dn.cause.hidden{background:#fff;color:var(--ink);border:4px dashed var(--amber)}.dn.cause.hidden small{color:var(--amber-ink);opacity:1}
+.dn.outc{background:var(--red-bg);box-shadow:inset 0 0 0 3px rgba(216,67,59,.35)}
+.dnote{position:absolute;font-size:24px;line-height:1.28;font-weight:600;color:var(--body)}
+.cc.c-blue{background:var(--mist)}.cc.c-amber{background:var(--amber-bg)}.lamp-blue{background:var(--blue);box-shadow:0 0 0 7px rgba(21,101,192,.2)}
+
+.panels.p3 .bar{width:86px}.panels.p3 .barrow{gap:10px}.panels.p3 .bv{font-size:25px}.panels.p3 .bl{font-size:20px}.panels.p3 .panel.dense .bar{width:34px}.panels.p3 .panel.dense .bv,.panels.p3 .panel.dense .bl{font-size:17px}
+
+.dn.outc b{font-size:25px}
+
+/* ---- week 2, part 3 ---- */
+.smk{display:flex;flex-direction:column;align-items:center;gap:16px}.smkw{position:relative;display:inline-block;line-height:0;margin-top:14px}.smkw img{border-radius:16px;box-shadow:0 0 0 2px var(--line)}
+.smkw img{display:block;max-height:540px;max-width:1424px;width:auto;height:auto}
+.mkn{position:absolute;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;background:var(--amber);color:var(--ink);font:800 30px/54px var(--font);text-align:center;box-shadow:0 0 0 4px #fff,0 4px 14px rgba(0,0,0,.45)}
+.smk.smkq{display:grid;grid-template-columns:1fr 420px;gap:44px;align-items:center}.smk.smkq .smkw img{max-height:none;max-width:100%;width:100%}.smkl{min-width:0}
+.qside .context{font-size:29px;font-weight:700;line-height:1.24;text-align:left}.qside .numlist.wk{margin:16px 0 20px;gap:9px}.qside .numlist.wk li{font-size:24px}.qside .timer{width:100%;padding:20px 18px}.qside .timer-read{font-size:88px}.qside .timer-btns{margin-top:14px}.qside .timer button{font-size:18px;padding:8px 16px}
+.chz{display:grid;grid-template-columns:1fr 1fr;gap:24px;grid-auto-rows:1fr}.chq{background:var(--mist);border-radius:20px;padding:26px 30px;display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center;min-height:290px}
+.chq h3{font-size:36px;color:var(--deep);margin-bottom:8px}.chg{font-size:25px;color:var(--muted);line-height:1.25;margin-bottom:14px}.chx{font-size:28px;line-height:1.28;font-weight:600;text-align:left}
+.chico{display:flex;gap:14px}.chico figure{margin:0;text-align:center;width:128px}.chico figcaption{font-size:21px;line-height:1.15;color:var(--body);margin-top:6px;font-weight:600}
+.gly{width:100%;height:auto;background:#fff;border-radius:12px;padding:6px;fill:var(--deep)}.gly .gs{stroke:var(--deep);fill:none}.gly .g2{fill:var(--amber)}.gly .g3{fill:var(--red)}.gly .g4{fill:var(--green)}
+.mpics{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}.mpic{background:var(--mist);border-radius:20px;padding:22px 24px 24px;display:flex;flex-direction:column;gap:10px}
+.mpm{font-size:22px;font-weight:700;color:var(--muted)}.mpic .gly{width:100%;margin:4px 0 6px}.mpic h3{font-size:28px;color:var(--deep);line-height:1.15}.mpic p:last-child{font-size:23px;line-height:1.3;color:var(--body)}
+.mkd{border:3px solid var(--ink);border-radius:22px;overflow:hidden;background:#fff}.mkdh{background:var(--ink);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:14px 26px;font-size:27px}.mkdh span{opacity:.85;font-size:23px}
+.mkt{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:18px 22px 6px}.mktile{background:var(--mist);border-radius:14px;padding:12px 18px;display:flex;flex-direction:column}
+.mkv{font-size:52px;font-weight:800;line-height:1.05;font-variant-numeric:tabular-nums}.mkl{font-size:22px;color:var(--body);line-height:1.2;margin-top:2px}
+.mklist{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:12px 22px 16px}.mkli{border-radius:14px;padding:14px 18px;border-left:10px solid var(--deep);background:var(--mist)}
+.mkli.t-red{border-color:var(--red);background:var(--red-bg)}.mkli.t-amber{border-color:var(--amber);background:var(--amber-bg)}.mkli.t-grey{border-color:#8795AA;background:#F1F4F8}
+.mkli h3{font-size:29px;display:flex;justify-content:space-between;gap:10px;line-height:1.15}.mkli h3 em{font-style:normal;font-weight:800;font-variant-numeric:tabular-nums}
+.mkr{font-size:22px;color:var(--muted);margin:6px 0 12px;line-height:1.25}.mka{font-size:26px;line-height:1.28;font-weight:600}
+.mkf{background:var(--ink);color:#fff;font-size:25px;line-height:1.3;padding:10px 26px}
+.mkd+.footline{margin-top:22px}
+.fnl{display:grid;gap:12px}.fnr{display:grid;grid-template-columns:1fr 150px 330px;gap:22px;align-items:center;background:var(--mist);border-radius:16px;padding:22px 26px}
+.fnr code{background:transparent;padding:0;font:600 25px/1.3 ui-monospace,Menlo,Consolas,monospace;color:var(--ink);white-space:pre-wrap}.fnn{font-size:44px;font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
+.fnv{font-size:24px;font-weight:700;line-height:1.2}.fnv.red{color:#A92C25}.fnv.green{color:#14532D}.fnv.amber{color:var(--amber-ink)}
+
+.mkb{position:absolute;border:5px solid var(--amber);border-radius:10px;box-shadow:0 0 0 2px rgba(18,35,63,.55)}
+.gridn.tall .gcard{min-height:330px;padding:32px 30px}.gridn.tall .gcard h3{font-size:34px}.gridn.tall .gcard p{font-size:29px;line-height:1.32;margin-top:14px}
+.ht td code{font-size:.92em;white-space:nowrap}
+
+.qside .numlist.wk li span{text-align:left}
+
+/* Week 3, Part 1: people matrix (prefix ppl; no other rule uses it) */
+.ppl{display:grid;grid-template-columns:1fr 340px;gap:28px;align-items:stretch}
+.pplg{display:grid;grid-template-columns:190px 1fr 1fr;grid-template-rows:auto 1fr 1fr;gap:14px}
+.pplh{font-size:25px;font-weight:700;color:var(--muted);text-align:center;align-self:end;line-height:1.2}
+.pplr{display:flex;align-items:center;font-size:25px;font-weight:700;color:var(--muted);line-height:1.2}
+.pplc{border-radius:20px;padding:18px 26px 20px;border-left:12px solid var(--ghost);background:var(--mist)}
+.pplc.ppl-green{border-color:var(--green);background:#E6F4EC}.pplc.ppl-amber{border-color:var(--amber);background:var(--amber-bg)}.pplc.ppl-red{border-color:var(--red);background:var(--red-bg)}.pplc.ppl-grey{border-color:#8795AA;background:#F1F4F8}
+.ppln{font-size:66px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;display:block;color:var(--ink)}
+.pplc h3{font-size:29px;line-height:1.2;margin:6px 0 2px}.pplc p{font-size:24px;line-height:1.3;color:var(--body)}
+.ppls{display:grid;gap:14px;padding-top:44px}.pplm{background:var(--ink);color:#fff;border-radius:18px;padding:14px 22px;display:flex;flex-direction:column;justify-content:center}
+.pplv{font-size:50px;font-weight:800;line-height:1.05;font-variant-numeric:tabular-nums}.ppll{font-size:22px;line-height:1.25;opacity:.92}
+.ppl+.lesson{margin-top:22px;font-size:30px;padding:20px 30px}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><marker id="ah" markerUnits="userSpaceOnUse" markerWidth="26" markerHeight="26" refX="22" refY="13" orient="auto"><path d="M0,0 L26,13 L0,26 z" fill="#0D47A1"/></marker><marker id="ahr" markerUnits="userSpaceOnUse" markerWidth="26" markerHeight="26" refX="22" refY="13" orient="auto"><path d="M0,0 L26,13 L0,26 z" fill="#C2362F"/></marker><marker id="ahg" markerUnits="userSpaceOnUse" markerWidth="26" markerHeight="26" refX="22" refY="13" orient="auto"><path d="M0,0 L26,13 L0,26 z" fill="#C9D4E3"/></marker></defs></svg>
+<div id="viewport"><div id="stage">
+<section class="slide t-fact " data-i="0" aria-label="Διαφάνεια 1 από 12"><header class="head"><h2 class="">Εργαστήριο 2: ποιοι φοιτητές θα λάβουν τι;</h2></header><div class="body "><div class="fact"><div class="fbig"><span class="num xl">4.424</span><p>φοιτητές 17 προπτυχιακών προγραμμάτων του Πολυτεχνικού Ινστιτούτου του Portalegre, στην Πορτογαλία</p></div><div class="fmain"><p class="statement">Πραγματικά, ανωνυμοποιημένα δεδομένα. Τροφοδοτούν εργαλείο που δίνει στην ομάδα υποστήριξης των φοιτητών μια εκτίμηση του κινδύνου εγκατάλειψης.</p><ul class="points"><li>Έκβαση στο τέλος της κανονικής διάρκειας των σπουδών: 2.209 αποφοίτησαν, 1.421 εγκατέλειψαν, 794 παραμένουν εγγεγραμμένοι.</li><li>Απόψε προβλέπουμε το «εγκατέλειψε» έναντι όλων των άλλων.</li><li>Όπως στο Εργαστήριο 1: ομάδες, ένα φύλλο εργασίας, καθόλου κώδικας.</li></ul></div></div></div>
+<footer class="foot"><p class="src">Realinho, Machado, Baptista &amp; Martins (2022), Data, 7(11), 146· UCI Machine Learning Repository, σύνολο δεδομένων 697· άδεια CC BY 4.0.</p><span class="pn">1</span></footer></section>
+<section class="slide t-table " data-i="1" aria-label="Διαφάνεια 2 από 12"><header class="head"><h2 class="">Τι είναι γνωστό και πότε</h2></header><div class="body "><div class="trows tagged "><div class="trow"><span class="trh">Κατά την εγγραφή</span><span class="trt">Πορεία πριν από την εισαγωγή, δημογραφικά και κοινωνικοοικονομικά στοιχεία (υποτροφία, οφειλές, δίδακτρα, επάγγελμα και εκπαίδευση γονέων), μακροοικονομικοί δείκτες.</span><span class="ttag ">AUC 0,80</span></div><div class="trow"><span class="trh">Τέλος 1ου εξαμήνου</span><span class="trt">Μαθήματα στα οποία ο φοιτητής γράφτηκε, αξιολογήθηκε και πέτυχε· μέσος βαθμός.</span><span class="ttag deep">AUC 0,89</span></div><div class="trow"><span class="trh">Τέλος 2ου εξαμήνου</span><span class="trt">Τα ίδια στοιχεία για το δεύτερο εξάμηνο.</span><span class="ttag ">AUC 0,91</span></div></div><p class="footline">Απόψε η πρόβλεψη γίνεται στο τέλος του 1ου εξαμήνου. Όσο νωρίτερα, τόσο χρησιμότερη και τόσο λιγότερο ακριβής: το «πότε;» της Εβδομάδας 2.</p></div>
+<footer class="foot"><p class="src">Δική μας ανάλυση των δεδομένων των Realinho et al. (2022): λογιστική παλινδρόμηση, έλεγχος σε 885 φοιτητές που το μοντέλο δεν είχε δει.</p><span class="pn">2</span></footer></section>
+<section class="slide t-listslide " data-i="2" aria-label="Διαφάνεια 3 από 12"><header class="head"><h2 class="">Το ζητούμενο</h2></header><div class="body "><ol class="numlist roomy"><li><span><strong class="em-blue">Ποια ενέργεια επιλέγετε</strong>, και ποιο κατώφλι της αντιστοιχεί; Πρώτα η ενέργεια, μετά το κατώφλι.</span></li><li><span><strong class="em-blue">Με το κατώφλι σας</strong>: πόσοι φοιτητές επισημαίνονται, πόσοι από αυτούς χωρίς λόγο, και πόσοι διαφεύγουν;</span></li><li><span><strong class="em-blue">Σε ποιους δίνετε τις 100 προσωπικές συναντήσεις</strong>; Με ποιο κριτήριο, πέρα από την εκτίμηση κινδύνου;</span></li></ol><p class="footline">Τα τρία ερωτήματα βρίσκονται και στο κάτω μέρος του φύλλου εργασίας.</p></div>
+<footer class="foot"><p class="src"></p><span class="pn">3</span></footer></section>
+<section class="slide t-cards3 " data-i="3" aria-label="Διαφάνεια 4 από 12"><header class="head"><h2 class="">Πώς δουλεύουμε</h2></header><div class="body "><div class="three"><div class="item"><h3>Ομάδες</h3><p>Μία ομάδα ανά αίθουσα του Zoom. Ορίζετε συντονιστή, που κρατά τον χρόνο, και εισηγητή, που σημειώνει μία πρόταση για κάθε ερώτημα.</p></div><div class="item"><h3>Ένα φύλλο εργασίας</h3><p>Το ίδιο για όλες τις ομάδες: τα είδη ενέργειας, ο πίνακας του κατωφλίου, το διάγραμμα των σφαλμάτων και η δυναμικότητα. Το μελετάτε όλοι μαζί.</p></div><div class="item"><h3>Από το Μέρος 1</h3><p>Το κόστος το ορίζει η ενέργεια: ο πίνακας των τριών ειδών βρίσκεται στο φύλλο. Ευστοχία και ανάκληση, όπως ορίστηκαν στο Μέρος 1.</p></div></div><p class="footline">Δεν γράφετε κώδικα και δεν αλλάζετε το μοντέλο. Αποφασίζετε πώς θα χρησιμοποιηθεί.</p></div>
+<footer class="foot"><p class="src"></p><span class="pn">4</span></footer></section>
+<section class="slide t-work " data-i="4" aria-label="Διαφάνεια 5 από 12"><header class="head"><h2 class="">Εργασία σε ομάδες</h2></header><div class="body "><div class="act work"><div><p class="context">Έστω ότι η ομάδα υποστήριξης μπορεί να δει προσωπικά έως 100 φοιτητές. Πώς χρησιμοποιείτε την πρόβλεψη;</p><ol class="numlist wk"><li><span>Η ενέργεια που επιλέγετε, και το κατώφλι της.</span></li><li><span>Με το κατώφλι σας: πόσοι επισημαίνονται, πόσοι χωρίς λόγο, πόσοι διαφεύγουν.</span></li><li><span>Σε ποιους δίνετε τις 100 συναντήσεις, και με ποιο κριτήριο.</span></li></ol><p class="footline sm">Όλα όσα χρειάζεστε βρίσκονται στο φύλλο εργασίας.</p></div><div class="timer" data-sec="900"><div class="timer-read">15:00</div><div class="timer-btns"><button type="button" class="t-start">Έναρξη χρονομέτρου</button><button type="button" class="t-reset">Μηδενισμός</button></div></div></div></div>
+<footer class="foot"><p class="src"></p><span class="pn">5</span></footer></section>
+<section class="slide t-work " data-i="5" aria-label="Διαφάνεια 6 από 12"><header class="head"><h2 class="">Δύο ομάδες παρουσιάζουν</h2></header><div class="body "><div class="act work"><div><p class="context">Ο εισηγητής απαντά πλήρως στα τρία ερωτήματα, με τη σειρά τους.</p><ol class="numlist wk"><li><span>Ενέργεια και κατώφλι.</span></li><li><span>Πόσοι επισημαίνονται, πόσοι χωρίς λόγο, πόσοι διαφεύγουν.</span></li><li><span>Σε ποιους οι 100 συναντήσεις, και γιατί.</span></li></ol><p class="footline sm">Οι υπόλοιπες ομάδες αναφέρουν μόνο σε τι διαφωνούν. Η αποκάλυψη ακολουθεί αμέσως.</p></div><div class="timer" data-sec="150"><div class="timer-read">02:30</div><div class="timer-btns"><button type="button" class="t-start">Έναρξη χρονομέτρου</button><button type="button" class="t-reset">Μηδενισμός</button></div></div></div></div>
+<footer class="foot"><p class="src"></p><span class="pn">6</span></footer></section>
+<section class="slide t-bars " data-i="6" aria-label="Διαφάνεια 7 από 12"><header class="head"><h2 class="">Το ίδιο κατώφλι, σε πραγματικούς αριθμούς</h2></header><div class="body "><div class="bp"><div class="panels p1"><div class="panel" style="flex:1"><h3>885 φοιτητές που το μοντέλο δεν είχε δει· οι 284 εγκατέλειψαν</h3><div class="pbody"><div class="bgrp"><div class="barrow"><div class="bar" style="width:92px"><span class="bv">244</span><i class="t-green" style="height:250px"></i><span class="bl">ορθά</span></div><div class="bar" style="width:92px"><span class="bv">132</span><i class="t-amber" style="height:135px"></i><span class="bl">χωρίς λόγο</span></div><div class="bar" style="width:92px"><span class="bv">40</span><i class="t-red" style="height:41px"></i><span class="bl">διαφεύγουν</span></div></div><span class="bgl">κατώφλι 0,2</span></div><div class="bgrp"><div class="barrow"><div class="bar" style="width:92px"><span class="bv">226</span><i class="t-green" style="height:232px"></i><span class="bl">ορθά</span></div><div class="bar" style="width:92px"><span class="bv">91</span><i class="t-amber" style="height:93px"></i><span class="bl">χωρίς λόγο</span></div><div class="bar" style="width:92px"><span class="bv">58</span><i class="t-red" style="height:59px"></i><span class="bl">διαφεύγουν</span></div></div><span class="bgl">κατώφλι 0,3</span></div><div class="bgrp"><div class="barrow"><div class="bar" style="width:92px"><span class="bv">192</span><i class="t-green" style="height:197px"></i><span class="bl">ορθά</span></div><div class="bar" style="width:92px"><span class="bv">39</span><i class="t-amber" style="height:40px"></i><span class="bl">χωρίς λόγο</span></div><div class="bar" style="width:92px"><span class="bv">92</span><i class="t-red" style="height:94px"></i><span class="bl">διαφεύγουν</span></div></div><span class="bgl">κατώφλι 0,5</span></div><div class="bgrp"><div class="barrow"><div class="bar" style="width:92px"><span class="bv">162</span><i class="t-green" style="height:166px"></i><span class="bl">ορθά</span></div><div class="bar" style="width:92px"><span class="bv">18</span><i class="t-amber" style="height:18px"></i><span class="bl">χωρίς λόγο</span></div><div class="bar" style="width:92px"><span class="bv">122</span><i class="t-red" style="height:125px"></i><span class="bl">διαφεύγουν</span></div></div><span class="bgl">κατώφλι 0,7</span></div></div><p class="pnote">Κατώφλι 0,2: 376 επισημάνσεις, ευστοχία 65%, ανάκληση 86%. Κατώφλι 0,7: 180 επισημάνσεις, ευστοχία 90%, ανάκληση 57%.</p></div></div></div><p class="lesson">Από το 0,2 στο 0,7 επισημαίνονται χωρίς λόγο 114 λιγότεροι φοιτητές, και διαφεύγουν 82 περισσότεροι.</p></div>
+<footer class="foot"><p class="src">Δική μας ανάλυση των δεδομένων των Realinho et al. (2022): λογιστική παλινδρόμηση, έλεγχος σε 885 φοιτητές που το μοντέλο δεν είχε δει.</p><span class="pn">7</span></footer></section>
+<section class="slide t-fact " data-i="7" aria-label="Διαφάνεια 8 από 12"><header class="head"><h2 class="">Ποιοι βρίσκονται στην κορυφή της λίστας</h2></header><div class="body "><div class="fact"><div class="fbig"><span class="num xl">99</span><p>από τους 100 φοιτητές με την υψηλότερη εκτίμηση κινδύνου πράγματι εγκατέλειψαν</p></div><div class="fmain"><p class="statement">Οι 71 από αυτούς δεν είχαν περάσει κανένα μάθημα στο 1ο εξάμηνο: το μοντέλο είναι βέβαιο εκεί όπου είναι ήδη αργά.</p><ul class="points"><li>Ο υψηλότερος κίνδυνος δεν σημαίνει το μεγαλύτερο όφελος από μια συνάντηση.</li><li>Στους φοιτητές με ένα τουλάχιστον επιτυχές μάθημα, όπου η παρέμβαση έχει ακόμη νόημα, το μοντέλο εντοπίζει το 61% όσων θα εγκαταλείψουν (κατώφλι 0,4).</li><li>Η κατάταξη κινδύνου απαντά στο «ποιος;». Δεν απαντά στο «ποιον μπορούμε ακόμη να βοηθήσουμε;».</li></ul></div></div></div>
+<footer class="foot"><p class="src">Δική μας ανάλυση των δεδομένων των Realinho et al. (2022): λογιστική παλινδρόμηση, έλεγχος σε 885 φοιτητές που το μοντέλο δεν είχε δει.</p><span class="pn">8</span></footer></section>
+<section class="slide t-bars " data-i="8" aria-label="Διαφάνεια 9 από 12"><header class="head"><p class="kicker"><span class="lamp lamp-amber" aria-hidden="true"></span>Πέρα από το φύλλο εργασίας</p><h2 class="">Άνισα σφάλματα, αυτή τη φορά με άνισα βασικά ποσοστά</h2></header><div class="body "><div class="bp"><div class="panels p2"><div class="panel" style="flex:1"><h3>Υποτροφία: εγκατέλειψαν, και όμως διέφυγαν</h3><div class="pbody"><div class="barrow"><div class="bar"><span class="bv">21%</span><i class="t-blue" style="height:63px"></i><span class="bl">χωρίς υποτροφία</span><span class="bn">n = 254</span></div><div class="bar"><span class="bv">67%</span><i class="t-red" style="height:200px"></i><span class="bl">υπότροφοι</span><span class="bn">n = 30</span></div></div></div></div><div class="panel" style="flex:1"><h3>Δίδακτρα: παρέμειναν, και όμως επισημάνθηκαν</h3><div class="pbody"><div class="barrow"><div class="bar"><span class="bv">8%</span><i class="t-blue" style="height:25px"></i><span class="bl">εξοφλημένα</span><span class="bn">n = 583</span></div><div class="bar"><span class="bv">56%</span><i class="t-red" style="height:167px"></i><span class="bl">σε καθυστέρηση</span><span class="bn">n = 18</span></div></div></div></div></div></div><p class="lesson">Εγκαταλείπει το 13% των υποτρόφων έναντι 39% των υπολοίπων, και το 84% όσων καθυστερούν τα δίδακτρα έναντι 24%. Με τόσο άνισα βασικά ποσοστά, η ανισότητα των σφαλμάτων δεν διορθώνεται: επιλέγεται.</p></div>
+<footer class="foot"><p class="src">Δική μας ανάλυση των δεδομένων των Realinho et al. (2022): λογιστική παλινδρόμηση, έλεγχος σε 885 φοιτητές που το μοντέλο δεν είχε δει. Κατώφλι 0,4.</p><span class="pn">9</span></footer></section>
+<section class="slide t-table " data-i="9" aria-label="Διαφάνεια 10 από 12"><header class="head"><p class="kicker"><span class="lamp lamp-amber" aria-hidden="true"></span>Πέρα από το φύλλο εργασίας</p><h2 class="">Τι βαραίνει στο μοντέλο</h2></header><div class="body "><div class="trows tagged compact"><div class="trow"><span class="trh">Μαθήματα που πέρασε στο 1ο εξάμηνο</span><span class="trt">Το ισχυρότερο στοιχείο, με διαφορά. Όσο περισσότερα, τόσο χαμηλότερος ο κίνδυνος.</span><span class="ttag ">−2,30</span></div><div class="trow"><span class="trh">Δίδακτρα εξοφλημένα</span><span class="trt">Δεύτερο σε βάρος μεταξύ όσων δεν αφορούν τις σπουδές.</span><span class="ttag ">−0,80</span></div><div class="trow"><span class="trh">Υποτροφία</span><span class="trt">Μειώνει την εκτίμηση κινδύνου: γι' αυτό οι υπότροφοι που δυσκολεύονται διαφεύγουν.</span><span class="ttag ">−0,32</span></div><div class="trow"><span class="trh">Ηλικία κατά την εγγραφή</span><span class="trt">Οι μεγαλύτεροι φοιτητές επισημαίνονται συχνότερα, και συχνότερα χωρίς λόγο.</span><span class="ttag ">+0,31</span></div><div class="trow"><span class="trh">Επάγγελμα της μητέρας, ποσοστό ανεργίας</span><span class="trt">Στοιχεία που ο φοιτητής δεν μπορεί να αλλάξει βρίσκονται στα δέκα ισχυρότερα.</span><span class="ttag ">στα 10 πρώτα</span></div></div><p class="footline">Το μοντέλο επισημαίνει όποιον χρωστά. Η ενέργεια που ταιριάζει είναι οικονομική, όχι φροντιστήριο: δύο δρόμοι και εδώ.</p></div>
+<footer class="foot"><p class="src">Δική μας ανάλυση των δεδομένων των Realinho et al. (2022): λογιστική παλινδρόμηση, έλεγχος σε 885 φοιτητές που το μοντέλο δεν είχε δει. Τυποποιημένοι συντελεστές.</p><span class="pn">10</span></footer></section>
+<section class="slide t-table " data-i="10" aria-label="Διαφάνεια 11 από 12"><header class="head"><h2 class="">Υπόδειγμα απάντησης</h2></header><div class="body "><div class="trows  compact"><div class="trow"><span class="trh">Ενέργεια και κατώφλι</span><span class="trt">Ελαφριά ενέργεια, μήνυμα με πόρους και ώρες γραφείου, για όσους υπερβαίνουν το 0,3: ανέχεται πολλούς ψευδώς θετικούς, άρα χαμηλό κατώφλι.</span></div><div class="trow"><span class="trh">Με το κατώφλι 0,3</span><span class="trt">Επισημαίνονται 317 φοιτητές· οι 91 από αυτούς χωρίς λόγο, και διαφεύγουν 58. Ευστοχία 71%, ανάκληση 80%.</span></div><div class="trow"><span class="trh">Οι 100 συναντήσεις</span><span class="trt">Σε όσους έχουν ένα τουλάχιστον επιτυχές μάθημα στο 1ο εξάμηνο, όχι στην κορυφή της λίστας: οι 71 από τους 100 πρώτους έχουν στην πράξη ήδη φύγει.</span></div><div class="trow"><span class="trh">Και το μήνυμα, πέρα από το φύλλο</span><span class="trt">Ονομάζει ό,τι παρατηρήθηκε (τα μαθήματα του 1ου εξαμήνου), προτείνει ένα βήμα, υπογράφεται από πρόσωπο. Δεν αναφέρει ούτε πιθανότητα ούτε δίδακτρα.</span></div></div><p class="footline">Μία τεκμηριωμένη απάντηση. Υπάρχουν και άλλες.</p></div>
+<footer class="foot"><p class="src"></p><span class="pn">11</span></footer></section>
+<section class="slide t-break dark" data-i="11" aria-label="Διαφάνεια 12 από 12"><div class="brk"><h2>Διάλειμμα</h2><p class="back">Επιστρέφουμε σε <span>15′</span></p><p class="count" data-break="15">15:00</p><p class="next">Στο Μέρος 3: ηθική και δίκαιο, νέες κατευθύνσεις, και ερωτήσεις για την εργασία σας.</p></div>
+<footer class="foot"><p class="src"></p><span class="pn">12</span></footer></section>
+</div></div>
+<nav class="ctl" aria-label="Πλοήγηση διαφανειών"><button type="button" id="bPrev" aria-label="Προηγούμενη διαφάνεια">‹</button><button type="button" id="bNext" aria-label="Επόμενη διαφάνεια">›</button><button type="button" id="bNotes" title="Σημειώσεις ομιλητή (N)">Σημειώσεις</button><button type="button" id="bHelp" title="Πλήκτρα (?)">?</button></nav>
+<div id="progress" aria-hidden="true"><i></i></div>
+<div id="help" hidden><div><h3>Πλήκτρα</h3><dl><div><dt>← →, Space</dt><dd>προηγούμενη, επόμενη διαφάνεια</dd></div><div><dt>N</dt><dd>παράθυρο σημειώσεων ομιλητή με ρολόι, ρυθμό και πλάνο</dd></div><div><dt>T</dt><dd>έναρξη ή παύση χρονομέτρου</dd></div><div><dt>F</dt><dd>πλήρης οθόνη</dd></div><div><dt>P</dt><dd>εκτύπωση ή αποθήκευση ως PDF, μία διαφάνεια ανά σελίδα</dd></div></dl><p>Άλλη ώρα έναρξης: προσθέστε <code>?start=15:15</code> στη διεύθυνση.</p></div></div>
+<script>window.DECK = {"meta":{"course":"Βάσεις Δεδομένων & Ανάλυση Δεδομένων Μάθησης","deckTitle":"Εργαστήριο 2: κατώφλι, δικαιοσύνη, παρέμβαση","part":"Εβδομάδα 3, Μέρος 2","start":"19:15","lengthMin":45,"breakMin":15,"lang":"el"},"slides":[{"title":"Εργαστήριο 2: ποιοι φοιτητές θα λάβουν τι;","mins":2,"skippable":false,"notes":["Η διαφορά από το Εργαστήριο 1: εδώ τίποτε δεν είναι προσομοιωμένο και δεν υπάρχει «αλήθεια» να αποκαλυφθεί στο τέλος. Υπάρχουν μόνο αποφάσεις που πρέπει να τεκμηριωθούν.","Το φύλλο εργασίας μοιράζεται τώρα, από την πλατφόρμα ή τη συνομιλία του Zoom. Κανείς δεν χρειάζεται να έχει διαβάσει κάτι πριν.","Το εργαλείο είναι πραγματικό: οι συγγραφείς το περιγράφουν ως μέρος συστήματος που ενημερώνει την ομάδα των συμβούλων-καθηγητών."],"type":"fact"},{"title":"Τι είναι γνωστό και πότε","mins":1,"skippable":false,"notes":["Το ίδιο μοντέλο, με ό,τι είναι γνωστό σε καθεμία από τις τρεις στιγμές. Εκπαίδευση στο 80% των φοιτητών, έλεγχος στο υπόλοιπο 20%, όπως συνιστούν οι δημιουργοί των δεδομένων.","Η μετάβαση από το 0,80 στο 0,89 είναι η αξία ενός εξαμήνου αναμονής. Το κόστος της είναι ότι κάποιοι έχουν ήδη φύγει: θα το δείτε στο φύλλο εργασίας."],"type":"table"},{"title":"Το ζητούμενο","mins":2,"skippable":false,"notes":["Η σειρά έχει σημασία και προέρχεται από τη διαφάνεια 11 του Μέρους 1: το κόστος το ορίζει η ενέργεια, άρα πρώτα η ενέργεια, μετά το κατώφλι.","Το δεύτερο ερώτημα διαβάζεται από τον πίνακα του κατωφλίου, το τρίτο από τον πίνακα της δυναμικότητας. Κανένας υπολογισμός."],"type":"listslide"},{"title":"Πώς δουλεύουμε","mins":1,"skippable":false,"notes":["Αυτόματη κατανομή σε αίθουσες, περίπου τέσσερα άτομα ανά αίθουσα, όπως την προηγούμενη εβδομάδα.","Όλες οι αίθουσες έχουν το ίδιο φύλλο και τα ίδια ερωτήματα· τίποτε δεν μοιράζεται σε κομμάτια.","Όποιος ζητήσει να δει τον κώδικα: υπάρχει προαιρετικό τετράδιο Colab στο αρχείο κατασκευής του υλικού (φάκελος lab2)· το στέλνετε μετά το μάθημα."],"type":"cards3"},{"title":"Εργασία σε ομάδες","mins":19,"skippable":false,"notes":["Ανοίξτε τις αίθουσες με διάρκεια 15′ και αυτόματο κλείσιμο. Το χρονόμετρο ξεκινά (πλήκτρο T) τη στιγμή που ανοίγουν. Άνοιγμα και επιστροφή: περίπου 2′ το καθένα.","Μήνυμα προς όλες τις αίθουσες στο 5ο λεπτό: «Έχετε επιλέξει ενέργεια; Το κατώφλι έπεται.» Στο 11ο λεπτό: «Τέσσερα λεπτά ακόμη: το τρίτο ερώτημα, οι 100 συναντήσεις.»","Επισκεφθείτε κάθε αίθουσα μία φορά. Δεν δίνετε απαντήσεις· ρωτάτε «ποιος ωφελείται από αυτή την ενέργεια;» ή «ποιον αφήνει έξω το κατώφλι σας;»."],"type":"work"},{"title":"Δύο ομάδες παρουσιάζουν","mins":10,"skippable":false,"notes":["Δύο ομάδες, ένα χρονόμετρο για την καθεμία. Πριν από τη δεύτερη: «Μηδενισμός» και πλήκτρο T.","Οι υπόλοιπες ομάδες αναφέρουν μόνο σε τι διαφωνούν, με μία πρόταση η καθεμία· σε αυτές ανήκουν τα υπόλοιπα λεπτά.","Οι απαντήσεις δεν σχολιάζονται τώρα. Οι επόμενες διαφάνειες δεν εξαρτώνται από το τι επέλεξαν οι ομάδες."],"type":"work"},{"title":"Το ίδιο κατώφλι, σε πραγματικούς αριθμούς","mins":2,"skippable":false,"notes":["Είναι η διαφάνεια 6 του Μέρους 1, αυτή τη φορά με ανθρώπους που υπήρξαν.","Το δεύτερο ερώτημα του φύλλου: οι αριθμοί κάθε γραμμής του πίνακα, εδώ ως ράβδοι.","Κανένα κατώφλι δεν είναι «σωστό». Κάθε ομάδα διάλεξε ένα επειδή πρώτα διάλεξε ενέργεια."],"type":"bars"},{"title":"Ποιοι βρίσκονται στην κορυφή της λίστας","mins":1,"skippable":false,"notes":["Είναι το ερώτημα που έμεινε ανοιχτό στη διαφάνεια 12 του Μέρους 1: είναι οι πρώτοι της κατάταξης αυτοί που θα ωφεληθούν περισσότερο;","Όποια ομάδα έδωσε τις 100 συναντήσεις στην κορυφή της λίστας έκανε το προφανές. Δεν είναι λάθος· είναι όμως ακριβή επιβεβαίωση αυτού που ήδη γνωρίζει η γραμματεία."],"type":"fact"},{"title":"Άνισα σφάλματα, αυτή τη φορά με άνισα βασικά ποσοστά","mins":1,"skippable":false,"notes":["Το φύλλο δεν χώριζε τους φοιτητές σε υποομάδες: αυτό το δείχνετε εσείς. Είναι η δεξιά στήλη της διαφάνειας 17 του Μέρους 1. Στο Εργαστήριο 1 η ανισότητα οφειλόταν στη μέτρηση· εδώ οφείλεται στο ότι οι ομάδες πράγματι διαφέρουν.","Ομάδες των 30 (διεθνείς φοιτητές) ή των 12 ατόμων (ειδικές εκπαιδευτικές ανάγκες) δεν μπορούν καν να ελεγχθούν: τα ποσοστά τους δεν σημαίνουν τίποτε.","Δύο στους τρεις υποτρόφους που εγκαταλείπουν δεν επισημαίνονται, επειδή «υπότροφος» σημαίνει για το μοντέλο «ασφαλής»."],"type":"bars"},{"title":"Τι βαραίνει στο μοντέλο","mins":1,"skippable":false,"notes":["Οι αριθμοί είναι τυποποιημένοι συντελεστές λογιστικής παλινδρόμησης: συγκρίνονται μεταξύ τους, δεν ερμηνεύονται αιτιακά.","Το ερώτημα της ελαχιστοποίησης τίθεται από μόνο του: χρειάζεται το μοντέλο το επάγγελμα της μητέρας; Η απάντηση έρχεται στο Μέρος 3, με τον GDPR."],"type":"table"},{"title":"Υπόδειγμα απάντησης","mins":2,"skippable":false,"notes":["Τα τρία ερωτήματα του φύλλου, με τη σειρά τους. Αντιπαραβάλετε με όσα είπαν οι δύο ομάδες που παρουσίασαν.","Η τέταρτη γραμμή δεν ζητήθηκε από τις ομάδες: το μήνυμα προς τον φοιτητή το παρουσιάζετε εσείς, με τους κανόνες του Μέρους 1.","Ο οδηγός διδάσκοντος έχει την πλήρη εκδοχή, με τους αριθμούς κάθε επιλογής."],"type":"table"},{"title":"Διάλειμμα","mins":3,"skippable":false,"notes":["Σταματήστε ακριβώς στην ώρα· τα 3′ αυτής της διαφάνειας είναι το περιθώριο του Μέρους 2.","Για το Μέρος 3 οι φοιτητές δεν χρειάζονται κανένα αρχείο."],"type":"break"}]};</script><script>(function () {
+  var D = window.DECK, S = D.slides, N = S.length;
+  var stage = document.getElementById('stage');
+  var slides = [].slice.call(document.querySelectorAll('.slide'));
+  var cur = 0, pres = null;
+
+  // ---- clock times: everything derives from one start time (?start=HH:MM overrides) ----
+  var q = new URLSearchParams(location.search).get('start');
+  var st = (q && /^\d{1,2}:\d{2}$/.test(q) ? q : D.meta.start).split(':').map(Number);
+  var start = st[0] * 60 + st[1];
+  function hm(m) { m = ((m % 1440) + 1440) % 1440; return ('0' + Math.floor(m / 60)).slice(-2) + ':' + ('0' + (m % 60)).slice(-2); }
+  var offs = [], acc = 0; S.forEach(function (s) { offs.push(acc); acc += s.mins; });
+  var times = { back: hm(start + 60) };
+  for (var k = 0; k < 3; k++) { times['p' + k + 's'] = hm(start + 60 * k); times['p' + k + 'e'] = hm(start + 60 * k + 45); }
+  [].forEach.call(document.querySelectorAll('[data-time]'), function (el) { el.textContent = times[el.getAttribute('data-time')] || ''; });
+
+  // ---- fit the 1600x900 stage to the window ----
+  function fit() {
+    var s = Math.min(innerWidth / 1600, innerHeight / 900);
+    stage.style.transform = 'translate(' + (innerWidth - 1600 * s) / 2 + 'px,' + (innerHeight - 900 * s) / 2 + 'px) scale(' + s + ')';
+  }
+  addEventListener('resize', fit); fit();
+
+  // ---- navigation ----
+  function go(i) {
+    cur = Math.max(0, Math.min(N - 1, i));
+    slides.forEach(function (el, j) { el.classList.toggle('on', j === cur); });
+    document.querySelector('#progress i').style.width = (100 * (cur + 1) / N) + '%';
+    history.replaceState(null, '', location.pathname + location.search + '#' + (cur + 1));
+    sync();
+  }
+  document.getElementById('bPrev').onclick = function () { go(cur - 1); };
+  document.getElementById('bNext').onclick = function () { go(cur + 1); };
+  document.getElementById('bNotes').onclick = openPresenter;
+  var help = document.getElementById('help');
+  document.getElementById('bHelp').onclick = function () { help.hidden = !help.hidden; };
+  help.onclick = function () { help.hidden = true; };
+
+  addEventListener('keydown', function (e) {
+    if (e.target.tagName === 'INPUT') return;
+    var k = e.key;
+    if (k === 'ArrowRight' || k === 'PageDown' || k === ' ') { e.preventDefault(); go(cur + 1); }
+    else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); go(cur - 1); }
+    else if (k === 'Home') go(0); else if (k === 'End') go(N - 1);
+    else if (/^[nν]$/i.test(k)) openPresenter();
+    else if (/^[tτ]$/i.test(k)) toggleTimer();
+    else if (/^[hη]$/i.test(k)) showHint();
+    else if (/^[fφ]$/i.test(k)) { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+    else if (/^[pπ]$/i.test(k)) print();
+    else if (k === '?' || k === 'Escape') help.hidden = k === 'Escape' ? true : !help.hidden;
+  });
+  // ---- mouse wheel / trackpad: one notch, one slide ----
+  var wAcc = 0, wLock = 0;
+  addEventListener('wheel', function (e) {
+    if (!help.hidden) return;                                   // the help overlay scrolls on its own
+    for (var el = e.target; el && el !== document.body; el = el.parentElement) {
+      if (el.scrollHeight - el.clientHeight > 4 && getComputedStyle(el).overflowY !== 'visible') return;
+    }
+    var now = Date.now();
+    if (now - wLock < 400) { e.preventDefault(); return; }      // one slide per gesture, not per event
+    wAcc += e.deltaY + e.deltaX;
+    if (Math.abs(wAcc) < 24) return;
+    e.preventDefault(); wLock = now; go(cur + (wAcc > 0 ? 1 : -1)); wAcc = 0;
+  }, { passive: false });
+
+  var tx = null;
+  addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; }, { passive: true });
+  addEventListener('touchend', function (e) { if (tx === null) return; var dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 60) go(cur + (dx < 0 ? 1 : -1)); tx = null; });
+
+  // ---- activity timers ----
+  var ticking = null;
+  function fmt(s) { return ('0' + Math.floor(s / 60)).slice(-2) + ':' + ('0' + (s % 60)).slice(-2); }
+  [].forEach.call(document.querySelectorAll('.timer'), function (t) {
+    var total = +t.getAttribute('data-sec'), left = total, read = t.querySelector('.timer-read'), b = t.querySelector('.t-start');
+    t._toggle = function () {
+      if (t._id) { clearInterval(t._id); t._id = null; b.textContent = 'Συνέχεια'; return; }
+      if (left <= 0) { left = total; t.classList.remove('done'); }
+      b.textContent = 'Παύση';
+      var end = Date.now() + left * 1000;
+      t._id = setInterval(function () {
+        left = Math.max(0, Math.round((end - Date.now()) / 1000)); read.textContent = fmt(left);
+        if (left === 0) { clearInterval(t._id); t._id = null; t.classList.add('done'); b.textContent = 'Ξανά'; }
+      }, 250);
+    };
+    b.onclick = t._toggle;
+    t.querySelector('.t-reset').onclick = function () { clearInterval(t._id); t._id = null; left = total; read.textContent = fmt(left); t.classList.remove('done'); b.textContent = 'Έναρξη χρονομέτρου'; };
+  });
+  function toggleTimer() { var t = slides[cur].querySelector('.timer'); if (t) t._toggle(); else if (brkEl()) brkStart = Date.now(); }
+  function showHint() { var h = slides[cur].querySelector('.hint[hidden]'); if (h) { h.hidden = false; var b = slides[cur].querySelector('.hint-btn'); if (b) b.remove(); } }
+  [].forEach.call(document.querySelectorAll('.hint-btn'), function (b) { b.onclick = showHint; });
+
+  // ---- break countdown: runs from the full break length, starting when the break slide is first shown ----
+  var brkStart = null;
+  function brkEl() { return slides[cur].querySelector('[data-break]'); }
+  setInterval(function () {
+    var el = brkEl(); if (!el) return;
+    if (brkStart === null) brkStart = Date.now();
+    var left = Math.max(0, Math.round(+el.getAttribute('data-break') * 60 - (Date.now() - brkStart) / 1000));
+    el.textContent = left > 0 ? fmt(left) : 'Ξεκινάμε.';
+  }, 500);
+
+  // ---- presenter window: notes, clock, pace, run sheet ----
+  function openPresenter() {
+    if (pres && !pres.closed) { pres.focus(); return; }
+    pres = window.open('', 'presenterNotes', 'width=980,height=760');
+    if (!pres) { alert('Ο browser μπλόκαρε το παράθυρο σημειώσεων. Επιτρέψτε τα αναδυόμενα παράθυρα για αυτή τη σελίδα.'); return; }
+    pres.document.write('<!DOCTYPE html><html lang="el"><head><meta charset="UTF-8"><title>Σημειώσεις ομιλητή</title><style>' +
+      'body{margin:0;font:18px/1.5 "Segoe UI","Helvetica Neue",Arial,sans-serif;background:#0B1628;color:#E8EEF8;display:grid;grid-template-columns:1fr 330px;height:100vh}' +
+      'main{padding:26px 30px;overflow:auto}aside{background:#12233F;padding:18px;overflow:auto;border-left:1px solid #2A436C}' +
+      '.bar{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}.box{background:#1C3358;border-radius:12px;padding:12px 16px}' +
+      '.box small{display:block;color:#9FB2CE;font-size:13px}.box b{font-size:34px;font-variant-numeric:tabular-nums}' +
+      '.pace.late{background:#A92C25}.pace.ok{background:#1F7A45}' +
+      'h1{font-size:26px;line-height:1.2;margin:4px 0 6px}.meta{color:#9FB2CE;font-size:15px;margin-bottom:14px}' +
+      '.skip{display:inline-block;background:#F2A413;color:#12233F;font-weight:700;border-radius:999px;padding:2px 12px;font-size:14px;margin-left:8px}' +
+      'ul{padding-left:22px}li{margin:0 0 12px;font-size:21px;line-height:1.42}' +
+      '.nxt{margin-top:22px;color:#9FB2CE;font-size:16px}.btns{margin-top:18px;display:flex;gap:10px}' +
+      'button{font:700 17px inherit;padding:12px 22px;border-radius:10px;border:0;background:#F2A413;color:#12233F;cursor:pointer}button.sec{background:#2A436C;color:#fff}' +
+      'ol{list-style:none;margin:0;padding:0}ol li{font-size:14px;line-height:1.3;margin:0;padding:7px 8px;border-radius:8px;display:grid;grid-template-columns:48px 1fr;gap:6px;cursor:pointer;color:#C9D7EC}' +
+      'ol li.cur{background:#F2A413;color:#12233F;font-weight:700}ol li .t{font-variant-numeric:tabular-nums}aside h2{font-size:14px;color:#9FB2CE;margin:0 0 8px;font-weight:600}' +
+      '</style></head><body><main><div class="bar"><div class="box"><small>Ώρα</small><b id="now"></b></div>' +
+      '<div class="box"><small>Πλάνο για αυτή τη διαφάνεια</small><b id="plan"></b></div><div class="box pace" id="paceBox"><small>Ρυθμός</small><b id="pace"></b></div></div>' +
+      '<h1 id="ttl"></h1><div class="meta" id="meta"></div><ul id="notes"></ul><div class="nxt" id="nxt"></div>' +
+      '<div class="btns"><button class="sec" id="pv">‹ Προηγούμενη</button><button id="nx">Επόμενη ›</button></div></main>' +
+      '<aside><h2>Πλάνο ' + hm(start) + '–' + hm(start + D.meta.lengthMin) + '</h2><ol id="sheet"></ol></aside></body></html>');
+    pres.document.close();
+    var pd = pres.document;
+    pd.getElementById('pv').onclick = function () { go(cur - 1); };
+    pd.getElementById('nx').onclick = function () { go(cur + 1); };
+    pres.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight' || e.key === ' ') go(cur + 1); if (e.key === 'ArrowLeft') go(cur - 1); });
+    var ol = pd.getElementById('sheet');
+    S.forEach(function (s, i) { var li = pd.createElement('li'); li.innerHTML = '<span class="t">' + hm(start + offs[i]) + '</span><span></span>'; li.lastChild.textContent = (i + 1) + '. ' + s.title + (s.skippable ? ' (παραλείπεται)' : ''); li.onclick = function () { go(i); }; ol.appendChild(li); });
+    sync();
+  }
+  function sync() {
+    if (!pres || pres.closed) return;
+    var pd = pres.document, s = S[cur];
+    pd.getElementById('ttl').textContent = (cur + 1) + '. ' + s.title;
+    pd.getElementById('meta').innerHTML = hm(start + offs[cur]) + ' → ' + hm(start + offs[cur] + s.mins) + ' (' + s.mins + '′)' + (s.skippable ? '<span class="skip">Αν είστε πίσω, παραλείπεται</span>' : '');
+    pd.getElementById('plan').textContent = hm(start + offs[cur]);
+    var ul = pd.getElementById('notes'); ul.innerHTML = '';
+    s.notes.forEach(function (n) { var li = pd.createElement('li'); li.textContent = n; ul.appendChild(li); });
+    pd.getElementById('nxt').textContent = cur < N - 1 ? 'Επόμενη: ' + S[cur + 1].title : 'Τέλος μέρους.';
+    [].forEach.call(pd.querySelectorAll('#sheet li'), function (li, i) { li.className = i === cur ? 'cur' : ''; if (i === cur) li.scrollIntoView({ block: 'nearest' }); });
+  }
+  setInterval(function () {
+    if (!pres || pres.closed) return;
+    var pd = pres.document, now = new Date(), nowMin = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+    pd.getElementById('now').textContent = hm(Math.floor(nowMin));
+    var late = Math.round(nowMin - (start + offs[cur] + S[cur].mins)), box = pd.getElementById('paceBox'), p = pd.getElementById('pace');
+    if (Math.abs(nowMin - start) > 180) { p.textContent = 'εκτός ώρας'; box.className = 'box pace'; }
+    else if (late > 0) { p.textContent = late + '′ πίσω'; box.className = 'box pace late'; }
+    else { p.textContent = 'εντός χρόνου'; box.className = 'box pace ok'; }
+  }, 1000);
+
+  // hide the controls while presenting from the keyboard; any mouse movement brings them back
+  var idleT; function wake() { document.body.classList.remove('idle'); clearTimeout(idleT); idleT = setTimeout(function () { document.body.classList.add('idle'); }, 2500); }
+  addEventListener('mousemove', wake); wake();
+
+  go(Math.max(0, (parseInt(location.hash.slice(1), 10) || 1) - 1));
+})();
+</script></body></html>
