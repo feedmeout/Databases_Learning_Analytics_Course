@@ -5,7 +5,7 @@ set -e
 PW=playwright
 V=$(npm ls -g playwright --depth=0 2>/dev/null | grep -o 'playwright@[0-9]*\.[0-9]*' | head -1 | cut -d@ -f2)
 [ -n "$V" ] && PW="playwright~=$V.0"
-python3 -m pip install --quiet --upgrade "$PW" pillow
+python3 -m pip install --quiet --upgrade "$PW" pillow pandas
 python3 -m playwright install --with-deps chromium || python3 -m playwright install chromium
 if ! command -v pdftoppm >/dev/null 2>&1; then
   (sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils) || (apt-get update -qq && apt-get install -y -qq poppler-utils) || echo "WARNING: poppler-utils (pdftoppm) not installed"

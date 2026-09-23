@@ -468,7 +468,83 @@ CLOUD ENVIRONMENT: the decks load Commissioner from Google Fonts, which headless
   playwright to the version of the global npm playwright, whose Chromium the cloud image already has (1.56 -> chromium-1194): the old unpinned upgrade moved
   playwright past that Chromium and needed a browser download, which the cloud network refuses.
 
+==================== v15 (24 Sept 2026: speaker notes for every deck by the CLAUDE.md notes rules, after the lecturer's OK of the pilot) ====================
+Branches: one per deck, notes/<deck>; W2P2+W2P3 and W3P2+W3P3 share one, because lab1/make_deck_json.py and w3p2/make_deck_json.py also write the
+  reveal (lab1_reveal.json) and ethics (lab2_ethics.json) slides of the next part. Evening 1 (N1P1-N1P3) is final and was not touched.
+ENGINE (opt-in, same flag): decks with meta.notesMarkup also send titleHtml, so the presenter shows `code` in titles as code, not as backticks.
+setup.sh also installs pandas (lab1/ and workshop1/ generators).
+
+N2P1:
+  pending
+
+N2P2:
+  pending
+
+N2P3:
+  pending
+
+W1P1:
+  pending
+
+W1P2:
+  pending
+
+W1P3:
+  pending
+
+W2P1:
+  pending
+
+W2P2:
+  pending
+
+W2P3:
+  pending
+
+W3P1:
+  pending
+
+W3P2:
+  pending
+
+W3P3:
+  pending
+
 ==================== Αλλαγές από το παλαιότερο υλικό (kept out of the speaker notes; notes rule 4) ====================
+N2P1:
 N2P1 slide 5: the older material also showed the reverse command, mongoexport (mongoexport --db=world --collection=country --out=country_export.json);
   not needed for Εργασία 2.
 N2P1 slide 8: the older material used count(); it still works, with a DeprecationWarning. The deck uses countDocuments().
+
+N2P2:
+  none
+
+N2P3:
+  none
+
+W1P1:
+  none
+
+W1P2:
+  none
+
+W1P3:
+  none
+
+W2P1:
+  none
+
+W2P2:
+  none
+
+W2P3:
+  none
+
+W3P1:
+  none
+
+W3P2:
+  none
+
+W3P3:
+  none
