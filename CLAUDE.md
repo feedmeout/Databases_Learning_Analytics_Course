@@ -46,6 +46,7 @@ Notes take markup when the deck opts in with `'notesMarkup': True` in its meta (
 - He reads short messages only: English in chat, Greek in the material.
 - He approves by looking at images: for every changed deck, save PNG review images (each slide next to its notes, 4 slides per image) in `review/<deck>/` with `build_kit/review.py`, and commit them.
 - One branch per deck (`notes/<deck>`). Never rewrite history or delete files unless he asks.
+- Merge your own PRs yourself as soon as every check passes (his standing instruction of 24 Sept 2026: "Always merge automatically"); he reviews on `main` and asks for fixes afterwards. Before each merge, confirm the branch still merges cleanly into `main`.
 - Decide sensible details yourself; ask at most one short question when something is truly his call.
 - Order of work: N2P1, N2P2, N2P3 (taught next), then W1P1 to W3P3.
 

@@ -24,8 +24,11 @@ ONE_MEAP = 'ένα' if JAVA_MEAP == '1' else JAVA_MEAP
 JAVA_LC_TITLES = re.findall(r"title: '([^']*)'", O['java_lc'][0])
 assert len(JAVA_LC_TITLES) == int(JAVA_LC) and "categories: [ 'java' ]" in O['java_lc'][0]
 JAVASCRIPT_TITLES = re.findall(r"title: '([^']*)'", O['javascript'][0])
-ROOM_MIN, ROOM_SEC, PRES_MIN, PRES_SEC, BREAK_MIN = 22, 1200, 6, 180, 15
-assert 20 <= PRES_MIN * 60 / N_ITEMS <= 40  # «μισό λεπτό περίπου» per item with the sheet's rule (notes of slide 6)
+ROOM_MIN, ROOM_SEC, PRES_MIN, PRES_SEC, BREAK_MIN = 22, 1200, 6, 360, 15
+assert PRES_SEC == PRES_MIN * 60  # one timer for the whole round of presentations (slide 6)
+assert 20 <= PRES_MIN * 60 / N_ITEMS <= 40  # «μισό λεπτό περίπου» per item (notes of slide 6)
+NUMW = {1: 'ένα', 2: 'δύο', 3: 'τρία', 4: 'τέσσερα', 5: 'πέντε'}
+PER4 = (NUMW[N_ITEMS // 4], NUMW[-(-N_ITEMS // 4)])  # items per team with four teams (notes of slide 6)
 # worked example: the 3rd place ties with another MEAP book (order among equal values is not guaranteed); read from the course books.json
 BOOKS = [json.loads(l) for l in open(os.path.join(H, '..', 'sources_nosql', 'books.json'), encoding='utf8') if l.strip()]
 EX_TITLES, EX_PAGES = re.findall(r"title: '([^']*)'", O['example'][0]), [int(x) for x in re.findall(r'pageCount: (\d+)', O['example'][0])]
@@ -70,11 +73,11 @@ add(type='table', mins=1, compact=True, title='Πώς δουλεύουμε',
     rows=[{'h': 'Ομάδες', 't': 'Περίπου τέσσερα άτομα σε κάθε αίθουσα του Zoom· όλες οι αίθουσες έχουν το ίδιο φύλλο.'},
           {'h': 'Εργαλείο', 't': 'Ο καθένας στο δικό του mongosh, στη βάση library: `use library`.'},
           {'h': 'Τι γράφετε', 't': 'Για κάθε ζητούμενο, το ερώτημα της MongoDB και το πλήθος των εγγράφων που επιστρέφει.'},
-          {'h': 'Χρόνος', 't': '20 λεπτά στην αίθουσα· μετά δύο ομάδες παρουσιάζουν, 3 λεπτά η καθεμία.'},
+          {'h': 'Χρόνος', 't': '20 λεπτά στην αίθουσα· μετά παρουσιάζουν όλες οι ομάδες, με τη σειρά, ένα ζητούμενο κάθε φορά.'},
           {'h': 'Χωρίς τη συλλογή', 't': 'Όποιος δεν ολοκλήρωσε την εισαγωγή, δουλεύει με την οθόνη ενός μέλους της ομάδας.'}],
     notes=['**Ομάδες**: Όλες οι αίθουσες έχουν το ίδιο φύλλο, ώστε στο τέλος να συγκρίνονται τα πλήθη.',
            '**`use library`**: Η βάση που δημιούργησε το mongoimport στο Μέρος 1. Αν μια ομάδα βρίσκει παντού 0, είναι ακόμη στη βάση test.',
-           '**Τι γράφετε**, **%d λεπτά στην αίθουσα**: Είναι γραμμένα και στο φύλλο. Για την παρουσίαση όμως το φύλλο γράφει άλλον τρόπο: κάθε ομάδα ένα ζητούμενο, με τη σειρά, ώσπου να παρουσιαστούν και τα %d· πείτε τώρα ποιος ισχύει.' % (ROOM_SEC // 60, N_ITEMS),
+           '**Τι γράφετε**, **%d λεπτά στην αίθουσα**: Είναι γραμμένα και στο φύλλο, όπως και η σειρά της παρουσίασης: κάθε ομάδα παρουσιάζει τουλάχιστον ένα ζητούμενο.' % (ROOM_SEC // 60),
            '**Χωρίς τη συλλογή**: Την εισαγωγή την ολοκληρώνει στο επόμενο διάλειμμα, με τη διαφάνεια [[p1_install]] του Μέρους 1.'])
 
 add(type='shell', mins=2, dense=True, title='Ένα λυμένο παράδειγμα',
@@ -99,17 +102,17 @@ add(type='work', mins=ROOM_MIN, timerSec=ROOM_SEC, title='Στις αίθουσ�
            '**Ένα μέλος κρατά τις απαντήσεις της ομάδας**: Τις λύσεις και τα πλήθη τα έχετε στο αρχείο απαντήσεων (N2P2_answers).',
            '**%s**: Ξεκινήστε το χρονόμετρο με το πλήκτρο T μόλις μπουν όλοι. Μηνύματα προς όλες τις αίθουσες: όταν δείχνει 10:00, «Όποιος τελείωσε έως το 10, συνεχίζει στα 11 έως 13»· όταν δείχνει 02:00, «Δύο λεπτά· σημειώστε τα πλήθη».' % fmt(ROOM_SEC)])
 
-add(type='work', mins=PRES_MIN, timerSec=PRES_SEC, title='Δύο ομάδες παρουσιάζουν',
-    context='Δύο ομάδες, τρία λεπτά η καθεμία:',
-    items=['Η πρώτη ομάδα: τα ζητούμενα 4 έως 8, με το ερώτημα και το πλήθος.',
-           'Η δεύτερη ομάδα: τα ζητούμενα 9 έως 13, με τον ίδιο τρόπο.',
-           'Οι υπόλοιπες ομάδες συγκρίνουν με τα δικά τους πλήθη.'],
-    # the student sheet (build_n2p2_docs.py, README v13.5) has another rule: every team presents one item in turn. Note 3 of slide 3 flags it and
-    # the lecturer says there which rule applies; notes 1 and 4 here give the steps for either rule
-    notes=['**Δύο ομάδες, τρία λεπτά η καθεμία**: Ισχύει ο τρόπος που είπατε στη διαφάνεια [[s_how]]. Για δύο ομάδες, επιλέξτε τώρα δύο αίθουσες· με τον τρόπο του φύλλου, κάθε ομάδα παρουσιάζει ένα ζητούμενο, από το 1 έως το %d.' % N_ITEMS,
-           '**με το ερώτημα και το πλήθος**: Κρατήστε ανοιχτό το αρχείο απαντήσεων και συγκρίνετε κάθε πλήθος.',
-           '**Οι υπόλοιπες ομάδες συγκρίνουν**: Αν τα πλήθη διαφέρουν, η εξήγηση βρίσκεται σχεδόν πάντα σε μία από τις επόμενες τέσσερις διαφάνειες.',
-           '**%s**: Με δύο ομάδες: T για την πρώτη, «Μηδενισμός» και ξανά T για τη δεύτερη. Με τον τρόπο του φύλλου, τα %d ζητούμενα μοιράζονται τα %d λεπτά, μισό λεπτό περίπου το καθένα.' % (fmt(PRES_SEC), N_ITEMS, PRES_MIN)])
+# the rule of the student sheet (build_n2p2_docs.py, README v13.5), confirmed by the lecturer for the slides (README v16): every team presents,
+# one item per turn, until all items are presented; the number of items per team follows the number of teams
+add(type='work', mins=PRES_MIN, timerSec=PRES_SEC, title='Όλες οι ομάδες παρουσιάζουν',
+    context='Με τη σειρά, ένα ζητούμενο κάθε φορά:',
+    items=['Η πρώτη ομάδα το ζητούμενο 1, η δεύτερη το 2 και ούτω καθεξής.',
+           'Μετά την τελευταία ομάδα, ξανά η πρώτη, ώσπου να παρουσιαστούν και τα %d.' % N_ITEMS,
+           'Για κάθε ζητούμενο, το ερώτημα και το πλήθος· οι άλλες ομάδες συγκρίνουν με τα δικά τους πλήθη.'],
+    notes=['**Με τη σειρά, ένα ζητούμενο κάθε φορά**: Όπως γράφει το φύλλο. Ορίστε τη σειρά των ομάδων με τους αριθμούς των αιθουσών του Zoom.',
+           '**ξανά η πρώτη**: Με τέσσερις ομάδες, η καθεμία παρουσιάζει %s ή %s ζητούμενα.' % PER4,
+           '**το ερώτημα και το πλήθος**: Κρατήστε ανοιχτό το αρχείο απαντήσεων και συγκρίνετε κάθε πλήθος. Αν διαφέρει, η εξήγηση βρίσκεται σχεδόν πάντα σε μία από τις επόμενες τέσσερις διαφάνειες.',
+           '**%s**: Ένα χρονόμετρο για όλο τον γύρο: T στην αρχή. Τα %d ζητούμενα μοιράζονται τα %d λεπτά, μισό λεπτό περίπου το καθένα.' % (fmt(PRES_SEC), N_ITEMS, PRES_MIN)])
 
 add(type='shell', mins=2, title='Java: %s, όχι %s ούτε %s' % (JAVA, JAVA_EXACT, JAVA_IN), dense=True,
     cmd=cmd('java'), cmdLabel='Εντολές', out=out('java'), outLabel='Αποτελέσματα',
@@ -174,8 +177,7 @@ def num(pred):
     hits = [i + 1 for i, s in enumerate(S) if pred(s)]
     assert len(hits) == 1, hits
     return hits[0]
-REF = {'s_page': num(lambda s: s['title'] == 'Η σελίδα: SQL to MongoDB Mapping Chart'), 's_how': num(lambda s: s['title'] == 'Πώς δουλεύουμε'),
-       'p1_install': P1[0]}
+REF = {'s_page': num(lambda s: s['title'] == 'Η σελίδα: SQL to MongoDB Mapping Chart'), 'p1_install': P1[0]}
 for s in S:
     for k, v in REF.items():
         s['notes'] = [n.replace('[[%s]]' % k, str(v)) for n in s['notes']]
