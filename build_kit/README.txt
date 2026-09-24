@@ -520,7 +520,11 @@ W1P3:
   Slide 22 'ragged' (left-aligned text): its justified short lines opened gaps of 1,8 em.
 
 W2P1:
-  pending
+  35 slides, 114 notes (2 to 4 per slide, one «Αν ρωτήσουν» on slide 4), meta.notesMarkup = true; hand-edited JSON. Slide change (approved): slide 27, step
+  Collate, U+00A0 on both sides of the minus in «n − 1», which no longer breaks; slide HTML otherwise identical; student PDF regenerated (35 pages). Slide 25: the timer note comes before the answer.
+  Left out of the notes: slide 1, «questions on the assignment have their time in Part 3»; slide 9, the 2019 absences (half did not sit the exam, 27 of those
+  50 «green») and the pandemic conjecture; slide 12, the UEF team; slide 32, «the same questions will be put to the lab data» (only question 1 returns, in the Lab 1 reveal, W2P3 slide 9).
+  Slide 13 'ragged' (left-aligned text): its justified short lines opened gaps of 1,7 em.
 
 W2P2:
   pending
@@ -591,7 +595,8 @@ W1P3:
   none
 
 W2P1:
-  none
+W2P1 slide 26: the state names are those of the Informatics in Education paper; in the Journal of Information Systems Education paper «Repeated error» is
+  called «Confused», the name the older slide 7.7 used.
 
 W2P2:
   none
