@@ -188,6 +188,12 @@ S_ = [
             '**Στο Μέρος 3**: Ξεκινά με την ηθική και το δίκαιο, πάνω στις αποφάσεις του Εργαστηρίου 2. Οι φοιτητές δεν χρειάζονται κανένα αρχείο.']},
 ]
 ETHICS = S_[11:22]; assert ETHICS[0]['title'].startswith('GDPR') and ETHICS[-1]['type'] == 'remember' and len(ETHICS) == 11
+# left-aligned text where justified short lines open wide gaps (engine opt-in 'ragged', README v15)
+RAGGED = {'Συγκατάθεση', 'Αυτονομία', 'Ευθύνη να ενεργήσουμε', 'Κυριότητα και πρόσβαση'}
+for s in ETHICS:
+    if s['title'] in RAGGED:
+        s['ragged'] = True
+assert sum(1 for s in ETHICS if s.get('ragged')) == len(RAGGED)
 json.dump(ETHICS, open(os.path.join(HERE, '..', 'content', 'lab2_ethics.json'), 'w', encoding='utf8'), ensure_ascii=False, indent=1)   # rework of 20 Sept 2026: read by w3p3/make_deck_json.py
 S_ = S_[:11] + S_[22:]
 META = {'course': 'Βάσεις Δεδομένων & Ανάλυση Δεδομένων Μάθησης', 'deckTitle': 'Εργαστήριο 2: κατώφλι, δικαιοσύνη, παρέμβαση', 'part': 'Εβδομάδα 3, Μέρος 2', 'start': '19:15', 'lengthMin': 45, 'breakMin': 15, 'lang': 'el', 'notesMarkup': True}

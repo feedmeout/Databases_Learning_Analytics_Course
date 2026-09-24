@@ -525,6 +525,7 @@ W3P3:
   και στον οδηγό διδάσκοντος" (the zero-units caveat is now its «Αν ρωτήσουν»). check_notes order warning on 25: the timer note comes first (first action).
   SLIDE CHANGED (approved after review): 24, «σύγκριση με προηγούμενες ανασκοπήσεις» -> «σύγκριση με προηγούμενες έρευνες» (brief p. 5); same line changed
   in the Submission checklist (handouts/build_sheets.py; the other three sheets rebuild byte-identical; PDF 1 page, copied to Assignment/). Student PDF: final pass.
+  Slides 3, 4, 7, 8 'ragged' (left-aligned text; set by title in w3p2/make_deck_json.py for the ethics block): gaps of 1,5-2,7 em.
 
 ==================== Αλλαγές από το παλαιότερο υλικό (kept out of the speaker notes; notes rule 4) ====================
 N2P1:
