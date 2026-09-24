@@ -495,7 +495,7 @@ N2P3:
   remark that the manual's mapping page still shows count() (moved to «Αλλαγές»; the «Αν ρωτήσουν» names countDocuments(), not the old count()). Slide 17:
   the old note «one Java MEAP book has a known page count» was imprecise (there is one Java MEAP book in all) and is rewritten.
   Slide changes after review (lead's OK): slide 10 context «Η Ελλάδα έχει ήδη πέντε πεδία, εκτός από το `_id`.»; slide 17 title «$match και υπολογισμοί ανά
-  ομάδα» (was «συσσωρευτές»); slide 20 third point «Το `$project` αντιστοιχεί στο SELECT της SQL.». Student PDF not regenerated (lead's final pass).
+  ομάδα» (was «συσσωρευτές»); slide 20 third point «Το `$project` αντιστοιχεί στο SELECT της SQL.». Student PDF regenerated (32 pages).
   Slide 25 'ragged' (left-aligned text): the quote's first line spread five words over the full width (set by title in the generator).
 
 W1P1:
