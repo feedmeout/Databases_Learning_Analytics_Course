@@ -503,10 +503,10 @@ W2P3:
   pending
 
 W3P1:
-  32 slides, 110 notes (2 to 4 per slide, six «Αν ρωτήσουν»), every other note led by its on-slide item in bold; meta.notesMarkup on; numbers of the Lab 1
-  case still come from the generator's variables. w3p1/make_deck_json.py now asserts 2 to 4 notes per slide (was 2 to 3).
-  Left out: the skip remarks (slides 14, 19, 32); why an older source on slide 17; the journalistic-source remark of slide 21 (the source line says it);
-  «rarely the teacher» (6); whether the top of the ranking benefits most (12: Lab 2 asks it); the Java effect per specialisation (29). Proposals: see PR.
+  32 slides, 110 notes (2 to 4 per slide, six «Αν ρωτήσουν»), all other notes led by their on-slide item in bold; meta.notesMarkup on; Lab 1 numbers
+  from the generator's variables. make_deck_json.py asserts 2 to 4 notes per slide (was 2 to 3) and computes the slide 29 reference [[s_uoc]] (= 25).
+  Slides changed (approved): 16 foot «Στην προηγούμενη διαφάνεια παραβιάζονται…» -> «Στο Εργαστήριο 1 παραβιάζονται…»; 29 «(UOC, προηγούμενη διαφάνεια)» -> «(UOC, διαφάνεια 25)».
+  Left out: the skip remarks (slides 14, 19, 32); why an older source (17); the journalistic-source remark (21); «rarely the teacher» (6); the Java effect per specialisation (29).
 
 W3P2:
   pending
