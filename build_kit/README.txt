@@ -484,7 +484,7 @@ check_notes.py: the notes rules checked on the built deck (2-4 notes, **item** f
 
 N2P1:
   33 slides, 116 notes (2-4 per slide); slides 5, 7, 8 = the approved pilot, unchanged; all others rewritten (item in bold, one «Αν ρωτήσουν» at most; slide 4
-  puts its timer note first). SLIDE CHANGE (approved): slide 30 title «skip: η επόμενη σελίδα αποτελεσμάτων» (σελίδες = book pages here); student PDF: final pass.
+  puts its timer note first). SLIDE CHANGE (approved): slide 30 title «skip: η επόμενη σελίδα αποτελεσμάτων» (σελίδες = book pages here); student PDF regenerated (33 pages).
   Left out (not on the slide): EJSON.stringify (11), let/const (12), stable paging with a unique sort field (30), «prepares Άσκηση 2» (26); the old slide-16 note
   «every book has shortDescription» was wrong (6 of 12). make_n2p1.py: note numbers from e2p1_outputs.json, new asserts; new REF keys s_book23, s_regex, s_elem, s_poll.
 
