@@ -503,7 +503,10 @@ W2P3:
   pending
 
 W3P1:
-  pending
+  32 slides, 110 notes (2 to 4 per slide, six «Αν ρωτήσουν»), every other note led by its on-slide item in bold; meta.notesMarkup on; numbers of the Lab 1
+  case still come from the generator's variables. w3p1/make_deck_json.py now asserts 2 to 4 notes per slide (was 2 to 3).
+  Left out: the skip remarks (slides 14, 19, 32); why an older source on slide 17; the journalistic-source remark of slide 21 (the source line says it);
+  «rarely the teacher» (6); whether the top of the ranking benefits most (12: Lab 2 asks it); the Java effect per specialisation (29). Proposals: see PR.
 
 W3P2:
   pending
@@ -542,7 +545,8 @@ W2P3:
   none
 
 W3P1:
-  none
+W3P1 slide 8: the statement is worded as it appears in exercise solutions and handbooks (it comes from the key of the older Week 3 practical, DS1).
+W3P1 slide 24: the typology of interventions comes from the older material of the course (the LA revision deck) and remains useful.
 
 W3P2:
   none
