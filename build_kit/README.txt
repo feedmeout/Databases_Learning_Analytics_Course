@@ -506,10 +506,16 @@ W3P1:
   pending
 
 W3P2:
-  pending
+  12 slides, 44 notes (w3p2/make_deck_json.py, which also writes the notes of W3P3 slides 1-11 into lab2_ethics.json); meta notesMarkup; assert 2-4 notes.
+  Left out: slide 2, the 80/20 split "as the data creators recommend"; slide 9, the 30 international / 12 special-needs students (not on the slide, and it
+  read as if n = 30 cannot be checked while the left panel rests on n = 30). check_notes order warnings on 5 and 6: the timer note comes first (first action).
+  proposals: see PR.
 
 W3P3:
-  pending
+  27 slides, 83 notes (1-11 from w3p2/make_deck_json.py via lab2_ethics.json, 12-27 from w3p3/make_deck_json.py); meta notesMarkup; assert 2-4 notes.
+  Assignment notes (19, 22, 24, 25) checked against Assignment/Εργασία 3 LA 2026-27.pdf. Left out: the skip remarks of slides 10 and 27; slide 5, "που υπάρχει
+  και στον οδηγό διδάσκοντος" (the zero-units caveat is now its «Αν ρωτήσουν»). check_notes order warning on 25: the timer note comes first (first action).
+  proposals: see PR.
 
 ==================== Αλλαγές από το παλαιότερο υλικό (kept out of the speaker notes; notes rule 4) ====================
 N2P1:
@@ -548,4 +554,7 @@ W3P2:
   none
 
 W3P3:
-  none
+W3P3 slide 3: the seven questions come from the older lectures of the course (source deck 4, two grammar fixes; README v8).
+W3P3 slide 15: the publication calls the framework «τετραδιάστατο»; the older slides of the course spoke of data «από τρεις διαστάσεις». Both hold.
+W3P3 slide 17: the numbers are the published ones (Antonelli et al., 2023); the older slides 7.13-7.14 showed other numbers, not in the paper (README v9).
+W3P3 slide 24: the checklist comes from the older material of the course, aligned with the Week 1 brief.
