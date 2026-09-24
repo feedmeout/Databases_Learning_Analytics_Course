@@ -491,7 +491,10 @@ W1P2:
   pending
 
 W1P3:
-  pending
+  32 slides, 117 notes (2-4 per slide; one «Αν ρωτήσουν» on 6, 12, 17, 18, 20, 24, 32); w1p3.json edited by script (notes and meta.notesMarkup only).
+  Assignment facts checked against Assignment/Εργασία 3 LA 2026-27.pdf (individual or pair, deadline, different topic, special approval, cover and references).
+  Dropped (not on the slide or not verifiable): «σαφήνεια, συνάφεια, σκοπιμότητα» (7); «longest stretch of work between classes 2 and 3» (5);
+  «the template prevents the first four errors» (29: only 2 and 4); «Πέντε λεπτά» on the end slide (budget 7′). Proposals: see PR.
 
 W2P1:
   pending
