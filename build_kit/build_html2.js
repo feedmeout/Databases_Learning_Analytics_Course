@@ -348,7 +348,7 @@ Object.assign(R, {
   }
 });
 const dark = t => ['title', 'break', 'teaser', 'endslide'].includes(t);
-const slidesHtml = C.slides.map((s, i) => `<section class="slide t-${s.type} ${dark(s.type) ? 'dark' : ''}" data-i="${i}" aria-label="Διαφάνεια ${i + 1} από ${N}">${R[s.type](s)}
+const slidesHtml = C.slides.map((s, i) => `<section class="slide t-${s.type} ${dark(s.type) ? 'dark' : ''}${s.ragged ? ' ragged' : ''}" data-i="${i}" aria-label="Διαφάνεια ${i + 1} από ${N}">${R[s.type](s)}
 <footer class="foot"><p class="src">${s.src ? esc(s.src) : ''}</p><span class="pn">${i + 1}</span></footer></section>`).join('\n');
 // opt-in (meta.notesMarkup): in the speaker notes **item** -> bold, `code` -> code, and the presenter shows titles with their markup;
 // decks without the flag keep plain-text notes and titles
