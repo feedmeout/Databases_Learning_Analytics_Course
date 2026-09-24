@@ -525,7 +525,12 @@ W2P3:
   pending
 
 W3P1:
-  pending
+  32 slides, 110 notes (2 to 4 per slide, six «Αν ρωτήσουν»), all other notes led by their on-slide item in bold; meta.notesMarkup on; Lab 1 numbers
+  from the generator's variables. make_deck_json.py asserts 2 to 4 notes per slide (was 2 to 3) and computes the slide 29 reference [[s_uoc]] (= 25).
+  Slides changed (approved): 16 foot «Στην προηγούμενη διαφάνεια παραβιάζονται…» -> «Στο Εργαστήριο 1 παραβιάζονται…»; 29 «(UOC, προηγούμενη διαφάνεια)» -> «(UOC, διαφάνεια 25)».
+  Student PDF regenerated for the two slide changes (32 pages).
+  Left out: the skip remarks (slides 14, 19, 32); why an older source (17); the journalistic-source remark (21); «rarely the teacher» (6); the Java effect per specialisation (29).
+  Slides 10 and 30 'ragged' (left-aligned text): their justified short lines opened gaps of 1,5-2,4 em (set by title in the generator).
 
 W3P2:
   pending
@@ -591,7 +596,8 @@ W2P3:
   none
 
 W3P1:
-  none
+W3P1 slide 8: the statement is worded as it appears in exercise solutions and handbooks (it comes from the key of the older Week 3 practical, DS1).
+W3P1 slide 24: the typology of interventions comes from the older material of the course (the LA revision deck) and remains useful.
 
 W3P2:
   none
