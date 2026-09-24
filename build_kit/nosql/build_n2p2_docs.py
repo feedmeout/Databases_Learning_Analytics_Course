@@ -3,7 +3,7 @@ Every query and result comes from nosql/e2p2_cmds.py and nosql/e2p2_outputs.json
 import json, os, re, html, sys
 HERE = os.path.dirname(os.path.abspath(__file__)); K = os.path.join(HERE, '..'); e = html.escape
 sys.path.insert(0, HERE)
-from e2p2_cmds import SHEET, CMDS
+from e2p2_cmds import SHEET, CMDS, PRESENT_FROM
 O = json.load(open(f'{HERE}/e2p2_outputs.json', encoding='utf8'))
 CSS = re.search(r"CSS = '''(.*?)'''", open(f'{K}/lab1/build_pack.py', encoding='utf8').read(), re.S).group(1)
 CSS += '''
@@ -33,8 +33,9 @@ lead = ('<p class="lead">Δουλεύετε σε ομάδες των τεσσά�
         'Ο καθένας εκτελεί τα ερωτήματα στο δικό του mongosh, αφού πρώτα επιλέξει τη βάση library με την εντολή <code>use library</code>. '
         'Για κάθε ζητούμενο γράψτε στον πίνακα το ερώτημα της MongoDB και πόσα έγγραφα επιστρέφει· το πλήθος το βρίσκετε με την '
         '<code>countDocuments</code>, με το ίδιο φίλτρο.</p>'
-        f'<p class="lead">Στο τέλος, οι ομάδες παρουσιάζουν στην ολομέλεια με τη σειρά, ένα ζητούμενο η καθεμία: η πρώτη ομάδα το 1, '
-        f'η δεύτερη το 2 και ούτω καθεξής, ώσπου να παρουσιαστούν και τα {N}.</p>')
+        f'<p class="lead">Στο τέλος, μόλις επιστρέψετε στην κεντρική αίθουσα, ένα μέλος κάθε ομάδας γράφει στο chat τα {N} πλήθη της στήλης «Πλήθος», '
+        f'με τη σειρά και με κόμμα ανάμεσα, π.χ. «Ομάδα 2: {O["q1_find"][0]}, {C[2]}, …». Μετά οι ομάδες παρουσιάζουν με τη σειρά, ένα ζητούμενο η καθεμία, '
+        f'από το {PRESENT_FROM} έως το {N}: η πρώτη ομάδα το {PRESENT_FROM}, η δεύτερη το {PRESENT_FROM + 1} και ούτω καθεξής, ώσπου να παρουσιαστούν όλα.</p>')
 note = ('<b>Βοήθημα:</b> η σελίδα <a href="https://www.mongodb.com/docs/manual/reference/sql-comparison/">SQL to MongoDB Mapping Chart</a> '
         'του εγχειριδίου της MongoDB. Όπου η σελίδα χρησιμοποιεί την <code>count()</code>, χρησιμοποιήστε την <code>countDocuments()</code>. '
         'Η στήλη SQL γράφει κάθε ζητούμενο σαν να είχε κάθε βιβλίο μία μόνο κατηγορία (category)· στη MongoDB το πεδίο λέγεται categories και είναι λίστα.')
@@ -72,16 +73,27 @@ arows = [[str(q['n']), f'<span class="mono">{e(q["find"])}</span>', result(q), w
 a1 = (''
       + tbl('na', ['#', 'Λύση', 'Αποτέλεσμα', 'Προσοχή'], arows))
 test0 = O.get('in_test', None)
+# the line every team posts in the chat (slide 6): one number per item, as in the column «Πλήθος»
+N10 = 10; Q10 = [q for q in SHEET if q['n'] == N10][0]
+assert not Q10['count'] and not [q for q in SHEET if not q['count'] and q['n'] not in (1, N10)]
+LIM10 = re.search(r'\.limit\((\d+)\)$', Q10['find']).group(1)
+assert len(titles(O['q%d_show' % N10][0])) == int(LIM10) and Q10['find'].startswith('db.books.find({},')  # 5 documents; empty filter
+C2_ALL = C[2]  # countDocuments({}) = all books
+CHAT = [O['q1_find'][0] if q['n'] == 1 else LIM10 if q['n'] == N10 else C[q['n']] for q in SHEET]
+assert len(CHAT) == N and all(x and x.isdigit() for x in CHAT)
 a2 = ('<h2 style="margin-top:0">Μέρος 2, λεπτό προς λεπτό</h2>' + tbl('run', ['Λεπτά', 'Διαφάνεια', 'Τι γίνεται'], [
       ['0–1', '1', 'Ο στόχος, όπως τον έθετε το παλαιότερο υλικό. Αναρτήστε το φύλλο στην πλατφόρμα ή στο chat.'],
       ['1–3', '2', 'Η σελίδα SQL to MongoDB Mapping Chart, με τα δικά της παραδείγματα· όπου γράφει <code>count()</code>, ισχύει το <code>countDocuments()</code>.'],
       ['3–4', '3', 'Πώς δουλεύουμε: ομάδες των τεσσάρων, ίδιο φύλλο, το δικό του mongosh ο καθένας.'],
       ['4–6', '4', 'Λυμένο παράδειγμα, εκτός φύλλου: βιβλία MEAP με γνωστό αριθμό σελίδων.'],
-      ['6–28', '5', 'Αίθουσες. Χρονόμετρο 20:00 μόλις μπουν όλοι. Μηνύματα: στο 10ό λεπτό «όποιος τελείωσε έως το 10, συνεχίζει στα 11 έως 13»· στο 18ο «δύο λεπτά, σημειώστε τα πλήθη».'],
-      ['28–34', '6', f'Όλες οι ομάδες, με τη σειρά, ένα ζητούμενο κάθε φορά, ώσπου να παρουσιαστούν και τα {N}· ένα χρονόμετρο 06:00 για όλο τον γύρο. Οι άλλες συγκρίνουν πλήθη.'],
+      ['6–28', '5', 'Αίθουσες. Χρονόμετρο 20:00 μόλις μπουν όλοι. Μηνύματα: στο 10ό λεπτό «όποιος τελείωσε έως το 10, συνεχίζει στα 11 έως 13»· στο 18ο «δύο λεπτά, ετοιμάστε τα πλήθη για το chat».'],
+      ['28–34', '6', f'Πρώτα κάθε ομάδα γράφει στο chat τα {N} πλήθη (η σωστή γραμμή είναι πιο κάτω). Μετά, με τη σειρά, ένα ζητούμενο κάθε φορά, από το {PRESENT_FROM} έως το {N}. Ένα χρονόμετρο 06:00 για όλο τον γύρο.'],
       ['34–42', '7–10', 'Οι λύσεις εκεί όπου γίνονται τα λάθη: Java και java, AND και OR, πεζά στην ταξινόμηση, λέξη ή κομμάτι λέξης. Οι 9 και 10 παραλείπονται αν πιέζει ο χρόνος.'],
       ['42–43', '11', 'Να θυμάστε.'],
       ['43–45', '12', 'Διάλειμμα· τα 2 λεπτά είναι το περιθώριο του μέρους.']])
+      + f'<h2>Η σωστή γραμμή στο chat</h2><p class="lead"><b>{", ".join(CHAT)}</b></p>'
+      + f'<p class="lead">Στο {N10} δεκτό και το {C2_ALL}: η <code>countDocuments</code> με το ίδιο, κενό φίλτρο δεν λαμβάνει υπόψη το <code>limit</code>. '
+        f'Τα {PRESENT_FROM - 1} πρώτα δεν παρουσιάζονται· αν μια ομάδα γράφει εκεί 0, είναι στη βάση test.</p>'
       + '<h2>Αν μια ομάδα κολλήσει</h2><ul class="chg">'
       + f'<li><b>Όλα τα πλήθη 0:</b> η ομάδα είναι στη βάση test, όχι στη library· <code>use library</code>. Στη βάση test, το <code>db.books.countDocuments()</code> δίνει {O["q1_in_test"][0]}.</li>'
       + '<li><b>Κάποιος δεν έχει τη συλλογή:</b> δουλεύει με την οθόνη ενός μέλους της ομάδας και ολοκληρώνει την εισαγωγή στο επόμενο διάλειμμα (διαφάνεια 4 του Μέρους 1).</li>'

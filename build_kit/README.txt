@@ -580,6 +580,16 @@ Merging: Claude merges its own PRs once every check passes (lecturer, 24 Sept 20
 Open, waiting for the lecturer: the eight links of W1P3 slides 13 and 28 (the network here blocks those sites); the «άρθρο 10» tag of W3P3 slide 2 against the
   amended text (2026/1744).
 
+v16.1 (same day). Lecturer: item 1 makes no sense to present, "but still there needs to be a way how I control for their responses". N2P2 now:
+  every team posts the 13 counts of its column «Πλήθος» in the Zoom chat as soon as the rooms close («Ομάδα 2: 431, 431, …»), so every answer of every
+  team is checked, items 1-3 included; then the teams present items 4-13 in turn (PRESENT_FROM = 4 in e2p2_cmds.py, used by the slides and the sheet).
+  Slide 3 row Χρόνος «…μετά όλες οι ομάδες στέλνουν τα πλήθη τους στο chat και παρουσιάζουν.»; slide 5 item 3 «Ένα μέλος κρατά τις απαντήσεις και στο
+  τέλος στέλνει τα πλήθη στο chat.», its 02:00 message «ετοιμάστε τα πλήθη για το chat»; slide 6 «Πρώτα τα πλήθη στο chat, μετά τα ζητούμενα 4 έως 13:»,
+  one 06:00 timer (about a minute for the chat, half a minute per item). Sheet: the presentation paragraph says the same (still one page). Answers file,
+  page 2: new block «Η σωστή γραμμή στο chat» 431, 431, 431, 96, 95, 364, 90, 96, 96, 5, 38, 14, 19, built from e2p2_outputs.json; item 10 also accepts 431
+  (countDocuments with the same, empty filter ignores limit). Deck, sheet and answers PDFs, course copies (Lab/W2P2_Exercise_sheet.pdf too), review/N2P2
+  updated; slides 3, 5 and 6 changed.
+
 ==================== Αλλαγές από το παλαιότερο υλικό (kept out of the speaker notes; notes rule 4) ====================
 N2P1:
 N2P1 slide 5: the older material also showed the reverse command, mongoexport (mongoexport --db=world --collection=country --out=country_export.json);
