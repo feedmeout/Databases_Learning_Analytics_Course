@@ -485,7 +485,10 @@ N2P3:
   pending
 
 W1P1:
-  pending
+  35 slides, 102 notes (2 to 4 per slide; one «Αν ρωτήσουν», slide 16). Source content/w1p1_v2.json (hand-edited, no generator): only the notes
+  and meta.notesMarkup changed; slide HTML identical to notes/base, student PDF not regenerated.
+  Left out of the notes: slide 35 «stop on time; what is left is in the students' copy of the slides» (about skipping); slide 24 «the next
+  slides do not depend on the poll result». Proposals: see PR.
 
 W1P2:
   pending
@@ -524,7 +527,8 @@ N2P3:
   none
 
 W1P1:
-  none
+W1P1 slide 1: the older Week 1 material opened with a round of introductions (old slide 1.2, cut); the note offered instead an optional 45-second Zoom
+  poll on background (statistics, data mining, Learning Analytics, educational research).
 
 W1P2:
   none
