@@ -16,6 +16,7 @@ Everything is built from sources in `build_kit/`. `build_kit/README.txt` is the 
   - `python3 nosql/check_pre.py "$PWD/out/N2P1.html"` → `clipped code: none`
   - `python3 topdf_deck.py "$PWD/out/N2P1.html" "$PWD/out/N2P1_student.pdf"` (student PDF, one slide per page)
   - A4 documents: `python3 lab1/topdf.py <html> <pdf>` → `pages overflowing: none`
+  - Notes rules: `python3 check_notes.py "$PWD/out/N2P1.html"` → `notes rules: ok` (read every warning; errors must be zero)
   - Notes and review images: `python3 review.py "$PWD/out/N2P1.html" ../review/N2P1/pilot.png 5,7,8` → `notes shown: all`
 - Never hand-edit HTML in `out/`: change the JSON or its generator and rebuild.
 - Engine changes are opt-in (a new flag or markup). After any engine change, every earlier deck must rebuild with identical slide HTML: compare the part between `<div id="stage">` and `<nav class="ctl"` before and after. Check a new CSS class name with grep before using it (`.wkc` already exists).

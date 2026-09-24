@@ -468,7 +468,97 @@ CLOUD ENVIRONMENT: the decks load Commissioner from Google Fonts, which headless
   playwright to the version of the global npm playwright, whose Chromium the cloud image already has (1.56 -> chromium-1194): the old unpinned upgrade moved
   playwright past that Chromium and needed a browser download, which the cloud network refuses.
 
+==================== v15 (24 Sept 2026: speaker notes for every deck by the CLAUDE.md notes rules, after the lecturer's OK of the pilot) ====================
+Branches: one per deck, notes/<deck>; W2P2+W2P3 and W3P2+W3P3 share one, because lab1/make_deck_json.py and w3p2/make_deck_json.py also write the
+  reveal (lab1_reveal.json) and ethics (lab2_ethics.json) slides of the next part. Evening 1 (N1P1-N1P3) is final and was not touched.
+ENGINE (opt-in, same flag): decks with meta.notesMarkup also send titleHtml, so the presenter shows `code` in titles as code, not as backticks.
+  Same flag: the T key also starts/pauses the timer when the notes window has the focus (before, only the slide window reacted to T).
+ENGINE (opt-in per slide): 'ragged': True on a slide left-aligns its running text (class .ragged, deck2.css end). The house style stays justified
+  (v3: "where lines are long enough"); the flag is for slides whose short lines open wide gaps. All 15 decks rebuild with identical slide HTML.
+ENGINE (opt-in per slide): 'hLinks': True on a table slide renders its row names with em(), so a row name can be a [link](https://…).
+COURSE FOLDERS: the lecture HTML files under «1. NoSQL/» and «2. Database Systems & Learning Analytics (2026)/» are byte-identical copies of
+  build_kit/out/<DECK>.html (N2Pn -> 1. NoSQL/Week 2/1. Lecture/NoSQL_W2Pn.html; W1Pn -> Week1/1. Lecture/LA_W1_Partn.html; W2Pn, W3Pn ->
+  Week2|Week3/1. Lecture/HTML/WnPn.html); student PDFs likewise. Every deck branch copies its rebuilt deck there, so the lecture files carry the notes.
+setup.sh also installs pandas (lab1/ and workshop1/ generators).
+check_notes.py: the notes rules checked on the built deck (2-4 notes, **item** found on the slide, one «Αν ρωτήσουν» at most, meta words, order).
+
+N2P1:
+  pending
+
+N2P2:
+  12 slides, 47 notes (4 per slide, 3 on the break slide), one «Αν ρωτήσουν» (slide 7); meta.notesMarkup = true. make_n2p2.py asserts 2 to 4 notes per slide, fills
+  [[s_page]], [[s_how]], [[p1_install]] (N2P1, from content/n2p1.json); checks the 325-page tie of slide 4 in books.json; timers and minutes are variables (same slides).
+  Left out of the notes: slide 2, SQL strings in single quotes «όπως στο πρότυπο»; slide 3, «όπως στα εργαστήρια της Μαθησιακής Αναλυτικής»; slide 12, stop on time.
+  Slides 3 (row Χρόνος) and 6 keep the two-team rule, the sheet has one item per team in turn (v13.5): note 3 of slide 3 and notes 1 and 4 of slide 6 say so. Proposals: see PR.
+
+N2P3:
+  pending
+
+W1P1:
+  pending
+
+W1P2:
+  pending
+
+W1P3:
+  pending
+
+W2P1:
+  pending
+
+W2P2:
+  pending
+
+W2P3:
+  pending
+
+W3P1:
+  pending
+
+W3P2:
+  pending
+
+W3P3:
+  pending
+
 ==================== Αλλαγές από το παλαιότερο υλικό (kept out of the speaker notes; notes rule 4) ====================
+N2P1:
 N2P1 slide 5: the older material also showed the reverse command, mongoexport (mongoexport --db=world --collection=country --out=country_export.json);
   not needed for Εργασία 2.
 N2P1 slide 8: the older material used count(); it still works, with a DeprecationWarning. The deck uses countDocuments().
+
+N2P2:
+N2P2 slide 1: the group task is the older material's, as it was (study the SQL-MongoDB comparison page, groups, plenary); its optional exercises are the 13 items of the sheet.
+N2P2 slide 2: the older material gave the address docs.mongodb.com; today it is mongodb.com/docs.
+N2P2 slide 7: the older solutions of items 4 and 5 had typographic quotes (“Java”); mongosh answers SyntaxError: Unexpected character '“'. (1:27)
+N2P2 slide 7: the older solution of item 1, db.books.count(), works with a deprecation warning; the answers file uses db.books.countDocuments().
+
+N2P3:
+  none
+
+W1P1:
+  none
+
+W1P2:
+  none
+
+W1P3:
+  none
+
+W2P1:
+  none
+
+W2P2:
+  none
+
+W2P3:
+  none
+
+W3P1:
+  none
+
+W3P2:
+  none
+
+W3P3:
+  none
