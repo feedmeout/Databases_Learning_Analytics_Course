@@ -460,3 +460,5 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--mist);pa
 .shlx.n2sql{background:var(--amber-bg);color:var(--ink);box-shadow:inset 0 0 0 2px #EBD29B}
 .shl.n2side .shlc{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start;column-gap:26px}
 .n2a{color:var(--deep);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px;font-weight:700}
+/* opt-in per slide (slide.ragged = true): left-aligned text where justified lines would open wide gaps (short lines) */
+.slide.ragged :is(.defq,.callout p,.grp ul.plain li,.dfoot,.points li,.vnote,.context,.cc li,.lesson,.claim,.keyline,.numlist li span,.teaser p,.footline,.caption,.trt,.statement.wide,.gnote,.asteps p){text-align:left}
