@@ -496,6 +496,7 @@ W1P1:
   meta.notesMarkup, plus ONE slide change (approved): slide 5 callout «Τέσσερα ρήματα» -> «Τέσσερα στάδια» (the four words are nouns). The rest
   of the slide HTML is identical to notes/base; the student PDF was regenerated for slide 5 (35 pages) and copied to Week1/2. Students.
   Left out of the notes: slide 35 «stop on time; what is left is in the students' copy» (about skipping); slide 24 «next slides do not depend on the poll».
+  Slides 26 and 27 'ragged' (left-aligned text): their justified short lines opened gaps of 1,5-2,4 em.
 
 W1P2:
   pending
