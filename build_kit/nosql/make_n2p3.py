@@ -438,5 +438,11 @@ D = {'meta': {'course': 'Βάσεις Δεδομένων & Ανάλυση Δεδ
               'part': 'Μη σχεσιακές βάσεις, Βραδιά 2, Μέρος 3', 'start': '20:15', 'lengthMin': 45, 'breakMin': 15, 'lang': 'el',
               'notesMarkup': True},
      'slides': S}
+# left-aligned text where justified short lines open wide gaps (engine opt-in 'ragged', README v15)
+RAGGED = {'Η ενότητα 10 ζητά ομαδοποίηση'}
+for s in D['slides']:
+    if s['title'] in RAGGED:
+        s['ragged'] = True
+assert sum(1 for s in D['slides'] if s.get('ragged')) == len(RAGGED)
 json.dump(D, open(os.path.join(H, '..', 'content', 'n2p3.json'), 'w', encoding='utf8'), ensure_ascii=False, indent=1)
 print('slides', len(S), 'minutes', tot, 'skippable', skips, 'refs', REF)

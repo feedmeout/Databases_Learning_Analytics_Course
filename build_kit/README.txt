@@ -496,6 +496,7 @@ N2P3:
   the old note «one Java MEAP book has a known page count» was imprecise (there is one Java MEAP book in all) and is rewritten.
   Slide changes after review (lead's OK): slide 10 context «Η Ελλάδα έχει ήδη πέντε πεδία, εκτός από το `_id`.»; slide 17 title «$match και υπολογισμοί ανά
   ομάδα» (was «συσσωρευτές»); slide 20 third point «Το `$project` αντιστοιχεί στο SELECT της SQL.». Student PDF not regenerated (lead's final pass).
+  Slide 25 'ragged' (left-aligned text): the quote's first line spread five words over the full width (set by title in the generator).
 
 W1P1:
   pending
