@@ -515,6 +515,7 @@ W3P1:
   Slides changed (approved): 16 foot «Στην προηγούμενη διαφάνεια παραβιάζονται…» -> «Στο Εργαστήριο 1 παραβιάζονται…»; 29 «(UOC, προηγούμενη διαφάνεια)» -> «(UOC, διαφάνεια 25)».
   Student PDF regenerated for the two slide changes (32 pages).
   Left out: the skip remarks (slides 14, 19, 32); why an older source (17); the journalistic-source remark (21); «rarely the teacher» (6); the Java effect per specialisation (29).
+  Slides 10 and 30 'ragged' (left-aligned text): their justified short lines opened gaps of 1,5-2,4 em (set by title in the generator).
 
 W3P2:
   pending

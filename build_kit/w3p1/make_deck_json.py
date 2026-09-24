@@ -267,5 +267,11 @@ META = {'course': 'Βάσεις Δεδομένων & Ανάλυση Δεδομέ
 mins = sum(s['mins'] for s in S); skip = [i + 1 for i, s in enumerate(S) if s.get('skippable')]; tm = [(i + 1, s['timerSec']) for i, s in enumerate(S) if s.get('timerSec')]
 assert mins == 45, mins; assert len(S) == 32 and skip == [14, 19] and tm == [(8, 60)], (len(S), skip, tm)
 assert all(2 <= len(s['notes']) <= 4 for s in S), [i + 1 for i, s in enumerate(S) if not 2 <= len(s['notes']) <= 4]
+# left-aligned text where justified short lines open wide gaps (engine opt-in 'ragged', README v15)
+RAGGED = {'Ψευδώς θετικό: ο φοιτητής που επισημάνθηκε χωρίς λόγο', 'Πώς θα γνωρίζετε αν λειτούργησε η δική σας παρέμβαση'}
+for s in S:
+    if s['title'] in RAGGED:
+        s['ragged'] = True
+assert sum(1 for s in S if s.get('ragged')) == len(RAGGED)
 json.dump({'meta': META, 'slides': S}, open(os.path.join(HERE, '..', 'content', 'w3p1.json'), 'w', encoding='utf8'), ensure_ascii=False, indent=1)
 print('slides', len(S), '| minutes', mins, '| skippable', skip, '| timers', tm)
