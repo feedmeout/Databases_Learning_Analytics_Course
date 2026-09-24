@@ -484,8 +484,11 @@ N2P2:
 N2P3:
   32 slides, 114 notes, item in bold, top to bottom; five «Αν ρωτήσουν» (slides 6, 16, 18, 20, 27). meta.notesMarkup = true; make_n2p3.py asserts 2 to 4.
   Numbers and names in the notes are read from e2p3_outputs.json and e2p3_cmds.py (new variables), slide numbers from 13 new references [[s_set]] … [[s_map]].
-  Left out: slide 24, the source-book remark; slide 28, the manual's COUNT() list ($sum, $sortByCount); the skip remarks of slides 12 and 24. Slide 17: the
-  old note «one Java MEAP book has a known page count» was imprecise (there is one Java MEAP book in all) and is rewritten. Proposals: see PR.
+  Left out: slide 24, the source-book remark; slide 28, the manual's COUNT() list ($sum, $sortByCount); the skip remarks of slides 12 and 24; slide 27, the
+  remark that the manual's mapping page still shows count() (moved to «Αλλαγές»; the «Αν ρωτήσουν» names countDocuments(), not the old count()). Slide 17:
+  the old note «one Java MEAP book has a known page count» was imprecise (there is one Java MEAP book in all) and is rewritten.
+  Slide changes after review (lead's OK): slide 10 context «Η Ελλάδα έχει ήδη πέντε πεδία, εκτός από το `_id`.»; slide 17 title «$match και υπολογισμοί ανά
+  ομάδα» (was «συσσωρευτές»); slide 20 third point «Το `$project` αντιστοιχεί στο SELECT της SQL.». Student PDF not regenerated (lead's final pass).
 
 W1P1:
   pending
@@ -535,6 +538,7 @@ N2P3 slide 21: the file's first line changed: with use book-filtered-top-subset;
   in its name, without the persons. With db.getSiblingDB both ways work.
 N2P3 slide 22: the older material's slides 24 and 25, without the English comments of the original.
 N2P3 slide 25: the persons example alone, as in the older material, does not cover section 10 (it does not group).
+N2P3 slide 27: the manual's SQL to MongoDB Mapping Chart still shows count() for SELECT COUNT(*); the deck and the notes use countDocuments().
 N2P3 slide 30: the requirements are exactly as in the colleague's brief; only the wording was corrected.
 
 W1P1:
