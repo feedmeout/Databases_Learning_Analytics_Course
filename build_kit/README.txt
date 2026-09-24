@@ -534,10 +534,16 @@ W2P1:
   Slide 13 'ragged' (left-aligned text): its justified short lines opened gaps of 1,7 em.
 
 W2P2:
-  pending
+  8 slides, 28 notes. lab1/make_deck_json.py: meta.notesMarkup, asserts 2-4 notes (W2P2 and the reveal slides it writes to lab1_reveal.json), g1() for one number
+  with one decimal, three asserts behind data claims of reveal notes. Slide 5: rooms «σε όσο το δυνατόν λιγότερες αίθουσες, με έως 5 άτομα… Με έως 6 άτομα δεν
+  ανοίγετε αίθουσες» (as in Lab1_answers). Slide 3: «Επισήμανση σημαίνει» gone (terminology of v5). No slide changed. Proposals: none.
 
 W2P3:
-  pending
+  33 slides, 113 notes (slides 1-11 written in lab1/make_deck_json.py). workshop1/make_deck_json.py: meta.notesMarkup, asserts 2-4, ref() for earlier slide numbers.
+  Slides changed (approved): 17 row 1 «Την τάξη συνολικά: … 107 ενεργοί φοιτητές.» (107 is a count); 30 title «Βαθμονόμηση στο ERIC, μπλοκ προς μπλοκ» (v13.4).
+  Student PDF regenerated (33 pages). Sheets: Lab1_answers without «r = 0,28» after Saqr et al. (2022) (that r is lecture viewing, W2P1 slide 16); Search_sheet heading
+  «Τρεις παγίδες στο ERIC» (v13.4); both PDFs copied to the course folder (Search_sheet: topdf reports the page, not the content, 7 px over here, as the unchanged sheet does too; 1 page, nothing cut). Left out of the notes: skip lines (8, 19, 24); claims not in the kit (3, 13, 21, 23, and
+  29 the ERIC retrieval date); 4 the Saqr r (now an «Αν ρωτήσουν» without it); 5 the Turku «πράσινοι» (W2P1 notes only); 22 the Course Signals link.
 
 W3P1:
   32 slides, 110 notes (2 to 4 per slide, six «Αν ρωτήσουν»), all other notes led by their on-slide item in bold; meta.notesMarkup on; Lab 1 numbers
