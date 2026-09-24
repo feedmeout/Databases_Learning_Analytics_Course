@@ -509,13 +509,15 @@ W3P2:
   12 slides, 44 notes (w3p2/make_deck_json.py, which also writes the notes of W3P3 slides 1-11 into lab2_ethics.json); meta notesMarkup; assert 2-4 notes.
   Left out: slide 2, the 80/20 split "as the data creators recommend"; slide 9, the 30 international / 12 special-needs students (not on the slide, and it
   read as if n = 30 cannot be checked while the left panel rests on n = 30). check_notes order warnings on 5 and 6: the timer note comes first (first action).
-  proposals: see PR.
+  SLIDES CHANGED (approved after review): 9, 'bw': 140 on both panels (the labels «εξοφλημένα» / «σε καθυστέρηση» collided); 10, row «Δίδακτρα εξοφλημένα»
+  now «Το ισχυρότερο από όσα δεν αφορούν τις σπουδές.» (was «Δεύτερο…»; asserted from numbers.json). Student PDF to be regenerated in the final pass.
 
 W3P3:
   27 slides, 83 notes (1-11 from w3p2/make_deck_json.py via lab2_ethics.json, 12-27 from w3p3/make_deck_json.py); meta notesMarkup; assert 2-4 notes.
   Assignment notes (19, 22, 24, 25) checked against Assignment/Εργασία 3 LA 2026-27.pdf. Left out: the skip remarks of slides 10 and 27; slide 5, "που υπάρχει
   και στον οδηγό διδάσκοντος" (the zero-units caveat is now its «Αν ρωτήσουν»). check_notes order warning on 25: the timer note comes first (first action).
-  proposals: see PR.
+  SLIDE CHANGED (approved after review): 24, «σύγκριση με προηγούμενες ανασκοπήσεις» -> «σύγκριση με προηγούμενες έρευνες» (brief p. 5); same line changed
+  in the Submission checklist (handouts/build_sheets.py; the other three sheets rebuild byte-identical; PDF 1 page, copied to Assignment/). Student PDF: final pass.
 
 ==================== Αλλαγές από το παλαιότερο υλικό (kept out of the speaker notes; notes rule 4) ====================
 N2P1:
