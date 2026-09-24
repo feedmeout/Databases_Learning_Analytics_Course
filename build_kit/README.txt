@@ -476,7 +476,10 @@ setup.sh also installs pandas (lab1/ and workshop1/ generators).
 check_notes.py: the notes rules checked on the built deck (2-4 notes, **item** found on the slide, one «Αν ρωτήσουν» at most, meta words, order).
 
 N2P1:
-  pending
+  33 slides, 116 notes (2-4 per slide); slides 5, 7, 8 = the approved pilot, unchanged; all others rewritten (item in bold, top to bottom, one «Αν ρωτήσουν» at most).
+  Left out (not on the slide): EJSON.stringify (11), let/const (12), stable paging with a unique sort field (30), «prepares Άσκηση 2» (26); the old slide-16 note
+  «every book has shortDescription» was wrong (6 of the 12) and is gone. make_n2p1.py: note numbers read from e2p1_outputs.json with new asserts; new REF keys
+  s_book23, s_regex, s_elem, s_poll (the 2-4 assert was already in place). proposals: see PR.
 
 N2P2:
   pending
@@ -516,6 +519,27 @@ N2P1:
 N2P1 slide 5: the older material also showed the reverse command, mongoexport (mongoexport --db=world --collection=country --out=country_export.json);
   not needed for Εργασία 2.
 N2P1 slide 8: the older material used count(); it still works, with a DeprecationWarning. The deck uses countDocuments().
+N2P1 slide 3: the course copy of books.json (the colleague's file) has the same 431 documents as the GitHub file on the slide, with Windows
+  line endings.
+N2P1 slide 4: the same steps as the older material: install the tools, add their folder to Path, import books.json with mongoimport.
+N2P1 slide 9: the older material showed projection on the country collection, find({ name: "Greece" }, { name: 1, population: 1 });
+  here with a filter: the 6 books of the Python category.
+N2P1 slide 10: the older material showed exclusion with find({ name: "Cyprus" }, { population: 0 }).
+N2P1 slide 11: in the older material's printjson screenshot _id appeared as {}; today's mongosh shows its value, e.g.
+  ObjectId('53c2ae8528d75d572c06ad9d').
+N2P1 slide 12: the older material stored a list of documents in a variable and inserted it with insert(); today:
+  var countries = [ … ]; db.country.insertMany(countries). insert() still works, with a deprecation warning.
+N2P1 slide 13: the table is the older material's table of comparison operators, in Greek, with the matching SQL.
+N2P1 slide 14: as in the older material: find({ population: { $gt: 70000000 } }).
+N2P1 slide 15: Άσκηση 1 of the older material, as it was.
+N2P1 slide 16: the older material's solution of Άσκηση 1 is correct and is kept as it was.
+N2P1 slide 17: the table is the older material's table of logical operators, in Greek, with the matching SQL.
+N2P1 slide 19: the older material had the same topic from the manual («AND Queries With Multiple Expressions Specifying the Same Field»).
+N2P1 slide 24: the older material pointed to the manual's $regex page; its exercises with the word Java are done in Part 2.
+N2P1 slide 27: Άσκηση 2 of the older material; its task said «Piter» while its solution searched «Peter»: with «Piter» no book is found.
+N2P1 slide 28: the older material's solution, as it was: db.books.find({ authors: { $elemMatch: { $regex: "^Peter", $options: "i" } } }).
+N2P1 slide 28: with «Piter», as the old task said, countDocuments gives 0.
+N2P1 slide 29: as in the older material: find().sort({ population: -1 }).limit(1), «the country with the largest population».
 
 N2P2:
   none
