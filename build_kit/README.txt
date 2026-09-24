@@ -548,10 +548,19 @@ W3P1:
   Slides 10 and 30 'ragged' (left-aligned text): their justified short lines opened gaps of 1,5-2,4 em (set by title in the generator).
 
 W3P2:
-  pending
+  12 slides, 44 notes (w3p2/make_deck_json.py, which also writes the notes of W3P3 slides 1-11 into lab2_ethics.json); meta notesMarkup; assert 2-4 notes.
+  Left out: slide 2, the 80/20 split "as the data creators recommend"; slide 9, the 30 international / 12 special-needs students (not on the slide, and it
+  read as if n = 30 cannot be checked while the left panel rests on n = 30). check_notes order warnings on 5 and 6: the timer note comes first (first action).
+  SLIDES CHANGED (approved after review): 9, 'bw': 140 on both panels (the labels «εξοφλημένα» / «σε καθυστέρηση» collided); 10, row «Δίδακτρα εξοφλημένα»
+  now «Το ισχυρότερο από όσα δεν αφορούν τις σπουδές.» (was «Δεύτερο…»; asserted from numbers.json). Student PDF regenerated (12 pages).
 
 W3P3:
-  pending
+  27 slides, 83 notes (1-11 from w3p2/make_deck_json.py via lab2_ethics.json, 12-27 from w3p3/make_deck_json.py); meta notesMarkup; assert 2-4 notes.
+  Assignment notes (19, 22, 24, 25) checked against Assignment/Εργασία 3 LA 2026-27.pdf. Left out: the skip remarks of slides 10 and 27; slide 5, "που υπάρχει
+  και στον οδηγό διδάσκοντος" (the zero-units caveat is now its «Αν ρωτήσουν»). check_notes order warning on 25: the timer note comes first (first action).
+  SLIDE CHANGED (approved after review): 24, «σύγκριση με προηγούμενες ανασκοπήσεις» -> «σύγκριση με προηγούμενες έρευνες» (brief p. 5); same line changed
+  in the Submission checklist (handouts/build_sheets.py; the other three sheets rebuild byte-identical; PDF 1 page, copied to Assignment/). Student PDF regenerated (27 pages).
+  Slides 3, 4, 7, 8 'ragged' (left-aligned text; set by title in w3p2/make_deck_json.py for the ethics block): gaps of 1,5-2,7 em.
 
 ==================== Αλλαγές από το παλαιότερο υλικό (kept out of the speaker notes; notes rule 4) ====================
 N2P1:
@@ -631,4 +640,7 @@ W3P2:
   none
 
 W3P3:
-  none
+W3P3 slide 3: the seven questions come from the older lectures of the course (source deck 4, two grammar fixes; README v8).
+W3P3 slide 15: the publication calls the framework «τετραδιάστατο»; the older slides of the course spoke of data «από τρεις διαστάσεις». Both hold.
+W3P3 slide 17: the numbers are the published ones (Antonelli et al., 2023); the older slides 7.13-7.14 showed other numbers, not in the paper (README v9).
+W3P3 slide 24: the checklist comes from the older material of the course, aligned with the Week 1 brief.
