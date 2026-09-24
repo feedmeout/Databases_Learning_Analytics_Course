@@ -497,10 +497,15 @@ W2P1:
   pending
 
 W2P2:
-  pending
+  8 slides, 28 notes. lab1/make_deck_json.py: meta.notesMarkup, asserts 2-4 notes (W2P2 and the reveal slides it writes to lab1_reveal.json), g1() for one number
+  with one decimal, two asserts behind data claims of reveal notes. Slide 5: the room rule now reads «τέσσερις από 13 έως 20» (above 20, four rooms break
+  «3 έως 5 άτομα»). Slide 3: «Επισήμανση σημαίνει» gone (terminology of v5). Proposals: none.
 
 W2P3:
-  pending
+  33 slides, 113 notes (slides 1-11 written in lab1/make_deck_json.py). workshop1/make_deck_json.py: meta.notesMarkup, asserts 2-4, ref() for earlier slide numbers.
+  Left out: skip lines (8, 19, 24); claims not in the kit or background (3 «παραβιάζεται συχνότερα», 13 «σχεδόν όλες οι ανασκοπήσεις», 21 «βραβευμένη», 23 1.968
+  records and five studies with theory, 29 the ERIC retrieval date); 4 Saqr et al. r = 0,28 (W2P1 slide 16 gives it for lecture viewing, not activity: now an
+  «Αν ρωτήσουν» without the number); 5 the Turku «πράσινοι» (W2P1 notes only); 9 the k-means link; 22 the Course Signals link. Proposals: see PR.
 
 W3P1:
   pending
