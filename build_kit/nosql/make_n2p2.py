@@ -2,7 +2,7 @@
 # The colleague's line (Part B, slides 35-39): study the manual's SQL-to-MongoDB page, solve in groups, present to the plenary; his optional
 # exercises become the one-page sheet (e2p2_cmds.SHEET). Every number and output comes from e2p2_outputs.json (run_e2p2.py, real run).
 import json, os, re
-from e2p2_cmds import SHEET, CMDS
+from e2p2_cmds import SHEET, CMDS, PRESENT_FROM
 H = os.path.dirname(os.path.abspath(__file__))
 O = json.load(open(os.path.join(H, 'e2p2_outputs.json'), encoding='utf8'))
 S = []
@@ -25,10 +25,14 @@ JAVA_LC_TITLES = re.findall(r"title: '([^']*)'", O['java_lc'][0])
 assert len(JAVA_LC_TITLES) == int(JAVA_LC) and "categories: [ 'java' ]" in O['java_lc'][0]
 JAVASCRIPT_TITLES = re.findall(r"title: '([^']*)'", O['javascript'][0])
 ROOM_MIN, ROOM_SEC, PRES_MIN, PRES_SEC, BREAK_MIN = 22, 1200, 6, 360, 15
-assert PRES_SEC == PRES_MIN * 60  # one timer for the whole round of presentations (slide 6)
-assert 20 <= PRES_MIN * 60 / N_ITEMS <= 40  # «μισό λεπτό περίπου» per item (notes of slide 6)
+assert PRES_SEC == PRES_MIN * 60  # one timer for the whole round: counts in the chat, then the presentations (slide 6)
+N_PRES = N_ITEMS - PRESENT_FROM + 1  # items presented (slide 6)
+CHAT_SEC = 60  # «περίπου ένα λεπτό για το chat» (notes of slide 6)
+assert 20 <= (PRES_SEC - CHAT_SEC) / N_PRES <= 40  # «μισό λεπτό για κάθε ζητούμενο» (notes of slide 6)
 NUMW = {1: 'ένα', 2: 'δύο', 3: 'τρία', 4: 'τέσσερα', 5: 'πέντε'}
-PER4 = (NUMW[N_ITEMS // 4], NUMW[-(-N_ITEMS // 4)])  # items per team with four teams (notes of slide 6)
+PER4 = (NUMW[N_PRES // 4], NUMW[-(-N_PRES // 4)])  # items per team with four teams (notes of slide 6)
+COUNT1 = O['q1_find'][0]
+assert COUNT1 == C[2]  # the example line of slide 6 shows the counts of items 1 and 2
 # worked example: the 3rd place ties with another MEAP book (order among equal values is not guaranteed); read from the course books.json
 BOOKS = [json.loads(l) for l in open(os.path.join(H, '..', 'sources_nosql', 'books.json'), encoding='utf8') if l.strip()]
 EX_TITLES, EX_PAGES = re.findall(r"title: '([^']*)'", O['example'][0]), [int(x) for x in re.findall(r'pageCount: (\d+)', O['example'][0])]
@@ -73,11 +77,11 @@ add(type='table', mins=1, compact=True, title='Πώς δουλεύουμε',
     rows=[{'h': 'Ομάδες', 't': 'Περίπου τέσσερα άτομα σε κάθε αίθουσα του Zoom· όλες οι αίθουσες έχουν το ίδιο φύλλο.'},
           {'h': 'Εργαλείο', 't': 'Ο καθένας στο δικό του mongosh, στη βάση library: `use library`.'},
           {'h': 'Τι γράφετε', 't': 'Για κάθε ζητούμενο, το ερώτημα της MongoDB και το πλήθος των εγγράφων που επιστρέφει.'},
-          {'h': 'Χρόνος', 't': '20 λεπτά στην αίθουσα· μετά παρουσιάζουν όλες οι ομάδες, με τη σειρά, ένα ζητούμενο κάθε φορά.'},
+          {'h': 'Χρόνος', 't': '20 λεπτά στην αίθουσα· μετά όλες οι ομάδες στέλνουν τα πλήθη τους στο chat και παρουσιάζουν.'},
           {'h': 'Χωρίς τη συλλογή', 't': 'Όποιος δεν ολοκλήρωσε την εισαγωγή, δουλεύει με την οθόνη ενός μέλους της ομάδας.'}],
     notes=['**Ομάδες**: Όλες οι αίθουσες έχουν το ίδιο φύλλο, ώστε στο τέλος να συγκρίνονται τα πλήθη.',
            '**`use library`**: Η βάση που δημιούργησε το mongoimport στο Μέρος 1. Αν μια ομάδα βρίσκει παντού 0, είναι ακόμη στη βάση test.',
-           '**Τι γράφετε**, **%d λεπτά στην αίθουσα**: Είναι γραμμένα και στο φύλλο, όπως και η σειρά της παρουσίασης: κάθε ομάδα παρουσιάζει τουλάχιστον ένα ζητούμενο.' % (ROOM_SEC // 60),
+           '**Τι γράφετε**, **%d λεπτά στην αίθουσα**: Είναι γραμμένα και στο φύλλο, όπως και ο τρόπος της παρουσίασης. Από τα πλήθη στο chat βλέπετε τις απαντήσεις κάθε ομάδας σε όλα τα ζητούμενα.' % (ROOM_SEC // 60),
            '**Χωρίς τη συλλογή**: Την εισαγωγή την ολοκληρώνει στο επόμενο διάλειμμα, με τη διαφάνεια [[p1_install]] του Μέρους 1.'])
 
 add(type='shell', mins=2, dense=True, title='Ένα λυμένο παράδειγμα',
@@ -95,24 +99,25 @@ add(type='work', mins=ROOM_MIN, timerSec=ROOM_SEC, title='Στις αίθουσ�
     context='Σε κάθε αίθουσα, με το φύλλο της άσκησης:',
     items=['Ο καθένας στο δικό του mongosh: `use library`.',
            'Για κάθε ζητούμενο, το ερώτημα της MongoDB και το πλήθος, με `countDocuments` και το ίδιο φίλτρο.',
-           'Ένα μέλος κρατά τις απαντήσεις της ομάδας.'],
+           'Ένα μέλος κρατά τις απαντήσεις και στο τέλος στέλνει τα πλήθη στο chat.'],
     foot='Βοήθημα: [SQL to MongoDB Mapping Chart](https://www.mongodb.com/docs/manual/reference/sql-comparison/), στο εγχειρίδιο της MongoDB.',
     notes=['**Σε κάθε αίθουσα, με το φύλλο της άσκησης**: Ανοίξτε τις αίθουσες, με τέσσερα άτομα περίπου στην καθεμία. Τα %d λεπτά της διαφάνειας περιλαμβάνουν το άνοιγμα και το κλείσιμό τους.' % ROOM_MIN,
            '**με `countDocuments` και το ίδιο φίλτρο**: Το mongosh δείχνει τα αποτελέσματα του find 20 τη φορά· το πλήθος το δίνει το `countDocuments`.',
-           '**Ένα μέλος κρατά τις απαντήσεις της ομάδας**: Τις λύσεις και τα πλήθη τα έχετε στο αρχείο απαντήσεων (N2P2_answers).',
-           '**%s**: Ξεκινήστε το χρονόμετρο με το πλήκτρο T μόλις μπουν όλοι. Μηνύματα προς όλες τις αίθουσες: όταν δείχνει 10:00, «Όποιος τελείωσε έως το 10, συνεχίζει στα 11 έως 13»· όταν δείχνει 02:00, «Δύο λεπτά· σημειώστε τα πλήθη».' % fmt(ROOM_SEC)])
+           '**στέλνει τα πλήθη στο chat**: Όταν επιστρέψουν όλοι στην κεντρική αίθουσα. Τις λύσεις και τα πλήθη τα έχετε στο αρχείο απαντήσεων (N2P2_answers).',
+           '**%s**: Ξεκινήστε το χρονόμετρο με το πλήκτρο T μόλις μπουν όλοι. Μηνύματα προς όλες τις αίθουσες: όταν δείχνει 10:00, «Όποιος τελείωσε έως το 10, συνεχίζει στα 11 έως 13»· όταν δείχνει 02:00, «Δύο λεπτά· ετοιμάστε τα πλήθη για το chat».' % fmt(ROOM_SEC)])
 
-# the rule of the student sheet (build_n2p2_docs.py, README v13.5), confirmed by the lecturer for the slides (README v16): every team presents,
-# one item per turn, until all items are presented; the number of items per team follows the number of teams
+# the lecturer's rule (README v16, v16.1): every team says something, the number of items per team follows the number of teams. First every team
+# posts the counts of all items in the chat (so every answer of every team is checked, 1-3 included); then items PRESENT_FROM..N_ITEMS are presented
+# in turn. The sheet (build_n2p2_docs.py) says the same.
 add(type='work', mins=PRES_MIN, timerSec=PRES_SEC, title='Όλες οι ομάδες παρουσιάζουν',
-    context='Με τη σειρά, ένα ζητούμενο κάθε φορά:',
-    items=['Η πρώτη ομάδα το ζητούμενο 1, η δεύτερη το 2 και ούτω καθεξής.',
-           'Μετά την τελευταία ομάδα, ξανά η πρώτη, ώσπου να παρουσιαστούν και τα %d.' % N_ITEMS,
+    context='Πρώτα τα πλήθη στο chat, μετά τα ζητούμενα\u00a0%d\u00a0έως\u00a0%d:' % (PRESENT_FROM, N_ITEMS),  # no-break: one line
+    items=['Κάθε ομάδα γράφει στο chat τα %d πλήθη της, με τη σειρά: «Ομάδα 2: %s, %s, …».' % (N_ITEMS, COUNT1, C[2]),
+           'Η πρώτη ομάδα παρουσιάζει το ζητούμενο %d, η δεύτερη το %d και ούτω καθεξής· μετά την τελευταία, ξανά η πρώτη.' % (PRESENT_FROM, PRESENT_FROM + 1),
            'Για κάθε ζητούμενο, το ερώτημα και το πλήθος· οι άλλες ομάδες συγκρίνουν με τα δικά τους πλήθη.'],
-    notes=['**Με τη σειρά, ένα ζητούμενο κάθε φορά**: Όπως γράφει το φύλλο. Ορίστε τη σειρά των ομάδων με τους αριθμούς των αιθουσών του Zoom.',
-           '**ξανά η πρώτη**: Με τέσσερις ομάδες, η καθεμία παρουσιάζει %s ή %s ζητούμενα.' % PER4,
-           '**το ερώτημα και το πλήθος**: Κρατήστε ανοιχτό το αρχείο απαντήσεων και συγκρίνετε κάθε πλήθος. Αν διαφέρει, η εξήγηση βρίσκεται σχεδόν πάντα σε μία από τις επόμενες τέσσερις διαφάνειες.',
-           '**%s**: Ένα χρονόμετρο για όλο τον γύρο: T στην αρχή. Τα %d ζητούμενα μοιράζονται τα %d λεπτά, μισό λεπτό περίπου το καθένα.' % (fmt(PRES_SEC), N_ITEMS, PRES_MIN)])
+    notes=['**γράφει στο chat τα %d πλήθη**: Συγκρίνετε κάθε γραμμή με τη σωστή, στη δεύτερη σελίδα του αρχείου απαντήσεων. Ένα πλήθος που διαφέρει δείχνει πού θα σταθείτε στην παρουσίαση.' % N_ITEMS,
+           '**το ζητούμενο %d**: Τα %d έως %d δεν παρουσιάζονται: είναι απλά ερωτήματα και τα πλήθη τους φαίνονται στο chat. Με τέσσερις ομάδες, η καθεμία παρουσιάζει %s ή %s ζητούμενα.' % ((PRESENT_FROM, 1, PRESENT_FROM - 1) + PER4),
+           '**το ερώτημα και το πλήθος**: Αν ένα πλήθος διαφέρει, η εξήγηση βρίσκεται σχεδόν πάντα σε μία από τις επόμενες τέσσερις διαφάνειες.',
+           '**%s**: Ένα χρονόμετρο για όλο τον γύρο: T μόλις αρχίσουν να γράφουν στο chat. Περίπου ένα λεπτό για το chat και μισό λεπτό για κάθε ζητούμενο.' % fmt(PRES_SEC)])
 
 add(type='shell', mins=2, title='Java: %s, όχι %s ούτε %s' % (JAVA, JAVA_EXACT, JAVA_IN), dense=True,
     cmd=cmd('java'), cmdLabel='Εντολές', out=out('java'), outLabel='Αποτελέσματα',

@@ -71,3 +71,7 @@ CMDS = {
     'java_lc': ['db.books.find({ categories: "java" }, { title: 1, categories: 1, _id: 0 })'],
     'zeros_java': ['db.books.countDocuments({ categories: "Java", pageCount: 0 })'],
 }
+
+# N2P2 slide 6 and the sheet: every team posts the counts of all items in the chat; items from PRESENT_FROM on are presented,
+# items 1-3 (plain count, all books, a projection) are checked through the chat counts only (README v16.1)
+PRESENT_FROM = 4
