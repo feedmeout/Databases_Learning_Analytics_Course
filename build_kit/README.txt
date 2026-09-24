@@ -603,6 +603,13 @@ v16.2 (same day: final audit before handing the material over as a zip). Four in
   - CLAUDE.md: README pointer to v15-v16.2; the speaker-notes section is titled as rules.
   Kept on purpose (rejected by the skeptics): W1P3 slide 26 note «προηγούμενες ανασκοπήσεις» (W1P3 slide 16 says other reviews go in the Discussion).
 
+v16.3 (same day): the two open items of v16 are closed; nothing is waiting for the lecturer.
+  - W1P3 slides 13 and 28: the eight links are the official home pages, confirmed by web search (the sites themselves are blocked from here):
+    www.scopus.com, eric.ed.gov, ieeexplore.ieee.org, dl.acm.org, scholar.google.com, www.zotero.org, www.rayyan.ai, www.prisma-statement.org.
+  - W3P3 slide 2, tag «άρθρο 10»: stays. Regulation (EU) 2026/1744 added a new Article 4a (bias detection for AI systems other than high-risk and for
+    deployers) and left the high-risk provision of Article 10(5)(a)-(f) unchanged (legal summaries: Cuatrecasas, Orrick, Hunton; the Official Journal
+    text itself could not be opened from here). The slide is about high-risk systems, so Article 10 is the right reference.
+
 ==================== Αλλαγές από το παλαιότερο υλικό (kept out of the speaker notes; notes rule 4) ====================
 N2P1:
 N2P1 slide 5: the older material also showed the reverse command, mongoexport (mongoexport --db=world --collection=country --out=country_export.json);
