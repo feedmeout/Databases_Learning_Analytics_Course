@@ -473,6 +473,9 @@ Branches: one per deck, notes/<deck>; W2P2+W2P3 and W3P2+W3P3 share one, because
   reveal (lab1_reveal.json) and ethics (lab2_ethics.json) slides of the next part. Evening 1 (N1P1-N1P3) is final and was not touched.
 ENGINE (opt-in, same flag): decks with meta.notesMarkup also send titleHtml, so the presenter shows `code` in titles as code, not as backticks.
   Same flag: the T key also starts/pauses the timer when the notes window has the focus (before, only the slide window reacted to T).
+COURSE FOLDERS: the lecture HTML files under «1. NoSQL/» and «2. Database Systems & Learning Analytics (2026)/» are byte-identical copies of
+  build_kit/out/<DECK>.html (N2Pn -> 1. NoSQL/Week 2/1. Lecture/NoSQL_W2Pn.html; W1Pn -> Week1/1. Lecture/LA_W1_Partn.html; W2Pn, W3Pn ->
+  Week2|Week3/1. Lecture/HTML/WnPn.html); student PDFs likewise. Every deck branch copies its rebuilt deck there, so the lecture files carry the notes.
 setup.sh also installs pandas (lab1/ and workshop1/ generators).
 check_notes.py: the notes rules checked on the built deck (2-4 notes, **item** found on the slide, one «Αν ρωτήσουν» at most, meta words, order).
 
