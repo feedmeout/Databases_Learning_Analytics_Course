@@ -494,7 +494,10 @@ W1P3:
   pending
 
 W2P1:
-  pending
+  35 slides, 114 notes (2 to 4 per slide, one «Αν ρωτήσουν» on slide 4), meta.notesMarkup = true; hand-edited JSON, only notes and the flag changed.
+  Left out of the notes: slide 1, «questions on the assignment have their time in Part 3»; slide 9, the 2019 absences (half the students did not sit the
+  exam, 27 of those 50 «green» throughout) and the authors' pandemic conjecture; slide 12, the University of Eastern Finland team; slide 32, «the same
+  questions will be put to the lab data» (Lab 1 has no clustering). Pictures (29, 31): notes point at the caption, not at text inside the figure. proposals: see PR
 
 W2P2:
   pending
@@ -533,7 +536,8 @@ W1P3:
   none
 
 W2P1:
-  none
+W2P1 slide 26: the state names are those of the Informatics in Education paper; in the Journal of Information Systems Education paper «Repeated error» is
+  called «Confused», the name the older slide 7.7 used.
 
 W2P2:
   none
