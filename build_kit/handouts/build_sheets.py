@@ -71,7 +71,7 @@ syn = [('Πρόσβαση', 'Μέσω HEAL-Link, του συνδέσμου τω�
 B1 = '("learning analytics")'; B2 = 'AND (dashboard* OR "visual analytics")'; B3 = 'AND ("self-regulated learning" OR self-regulation OR SRL)'; B4 = 'AND ("higher education" OR universit* OR undergraduate*)'
 gr = lambda n: f'{n:,}'.replace(',', '.')
 search_body = f'''<table class="t syn"><tr><th></th><th>Scopus</th><th>ERIC</th><th>IEEE Xplore</th><th>ACM Digital Library</th></tr>{''.join('<tr>' + ''.join(f'<td>{c}</td>' for c in r) + '</tr>' for r in syn)}</table>
-<div class="grid2"><div><h2 style="margin-top:0">Τρεις παγίδες, με πραγματικούς αριθμούς</h2>
+<div class="grid2"><div><h2 style="margin-top:0">Τρεις παγίδες στο ERIC</h2>
 <table class="t traps"><tr><th>Τι πληκτρολογήθηκε στο ERIC</th><th>Πλήθος</th><th>Σύγκριση</th></tr>
 <tr><td><code>"learning analytics" AND "self-regulat*"</code><br>Αστερίσκος μέσα σε φράση ή μετά από ενωτικό.</td><td>{Q['q_wild_in_quotes']}</td><td>{Q['q_phrase']} με <code>"self-regulated learning"</code></td></tr>
 <tr><td><code>“learning analytics” AND dashboard*</code><br>Καμπύλα εισαγωγικά, από το Word.</td><td>{Q['q_curly']}</td><td>{Q['q_straight']} με ευθέα εισαγωγικά</td></tr>
