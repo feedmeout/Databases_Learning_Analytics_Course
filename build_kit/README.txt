@@ -482,7 +482,10 @@ N2P2:
   pending
 
 N2P3:
-  pending
+  32 slides, 114 notes, item in bold, top to bottom; five «Αν ρωτήσουν» (slides 6, 16, 18, 20, 27). meta.notesMarkup = true; make_n2p3.py asserts 2 to 4.
+  Numbers and names in the notes are read from e2p3_outputs.json and e2p3_cmds.py (new variables), slide numbers from 13 new references [[s_set]] … [[s_map]].
+  Left out: slide 24, the source-book remark; slide 28, the manual's COUNT() list ($sum, $sortByCount); the skip remarks of slides 12 and 24. Slide 17: the
+  old note «one Java MEAP book has a known page count» was imprecise (there is one Java MEAP book in all) and is rewritten. Proposals: see PR.
 
 W1P1:
   pending
@@ -521,7 +524,18 @@ N2P2:
   none
 
 N2P3:
-  none
+N2P3 slide 1: the deck follows the older material's Part B slides 19 to 26 (update, $unset, aggregation, the persons example, delete).
+N2P3 slide 2: the older material set yearOfIndipendence: 1821 here; the field was dropped in Evening 1 (misspelt, values meaningless for the other countries).
+N2P3 slide 5: the older material's example was updateOne({ name: "Greece" }, { $unset: { yearOfIndipendence2: "" } }).
+N2P3 slide 13: the older material's example was deleteOne({ name: "Greece" }).
+N2P3 slide 14: the older material's slide 23 in three points: stages, one operation per stage, results per group.
+N2P3 slide 15: the example of the older material's slide 22, with the Eurostat populations entered in Evening 1.
+N2P3 slide 21: as in the older material: «Εισάγετε τα περιεχόμενα του αρχείου persons.txt».
+N2P3 slide 21: the file's first line changed: with use book-filtered-top-subset; pasting worked, but load() left mongosh in a database with a semicolon
+  in its name, without the persons. With db.getSiblingDB both ways work.
+N2P3 slide 22: the older material's slides 24 and 25, without the English comments of the original.
+N2P3 slide 25: the persons example alone, as in the older material, does not cover section 10 (it does not group).
+N2P3 slide 30: the requirements are exactly as in the colleague's brief; only the wording was corrected.
 
 W1P1:
   none
