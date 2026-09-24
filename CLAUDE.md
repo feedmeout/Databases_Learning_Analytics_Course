@@ -5,7 +5,7 @@ Course material for «Βάσεις Δεδομένων & Ανάλυση Δεδο�
 - Learning Analytics: 3 weeks × 3 parts (W1P1 … W3P3), with lab sheets and answer keys.
 - NoSQL/MongoDB: 2 evenings × 3 parts (N1P1–N1P3, N2P1–N2P3), following his colleague's decks in `build_kit/sources_nosql/`.
 
-Everything is built from sources in `build_kit/`. `build_kit/README.txt` is the full history and the rules: read it before any change (latest sections v13 to v14, and the list «Αλλαγές από το παλαιότερο υλικό» at its end).
+Everything is built from sources in `build_kit/`. `build_kit/README.txt` is the full history and the rules: read it before any change (latest sections v15 to v16.2, and the list «Αλλαγές από το παλαιότερο υλικό» at its end).
 
 ## How it is built
 - Sources: `build_kit/content/*.json`, one per deck. The NoSQL JSON files are written by `build_kit/nosql/make_*.py`; their mongosh outputs come from real runs, stored in `nosql/e2p*_outputs.json` (`run_e2p*.py`).
@@ -31,7 +31,7 @@ Everything is built from sources in `build_kit/`. `build_kit/README.txt` is the 
 - NoSQL follows the colleague's approach (his decks in `sources_nosql/`): update and correct, do not redesign.
 - NoSQL Evening 1 (N1P1–N1P3) is final: change it only if he asks.
 
-## Speaker notes (Σημειώσεις): the current task
+## Speaker notes (Σημειώσεις): rules (every deck done, README v15)
 The notes are what he reads while the slide is on screen.
 1. Follow the slide from top to bottom; every item that carries the slide's message gets a note.
 2. Each note starts with the item to point at, written exactly as on the slide and shown in bold, then one or two short spoken sentences.

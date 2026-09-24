@@ -590,6 +590,19 @@ v16.1 (same day). Lecturer: item 1 makes no sense to present, "but still there n
   (countDocuments with the same, empty filter ignores limit). Deck, sheet and answers PDFs, course copies (Lab/W2P2_Exercise_sheet.pdf too), review/N2P2
   updated; slides 3, 5 and 6 changed.
 
+v16.2 (same day: final audit before handing the material over as a zip). Four independent auditors on a fresh copy of main (course folders against
+  the Drive baseline 2f205df; the N2P2 rule everywhere; every student PDF page against its slide; the 12 course decks opened live), each finding tested
+  by three skeptics. All 425 slides match their PDF pages and all 13 on-slide links are clickable. Fixed:
+  - Week2/2. Students/Lab1_one_page.html and Week3/2. Students/Lab2_one_page.html were older drafts of the lab sheets (still «κοόρτη», «μία σελίδα», no
+    room timings), next to the current Lab1_sheet.pdf and Lab2_sheet.pdf. Not deleted (CLAUDE.md): replaced with out/Lab1_sheet.html and
+    out/Lab2_sheet.html, the HTML of the same PDFs, so both formats in the folder say the same.
+  - W3P2 slide 11, row «Οι 100 συναντήσεις»: «…οι 71 από τους 100 πρώτους έχουν στην πράξη ήδη φύγει.» -> «…δεν πέρασαν κανένα μάθημα, και για αυτούς
+    είναι ήδη αργά.» The data say only that they passed no course (slide 8, its notes and Lab2_answers say the same). Student PDF, course copies and
+    review/W3P2 updated; only slide 11 changed; W3P3 rebuilds identical.
+  - N2P2 answers file, page 2: «στο 10ό λεπτό» -> «στο 10ο λεπτό»; «Στο 10 γίνεται δεκτό και το 431»; «Τα τρία πρώτα».
+  - CLAUDE.md: README pointer to v15-v16.2; the speaker-notes section is titled as rules.
+  Kept on purpose (rejected by the skeptics): W1P3 slide 26 note «προηγούμενες ανασκοπήσεις» (W1P3 slide 16 says other reviews go in the Discussion).
+
 ==================== Αλλαγές από το παλαιότερο υλικό (kept out of the speaker notes; notes rule 4) ====================
 N2P1:
 N2P1 slide 5: the older material also showed the reverse command, mongoexport (mongoexport --db=world --collection=country --out=country_export.json);
