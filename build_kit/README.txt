@@ -502,6 +502,7 @@ W1P3:
   Slides changed (approved): 5 row 1 «Ατομική εργασία ή δυάδα, …»; 13 and 28 hLinks, row names are links (text unchanged); 23 card 4 adds
   «· το διάγραμμα μπαίνει στη Μεθοδολογία»; 24 foot «Πριν από τον Τίτλο: εξώφυλλο. Μετά τα Συμπεράσματα: βιβλιογραφικές αναφορές σε APA 7.»
   Dropped from notes: «σαφήνεια, συνάφεια, σκοπιμότητα» (7); «longest work between classes 2 and 3» (5); «template prevents errors 1-4» (29); «Πέντε λεπτά» (32).
+  Slide 22 'ragged' (left-aligned text): its justified short lines opened gaps of 1,8 em.
 
 W2P1:
   pending
