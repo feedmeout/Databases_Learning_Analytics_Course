@@ -495,7 +495,11 @@ N2P3:
   pending
 
 W1P1:
-  pending
+  35 slides, 102 notes (2 to 4 per slide; one «Αν ρωτήσουν», slide 16). Source content/w1p1_v2.json (hand-edited, no generator): notes and
+  meta.notesMarkup, plus ONE slide change (approved): slide 5 callout «Τέσσερα ρήματα» -> «Τέσσερα στάδια» (the four words are nouns). The rest
+  of the slide HTML is identical to notes/base; the student PDF was regenerated for slide 5 (35 pages) and copied to Week1/2. Students.
+  Left out of the notes: slide 35 «stop on time; what is left is in the students' copy» (about skipping); slide 24 «next slides do not depend on the poll».
+  Slides 26 and 27 'ragged' (left-aligned text): their justified short lines opened gaps of 1,5-2,4 em.
 
 W1P2:
   pending
@@ -537,7 +541,8 @@ N2P3:
   none
 
 W1P1:
-  none
+W1P1 slide 1: the older Week 1 material opened with a round of introductions (old slide 1.2, cut); the note offered instead an optional 45-second Zoom
+  poll on background (statistics, data mining, Learning Analytics, educational research).
 
 W1P2:
   none
