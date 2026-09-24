@@ -491,7 +491,7 @@ N2P3:
 W1P1:
   35 slides, 102 notes (2 to 4 per slide; one «Αν ρωτήσουν», slide 16). Source content/w1p1_v2.json (hand-edited, no generator): notes and
   meta.notesMarkup, plus ONE slide change (approved): slide 5 callout «Τέσσερα ρήματα» -> «Τέσσερα στάδια» (the four words are nouns). The rest
-  of the slide HTML is identical to notes/base; the student PDF must be regenerated for slide 5 (lead, final pass).
+  of the slide HTML is identical to notes/base; the student PDF was regenerated for slide 5 (35 pages) and copied to Week1/2. Students.
   Left out of the notes: slide 35 «stop on time; what is left is in the students' copy» (about skipping); slide 24 «next slides do not depend on the poll».
 
 W1P2:
