@@ -492,7 +492,7 @@ N2P2:
   12 slides, 47 notes (4 per slide, 3 on the break slide), one «Αν ρωτήσουν» (slide 7); meta.notesMarkup = true. make_n2p2.py asserts 2 to 4 notes per slide, fills
   [[s_page]], [[s_how]], [[p1_install]] (N2P1, from content/n2p1.json); checks the 325-page tie of slide 4 in books.json; timers and minutes are variables (same slides).
   Left out of the notes: slide 2, SQL strings in single quotes «όπως στο πρότυπο»; slide 3, «όπως στα εργαστήρια της Μαθησιακής Αναλυτικής»; slide 12, stop on time.
-  Slides 3 (row Χρόνος) and 6 keep the two-team rule, the sheet has one item per team in turn (v13.5): note 3 of slide 3 and notes 1 and 4 of slide 6 say so. Proposals: see PR.
+  Slides 3 (row Χρόνος) and 6 keep the two-team rule, the sheet has one item per team in turn (v13.5): note 3 of slide 3 and notes 1 and 4 of slide 6 say so. Proposals: see PR; decided in v16.
 
 N2P3:
   32 slides, 114 notes, item in bold, top to bottom; five «Αν ρωτήσουν» (slides 6, 16, 18, 20, 27). meta.notesMarkup = true; make_n2p3.py asserts 2 to 4.
@@ -567,6 +567,18 @@ W3P3:
   SLIDE CHANGED (approved after review): 24, «σύγκριση με προηγούμενες ανασκοπήσεις» -> «σύγκριση με προηγούμενες έρευνες» (brief p. 5); same line changed
   in the Submission checklist (handouts/build_sheets.py; the other three sheets rebuild byte-identical; PDF 1 page, copied to Assignment/). Student PDF regenerated (27 pages).
   Slides 3, 4, 7, 8 'ragged' (left-aligned text; set by title in w3p2/make_deck_json.py for the ethics block): gaps of 1,5-2,7 em.
+
+==================== v16 (24 Sept 2026: all ten notes PRs merged; the lecturer's decisions of the morning) ====================
+N2P2 presentation rule. Lecturer: "every team should say something; depending on how many teams we have we adjust the number of items (approximation)".
+  The slides now follow the rule of the sheet (v13.5), which already does this. Slide 3, row Χρόνος: «20 λεπτά στην αίθουσα· μετά παρουσιάζουν όλες οι
+  ομάδες, με τη σειρά, ένα ζητούμενο κάθε φορά.» Slide 6: «Όλες οι ομάδες παρουσιάζουν», «Με τη σειρά, ένα ζητούμενο κάθε φορά:», three steps, one 06:00
+  timer for the whole round (PRES_SEC 180 -> 360; the slide keeps its 6 minutes). Notes of slides 3 and 6 rewritten; REF key s_how dropped (no longer used).
+  Answers file, row 28-34, likewise. The sheet is unchanged (rebuilt identical). Student PDF (12 pages), answers PDF (2 pages, "pages overflowing: none"),
+  course copies and review/N2P2 updated; only slides 3 and 6 changed. W2P2 slide 7 and W3P2 slide 6 keep «Δύο ομάδες παρουσιάζουν»: there the other teams
+  already speak («Οι υπόλοιπες ομάδες αναφέρουν μόνο σε τι διαφωνούν»).
+Merging: Claude merges its own PRs once every check passes (lecturer, 24 Sept 2026: "Always merge automatically"; CLAUDE.md). He asks for fixes afterwards.
+Open, waiting for the lecturer: the eight links of W1P3 slides 13 and 28 (the network here blocks those sites); the «άρθρο 10» tag of W3P3 slide 2 against the
+  amended text (2026/1744).
 
 ==================== Αλλαγές από το παλαιότερο υλικό (kept out of the speaker notes; notes rule 4) ====================
 N2P1:
