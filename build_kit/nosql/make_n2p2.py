@@ -24,7 +24,15 @@ ONE_MEAP = 'ένα' if JAVA_MEAP == '1' else JAVA_MEAP
 JAVA_LC_TITLES = re.findall(r"title: '([^']*)'", O['java_lc'][0])
 assert len(JAVA_LC_TITLES) == int(JAVA_LC) and "categories: [ 'java' ]" in O['java_lc'][0]
 JAVASCRIPT_TITLES = re.findall(r"title: '([^']*)'", O['javascript'][0])
-ROOM_MIN, ROOM_SEC, PRES_SEC, BREAK_MIN = 22, 1200, 180, 15
+ROOM_MIN, ROOM_SEC, PRES_MIN, PRES_SEC, BREAK_MIN = 22, 1200, 6, 180, 15
+assert 20 <= PRES_MIN * 60 / N_ITEMS <= 40  # «μισό λεπτό περίπου» per item with the sheet's rule (notes of slide 6)
+# worked example: the 3rd place ties with another MEAP book (order among equal values is not guaranteed); read from the course books.json
+BOOKS = [json.loads(l) for l in open(os.path.join(H, '..', 'sources_nosql', 'books.json'), encoding='utf8') if l.strip()]
+EX_TITLES, EX_PAGES = re.findall(r"title: '([^']*)'", O['example'][0]), [int(x) for x in re.findall(r'pageCount: (\d+)', O['example'][0])]
+MEAP_PAGES = sorted((b for b in BOOKS if b.get('status') == 'MEAP' and b.get('pageCount', 0) > 0), key=lambda b: -b['pageCount'])
+assert len(BOOKS) == 431 and [b['pageCount'] for b in MEAP_PAGES[:3]] == EX_PAGES
+EX_TIE = [b['title'] for b in MEAP_PAGES if b['pageCount'] == EX_PAGES[-1] and b['title'] != EX_TITLES[-1]]
+assert len(EX_TIE) == 1, EX_TIE
 fmt = lambda sec: '%02d:%02d' % divmod(sec, 60)
 # slide number of the install slide of Evening 2 Part 1, read from its content file (notes of slides 3 and 12)
 P1 = [i + 1 for i, s in enumerate(json.load(open(os.path.join(H, '..', 'content', 'n2p1.json'), encoding='utf8'))['slides'])
@@ -36,7 +44,7 @@ add(type='listslide', mins=1, title='Ομαδική άσκηση: από την 
            'Σε ομάδες, λύστε τα %d ζητούμενα του φύλλου στη συλλογή books.' % N_ITEMS,
            'Παρουσιάστε τα αποτελέσματα στην ολομέλεια.'],
     foot='Όλες οι αίθουσες έχουν την ίδια άσκηση· ο καθένας δουλεύει στο δικό του mongosh.',
-    notes=['**Μελετήστε τη σελίδα του εγχειριδίου**: Τη βλέπουμε στην επόμενη διαφάνεια. Κάθε ζητούμενο του φύλλου δίνεται και σε SQL· η σελίδα δείχνει πώς γράφεται ως ερώτημα της MongoDB.',
+    notes=['**Μελετήστε τη σελίδα του εγχειριδίου**: Τη βλέπουμε στην επόμενη διαφάνεια. Κάθε ζητούμενο του φύλλου δίνεται και σε SQL· η σελίδα δείχνει πώς γράφονται οι εντολές της SQL στη MongoDB.',
            '**λύστε τα %d ζητούμενα του φύλλου**: Αναρτήστε τώρα το φύλλο στην πλατφόρμα του μαθήματος ή στο chat του Zoom, μαζί με τον σύνδεσμο της σελίδας.' % N_ITEMS,
            '**Παρουσιάστε τα αποτελέσματα στην ολομέλεια**: Γίνεται όταν κλείσουν οι αίθουσες, πριν από τις λύσεις.',
            '**ο καθένας δουλεύει στο δικό του mongosh**: Με τη συλλογή books που εισήγαγε στο Μέρος 1.'])
@@ -66,7 +74,7 @@ add(type='table', mins=1, compact=True, title='Πώς δουλεύουμε',
           {'h': 'Χωρίς τη συλλογή', 't': 'Όποιος δεν ολοκλήρωσε την εισαγωγή, δουλεύει με την οθόνη ενός μέλους της ομάδας.'}],
     notes=['**Ομάδες**: Όλες οι αίθουσες έχουν το ίδιο φύλλο, ώστε στο τέλος να συγκρίνονται τα πλήθη.',
            '**`use library`**: Η βάση που δημιούργησε το mongoimport στο Μέρος 1. Αν μια ομάδα βρίσκει παντού 0, είναι ακόμη στη βάση test.',
-           '**Τι γράφετε**, **%d λεπτά στην αίθουσα**: Είναι γραμμένα και στο φύλλο, ώστε η αίθουσα να ξέρει τι κάνει χωρίς τις διαφάνειες.' % (ROOM_SEC // 60),
+           '**Τι γράφετε**, **%d λεπτά στην αίθουσα**: Είναι γραμμένα και στο φύλλο. Για την παρουσίαση όμως το φύλλο γράφει άλλον τρόπο: κάθε ομάδα ένα ζητούμενο, με τη σειρά, ώσπου να παρουσιαστούν και τα %d· πείτε τώρα ποιος ισχύει.' % (ROOM_SEC // 60, N_ITEMS),
            '**Χωρίς τη συλλογή**: Την εισαγωγή την ολοκληρώνει στο επόμενο διάλειμμα, με τη διαφάνεια [[p1_install]] του Μέρους 1.'])
 
 add(type='shell', mins=2, dense=True, title='Ένα λυμένο παράδειγμα',
@@ -75,10 +83,10 @@ add(type='shell', mins=2, dense=True, title='Ένα λυμένο παράδει�
     points=['`WHERE` γίνεται φίλτρο: το `AND` είναι το κόμμα.',
             '`SELECT title, pageCount` γίνεται προβολή.',
             '`ORDER BY … DESC` γίνεται `sort` με -1· το `LIMIT` γίνεται `limit`.'],
-    notes=['**`WHERE status = \'MEAP\' AND pageCount > 0`**: Ένα ερώτημα που δεν υπάρχει στο φύλλο: τα τρία βιβλία σε MEAP με τις περισσότερες σελίδες, από όσα έχουν γνωστό αριθμό σελίδων.',
+    notes=['**`WHERE status = \'MEAP\' AND pageCount > 0`**: Ένα ερώτημα που δεν υπάρχει στο φύλλο: βιβλία σε MEAP με γνωστό αριθμό σελίδων, τα τρία πρώτα κατά σελίδες. Στις %d σελίδες ισοβαθμεί και το «%s»· σε άλλον υπολογιστή μπορεί να βγει αυτό τρίτο.' % (EX_PAGES[-1], EX_TIE[0]),
            '**`WHERE` γίνεται φίλτρο**: Το φίλτρο είναι το πρώτο όρισμα του find. Το `>` γίνεται `$gt`.',
            '**`SELECT title, pageCount` γίνεται προβολή**: Το δεύτερο όρισμα του find. Χωρίς `_id: 0` θα εμφανιζόταν και το `_id`, που η SQL δεν ζητά.',
-           '**`ORDER BY … DESC` γίνεται `sort` με -1**: Η σειρά στο mongosh: find, μετά sort, μετά limit. Η σειρά γραφής των sort και limit δεν αλλάζει το αποτέλεσμα.'])
+           '**`ORDER BY … DESC` γίνεται `sort` με -1**: Το mongosh πρώτα ταξινομεί και μετά κρατά τα τρία πρώτα, όποια σειρά κι αν γράψουμε τα sort και limit.'])
 
 add(type='work', mins=ROOM_MIN, timerSec=ROOM_SEC, title='Στις αίθουσες',
     context='Σε κάθε αίθουσα, με το φύλλο της άσκησης:',
@@ -91,16 +99,17 @@ add(type='work', mins=ROOM_MIN, timerSec=ROOM_SEC, title='Στις αίθουσ�
            '**Ένα μέλος κρατά τις απαντήσεις της ομάδας**: Τις λύσεις και τα πλήθη τα έχετε στο αρχείο απαντήσεων (N2P2_answers).',
            '**%s**: Ξεκινήστε το χρονόμετρο με το πλήκτρο T μόλις μπουν όλοι. Μηνύματα προς όλες τις αίθουσες: όταν δείχνει 10:00, «Όποιος τελείωσε έως το 10, συνεχίζει στα 11 έως 13»· όταν δείχνει 02:00, «Δύο λεπτά· σημειώστε τα πλήθη».' % fmt(ROOM_SEC)])
 
-add(type='work', mins=6, timerSec=PRES_SEC, title='Δύο ομάδες παρουσιάζουν',
+add(type='work', mins=PRES_MIN, timerSec=PRES_SEC, title='Δύο ομάδες παρουσιάζουν',
     context='Δύο ομάδες, τρία λεπτά η καθεμία:',
     items=['Η πρώτη ομάδα: τα ζητούμενα 4 έως 8, με το ερώτημα και το πλήθος.',
            'Η δεύτερη ομάδα: τα ζητούμενα 9 έως 13, με τον ίδιο τρόπο.',
            'Οι υπόλοιπες ομάδες συγκρίνουν με τα δικά τους πλήθη.'],
-    # the student sheet (build_n2p2_docs.py, README v13.5) has another rule: every team presents one item in turn; the notes hold under both
-    notes=['**Δύο ομάδες, τρία λεπτά η καθεμία**: Το φύλλο των φοιτητών γράφει άλλη σειρά: κάθε ομάδα παρουσιάζει ένα ζητούμενο, η πρώτη το 1, η δεύτερη το 2, ώσπου να παρουσιαστούν και τα %d. Πείτε ποια σειρά ισχύει πριν ξεκινήσει η πρώτη ομάδα.' % N_ITEMS,
-           '**με το ερώτημα και το πλήθος**: Τα σωστά πλήθη είναι στο αρχείο απαντήσεων· αν ένα πλήθος διαφέρει, το ερώτημα δείχνει γιατί.',
+    # the student sheet (build_n2p2_docs.py, README v13.5) has another rule: every team presents one item in turn. Note 3 of slide 3 flags it and
+    # the lecturer says there which rule applies; notes 1 and 4 here give the steps for either rule
+    notes=['**Δύο ομάδες, τρία λεπτά η καθεμία**: Ισχύει ο τρόπος που είπατε στη διαφάνεια [[s_how]]. Για δύο ομάδες, επιλέξτε τώρα δύο αίθουσες· με τον τρόπο του φύλλου, κάθε ομάδα παρουσιάζει ένα ζητούμενο, από το 1 έως το %d.' % N_ITEMS,
+           '**με το ερώτημα και το πλήθος**: Κρατήστε ανοιχτό το αρχείο απαντήσεων και συγκρίνετε κάθε πλήθος.',
            '**Οι υπόλοιπες ομάδες συγκρίνουν**: Αν τα πλήθη διαφέρουν, η εξήγηση βρίσκεται σχεδόν πάντα σε μία από τις επόμενες τέσσερις διαφάνειες.',
-           '**%s**: Το χρονόμετρο ξεκινά με το πλήκτρο T. Για την επόμενη ομάδα: «Μηδενισμός» και ξανά T.' % fmt(PRES_SEC)])
+           '**%s**: Με δύο ομάδες: T για την πρώτη, «Μηδενισμός» και ξανά T για τη δεύτερη. Με τον τρόπο του φύλλου, τα %d ζητούμενα μοιράζονται τα %d λεπτά, μισό λεπτό περίπου το καθένα.' % (fmt(PRES_SEC), N_ITEMS, PRES_MIN)])
 
 add(type='shell', mins=2, title='Java: %s, όχι %s ούτε %s' % (JAVA, JAVA_EXACT, JAVA_IN), dense=True,
     cmd=cmd('java'), cmdLabel='Εντολές', out=out('java'), outLabel='Αποτελέσματα',
@@ -156,7 +165,7 @@ add(type='remember', mins=1, kicker='Να θυμάστε', title='Τρία ση�
 add(type='break', mins=2, title='Διάλειμμα',
     next='Στο Μέρος 3: ενημέρωση, διαγραφή και συνάθροιση, και η Εργασία 2 ενότητα προς ενότητα.',
     notes=['**Επιστρέφουμε σε %d′**: Αφήστε τη διαφάνεια στην οθόνη σε όλο το διάλειμμα· η αντίστροφη μέτρηση ξεκινά μόνη της.' % BREAK_MIN,
-           '**Στο Μέρος 3**: Χρειάζεται ξανά η συλλογή books. Όποιος δεν ολοκλήρωσε την εισαγωγή, την ολοκληρώνει τώρα, με τη διαφάνεια [[p1_install]] του Μέρους 1.',
+           '**Στο Μέρος 3**: Η συλλογή books εμφανίζεται ξανά στα παραδείγματα. Όποιος δεν ολοκλήρωσε την εισαγωγή, την ολοκληρώνει τώρα, με τη διαφάνεια [[p1_install]] του Μέρους 1.',
            '**η Εργασία 2 ενότητα προς ενότητα**: Οι ερωτήσεις για την Εργασία 2 έχουν χρόνο στο τέλος του Μέρους 3.'])
 
 skips = [i + 1 for i, s in enumerate(S) if s.get('skippable')]
@@ -165,7 +174,8 @@ def num(pred):
     hits = [i + 1 for i, s in enumerate(S) if pred(s)]
     assert len(hits) == 1, hits
     return hits[0]
-REF = {'s_page': num(lambda s: s['title'] == 'Η σελίδα: SQL to MongoDB Mapping Chart'), 'p1_install': P1[0]}
+REF = {'s_page': num(lambda s: s['title'] == 'Η σελίδα: SQL to MongoDB Mapping Chart'), 's_how': num(lambda s: s['title'] == 'Πώς δουλεύουμε'),
+       'p1_install': P1[0]}
 for s in S:
     for k, v in REF.items():
         s['notes'] = [n.replace('[[%s]]' % k, str(v)) for n in s['notes']]

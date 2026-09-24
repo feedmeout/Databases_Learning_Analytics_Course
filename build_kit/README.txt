@@ -479,10 +479,10 @@ N2P1:
   pending
 
 N2P2:
-  12 slides, 47 notes (4 per slide, 3 on the break slide), one «Αν ρωτήσουν» (slide 7); meta.notesMarkup = true. make_n2p2.py asserts 2 to 4 notes per slide,
-  fills [[s_page]] and [[p1_install]] (N2P1 install slide, read from content/n2p1.json); timers, room minutes and break length are variables now (same JSON slides).
+  12 slides, 47 notes (4 per slide, 3 on the break slide), one «Αν ρωτήσουν» (slide 7); meta.notesMarkup = true. make_n2p2.py asserts 2 to 4 notes per slide, fills
+  [[s_page]], [[s_how]], [[p1_install]] (N2P1, from content/n2p1.json); checks the 325-page tie of slide 4 in books.json; timers and minutes are variables (same slides).
   Left out of the notes: slide 2, SQL strings in single quotes «όπως στο πρότυπο»; slide 3, «όπως στα εργαστήρια της Μαθησιακής Αναλυτικής»; slide 12, stop on time.
-  Slide 6 (and slide 3, row Χρόνος) still has the two-team rule, the sheet has every team present one item in turn (v13.5): note 1 of slide 6 says so. Proposals: see PR.
+  Slides 3 (row Χρόνος) and 6 keep the two-team rule, the sheet has one item per team in turn (v13.5): note 3 of slide 3 and notes 1 and 4 of slide 6 say so. Proposals: see PR.
 
 N2P3:
   pending
