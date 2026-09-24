@@ -103,7 +103,7 @@ const R = {
     return head(s) + body(`<div class="three">${s.items.map(x => `<div class="item ${x.focus ? 'focus' : ''}"><h3>${esc(x.h)}</h3><ul class="il">${x.items.map(i => `<li>${em(i)}</li>`).join('')}</ul></div>`).join('')}</div>${s.foot ? `<p class="footline">${em(s.foot)}</p>` : ''}`);
   },
   table(s) {
-    return head(s) + body(`<div class="trows ${s.rows.some(r => r.tag) ? 'tagged' : ''} ${s.compact || s.rows.length > 5 ? 'compact' : ''}${s.wideTag ? ' wtag' : ''}">${s.rows.map(r => `<div class="trow"><span class="trh">${esc(r.h)}</span><span class="trt">${em(r.t)}</span>${r.tag ? `<span class="ttag ${r.tagTone || ''}">${esc(r.tag)}</span>` : ''}</div>`).join('')}</div>${s.foot ? `<p class="footline">${em(s.foot)}</p>` : ''}`);
+    return head(s) + body(`<div class="trows ${s.rows.some(r => r.tag) ? 'tagged' : ''} ${s.compact || s.rows.length > 5 ? 'compact' : ''}${s.wideTag ? ' wtag' : ''}">${s.rows.map(r => `<div class="trow"><span class="trh">${s.hLinks ? em(r.h) : esc(r.h)}</span><span class="trt">${em(r.t)}</span>${r.tag ? `<span class="ttag ${r.tagTone || ''}">${esc(r.tag)}</span>` : ''}</div>`).join('')}</div>${s.foot ? `<p class="footline">${em(s.foot)}</p>` : ''}`);
   },
   cols5(s) {
     return head(s) + body(`<div class="cols5">${s.cols.map((c, k) => `<div class="c5"><span class="c5n">${k + 1}</span><h3>${esc(c.h)}</h3><ul class="il">${c.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul></div>`).join('')}</div>${s.foot ? `<p class="footline">${em(s.foot)}</p>` : ''}`);
