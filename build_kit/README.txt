@@ -505,7 +505,12 @@ W1P1:
   Slides 26 and 27 'ragged' (left-aligned text): their justified short lines opened gaps of 1,5-2,4 em.
 
 W1P2:
-  pending
+  34 slides, 113 notes (2 to 4 per slide, «Αν ρωτήσουν» on 30 and 31). content/w1p2.json (json.load / json.dump): meta.notesMarkup = true, the notes arrays, and slide 5 (below).
+  Left out: slide 21, the advice to shorten slides 26-28 when the ViLLE section runs long (skipping advice); slide 30, the pointer to Course Signals
+  «αν το δείξατε» (W1P1 slide 28 is skippable); slide 4, "the first four categories already exist in an institution's systems" (not true of wearables).
+  Picture slides (22-30) point at the caption; the notes name the regions of each picture.
+  Slide 5 terms aligned with N1P2 slides 25-26 (approved): «Αποθήκη μαθησιακών καταγραφών» (was «Αποθήκη εγγραφών μάθησης»), «Μία δήλωση xAPI…»
+  (was «Μία εγγραφή xAPI…»); only slide 5's HTML changed. W1P2_student.pdf regenerated (34 pages).
 
 W1P3:
   pending
