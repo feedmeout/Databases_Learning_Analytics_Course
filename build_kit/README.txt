@@ -488,7 +488,10 @@ W1P1:
   pending
 
 W1P2:
-  pending
+  34 slides, 113 notes (2 to 4 per slide, «Αν ρωτήσουν» on 30 and 31). content/w1p2.json: meta.notesMarkup = true and the notes arrays only (json.load / json.dump).
+  Left out: slide 21, the advice to shorten slides 26-28 when the ViLLE section runs long (skipping advice); slide 30, the pointer to Course Signals
+  «αν το δείξατε» (W1P1 slide 28 is skippable); slide 4, "the first four categories already exist in an institution's systems" (not true of wearables).
+  Picture slides (22-30) point at the caption; the notes name the regions of each picture. Proposals: see PR.
 
 W1P3:
   pending
