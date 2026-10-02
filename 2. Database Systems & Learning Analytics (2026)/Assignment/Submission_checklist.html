@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="el"><head><meta charset="UTF-8"><title>Λίστα ελέγχου</title><link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;700;800&display=swap" rel="stylesheet"><style>@page{size:A4;margin:0}*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#12233F;--mist:#EEF3FA;--deep:#0D47A1;--muted:#55657C;--body:#33445E;--green:#2E9E5B;--amber:#F2A413;--amber-ink:#8A5A00;--amber-bg:#FFF4DA;--red:#D8433B;--red-bg:#FCE9E7;--line:#D3DDEB}
+body{font-family:'Commissioner','Segoe UI',Arial,sans-serif;color:var(--ink);font-size:10.6pt;line-height:1.42;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;height:297mm;padding:15mm 16mm 13mm;display:flex;flex-direction:column;page-break-after:always;break-after:page;overflow:hidden;position:relative}
+header{border-bottom:2.2pt solid var(--amber);padding-bottom:3mm;margin-bottom:5mm}.kick{font-size:10pt;font-weight:700;color:var(--amber-ink);letter-spacing:.02em}
+h1{font-size:19pt;line-height:1.15;font-weight:800;letter-spacing:-.01em;margin-top:1mm}h1.big{font-size:27pt;margin:2mm 0 5mm}
+h2{font-size:12.5pt;font-weight:800;margin:4.5mm 0 1.5mm;color:var(--deep)}h3{font-size:10.4pt;font-weight:700;margin-bottom:2mm}h4{font-size:10pt;font-weight:700;margin-bottom:1.5mm}
+p{text-align:justify;margin-bottom:2mm}.small{font-size:9.4pt;color:var(--body);margin-top:3mm}.course{font-size:9.5pt;color:var(--muted);margin-bottom:9mm}
+.content{flex:1;display:flex;flex-direction:column;gap:3.5mm}footer{display:flex;justify-content:space-between;font-size:8.4pt;color:var(--muted);border-top:.6pt solid var(--line);padding-top:2mm;margin-top:auto}
+.cover footer{position:absolute;left:16mm;right:16mm;bottom:13mm}
+.sim{background:var(--amber-bg);border-left:3pt solid var(--amber);border-radius:2mm;padding:4mm 5mm;text-align:justify;margin-bottom:2mm}
+ol.num{list-style:none;counter-reset:n;display:grid;gap:2mm}ol.num li{counter-increment:n;display:grid;grid-template-columns:8mm 1fr;text-align:justify}ol.num li::before{content:counter(n);width:5.6mm;height:5.6mm;border-radius:50%;background:var(--ink);color:#fff;font-size:9pt;font-weight:700;display:grid;place-items:center}
+table{border-collapse:collapse;width:100%}.toc td{padding:1.15mm 2mm;border-bottom:.6pt solid var(--line)}.toc td:first-child{font-weight:700;width:26mm}.toc td:last-child{text-align:right;width:16mm;color:var(--muted)}
+.t th{background:var(--ink);color:#fff;font-size:9.2pt;text-align:left;padding:2mm 2.4mm;font-weight:700;line-height:1.2;vertical-align:bottom}.t td{padding:1.9mm 2.4mm;border-bottom:.6pt solid var(--line);font-size:9.8pt;vertical-align:top}.t tr:nth-child(odd) td{background:#F7F9FC}
+.t td b{word-spacing:.09em}.t.tight td{padding:1.3mm 2.4mm}.t.num td:not(:first-child),.t.num th:not(:first-child){text-align:center}.t.num td:first-child{width:46%}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:5mm;align-items:start}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm}
+.fig{background:var(--mist);border-radius:3mm;padding:3.5mm 4mm 3mm}.fnote{font-size:8.8pt;color:var(--body);margin:2mm 0 0;text-align:left}
+.barrow{display:flex;gap:3mm;align-items:flex-end;justify-content:center;padding-top:1mm}.bar{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;width:21mm}
+.bar i{display:block;width:100%;border-radius:1.6mm 1.6mm 0 0}.t-blue{background:var(--deep)}.t-red{background:var(--red)}.t-green{background:var(--green)}.t-amber{background:var(--amber)}.t-grey{background:#8795AA}.t-light{background:#A9C8F0}
+.bv{font-size:10pt;font-weight:800;margin-bottom:.8mm}.bl{font-size:8.6pt;font-weight:700;text-align:center;line-height:1.15;border-top:1.2pt solid var(--ink);width:calc(100% + 3mm);padding-top:1.2mm}.bl{min-height:8.4mm}.bn{font-size:7.8pt;color:var(--muted)}
+.two>*{min-width:0}.two .bar{width:16mm}.two .barrow{gap:2.2mm}.two .bl{font-size:8.2pt}.barrow.dense{gap:1.4mm}.barrow.dense .bar,.two .barrow.dense .bar{width:4.4mm}.barrow.dense .bv{font-size:7.4pt}.barrow.dense .bl{font-size:7.6pt;width:calc(100% + 1.4mm);min-height:0}
+.grp2{display:flex;gap:6mm;justify-content:center;align-items:flex-end}.grp2 .bar{width:14mm}.gl{text-align:center;font-size:9pt;font-weight:700;color:var(--deep);margin:1.5mm 0 0}
+.note{background:var(--mist);border-radius:2.5mm;padding:3mm 4mm;font-size:9.6pt;text-align:justify}.prop{background:var(--red-bg);border-left:3pt solid var(--red);border-radius:2mm;padding:3.5mm 4.5mm;text-align:justify}
+.ask{border:1.2pt solid var(--ink);border-radius:3mm;padding:3.5mm 4.5mm;margin-top:auto}.ask h3{color:var(--deep)}.ask ul{list-style:none;display:grid;gap:1.6mm}.ask li{padding-left:5mm;position:relative;text-align:justify}.ask li::before{content:"";position:absolute;left:.6mm;top:1.9mm;width:2mm;height:2mm;border-radius:50%;background:var(--ink)}
+.E,.S,.seq{font-family:ui-monospace,Menlo,Consolas,monospace}.E{color:#A92C25}.S{color:#14532D}
+.mx{background:var(--mist);border-radius:3mm;padding:3.5mm 4mm}.mx table{margin:1mm 0}.mx th{font-size:8.6pt;color:var(--muted);font-weight:700;padding:1mm}.mx td{background:#fff;border-radius:1.5mm;text-align:center;font-size:13pt;font-weight:800;padding:2.4mm 1mm;border:1.2mm solid var(--mist)}.mx td.hl{background:var(--deep);color:#fff}.mx p{font-size:8.8pt;color:var(--body);margin:1mm 0 0;text-align:left}
+.ans{border:.8pt solid var(--line);border-radius:3mm;padding:3.5mm 4.5mm}.ans h2{margin-top:0}.blank{display:inline-block;border-bottom:.8pt solid var(--muted);width:48mm;height:4mm;vertical-align:bottom}.blank.w{width:120mm}.blank.s{width:22mm}.wl{border-bottom:.8pt solid var(--line);height:7.2mm}.chk{display:flex;gap:7mm;font-size:10pt;margin:2mm 0}
+.page{padding:10mm 14mm 8mm}.content{gap:1.3mm}header{margin-bottom:3mm;padding-bottom:2mm}h1{font-size:16.5pt}h2{font-size:11.2pt;margin:1.8mm 0 .8mm}
+p.lead{font-size:9.5pt;line-height:1.33;margin-bottom:0}
+table.data{width:100%;border-collapse:collapse;font-size:8.5pt;line-height:1.22}table.data th{background:var(--ink);color:#fff;font-weight:700;padding:1.3mm 1.4mm;text-align:center;vertical-align:bottom;font-size:7.9pt;line-height:1.15}
+table.data th.l{text-align:left}table.data td{padding:1mm 1.4mm;border-bottom:.6pt solid var(--line);text-align:center;vertical-align:middle}table.data td.l{text-align:left}
+table.data td .nm{white-space:nowrap}table.data td .rule{color:var(--muted);font-size:7.9pt}table.data td.acc{font-weight:800;color:var(--deep)}table.data tr.base td{border-bottom:none;color:var(--muted);font-size:8.3pt;padding-top:1.3mm}
+.note{background:var(--mist);border-radius:2mm;padding:1.7mm 2.6mm;font-size:8.1pt;line-height:1.27;color:var(--body);text-align:justify}
+table.charts{width:100%;border-collapse:collapse}table.charts td{vertical-align:top;padding:0;text-align:center}table.charts svg{height:30mm;width:auto}
+.ctitle{font-size:8.6pt;font-weight:700;color:var(--deep);text-align:center;margin-bottom:.2mm}.facts{font-size:8.6pt;line-height:1.28;text-align:justify;color:var(--body)}
+.qbox{border:1.2pt solid var(--ink);border-radius:3mm;padding:2.2mm 3.6mm 1.8mm;background:var(--mist);margin-top:.6mm}.qbox .qt{font-weight:800;color:var(--deep);font-size:10.2pt;margin-bottom:.6mm}
+table.q{width:100%;border-collapse:collapse}table.q td{vertical-align:top;padding:.35mm 0;text-align:justify;font-size:9.1pt;line-height:1.28}table.q td.n{width:6mm;font-weight:800;color:var(--deep)}
+.how{font-size:8.5pt;line-height:1.28;text-align:justify;margin-top:.4mm;color:var(--body)}.how b{color:var(--ink)}
+table.cols{width:100%;border-collapse:collapse;table-layout:fixed}table.cols td{vertical-align:top;padding:0}table.cols td+td{padding-left:4mm}table.cols svg{width:100%;height:auto}
+footer{font-size:7.7pt;white-space:nowrap}.src{font-size:7.8pt;line-height:1.25;color:var(--muted);text-align:justify}.tab{font-size:8.4pt;color:var(--amber-ink);font-weight:700;background:var(--amber-bg);border-radius:999px;padding:.5mm 3mm;float:right;margin-top:1.2mm}
+
+.page{padding:11mm 14mm 9mm}
+header{margin-bottom:3.4mm;padding-bottom:2.2mm}
+.content{gap:0}
+h2{font-size:11.2pt;margin:3.6mm 0 1.8mm;color:var(--deep)}
+h2:first-child{margin-top:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:6mm;align-items:start}
+.box{background:var(--mist);border-radius:2.6mm;padding:3mm 3.6mm}
+.box p{font-size:9pt;line-height:1.36;text-align:justify;margin:0}
+.box p+p{margin-top:1.4mm}
+.hl{color:var(--deep);font-weight:800}
+ol.num{gap:1.6mm}
+ol.num li{font-size:8.9pt;line-height:1.33;grid-template-columns:7mm 1fr}
+ol.num li::before{width:4.8mm;height:4.8mm;font-size:7.6pt;margin-top:.2mm}
+.err{border:1.1pt solid var(--red);border-radius:2.6mm;padding:3mm 3.6mm}
+.err ol.num li::before{background:var(--red)}
+.fine{font-size:7.6pt;line-height:1.3;color:var(--muted);text-align:justify;margin:2mm 0 0}
+.t{width:100%;border-collapse:collapse}
+.t th{font-size:8.2pt}
+.t td{font-size:8.2pt;line-height:1.28;padding:1.5mm 2.2mm;text-align:left}
+.t td.fail{color:var(--red-ink)}
+.t td.sec{font-weight:800;white-space:nowrap;width:1%}
+.t td p{margin:0;text-align:left}
+code,.mono{font-family:'DejaVu Sans Mono',ui-monospace,Menlo,Consolas,monospace;font-size:.92em}
+.cmp td{vertical-align:top}
+.cmp td.n{font-size:10pt;font-weight:800;color:var(--red);text-align:center;white-space:nowrap}
+.db th{font-size:8.2pt;padding:1.6mm 2mm}
+.db td{font-size:7.9pt;line-height:1.27;padding:1.5mm 2mm;vertical-align:top;text-align:left}
+.db td:first-child{font-weight:800;white-space:nowrap}
+.cal td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cal th.num{text-align:right}
+.chkbox{border:1.2pt solid var(--ink);border-radius:3mm;padding:3mm 3.8mm}
+.chkbox h3{font-size:10.2pt;color:var(--deep);margin:0 0 2mm}
+.rule{background:var(--amber-bg);border-left:3pt solid var(--amber);border-radius:2mm;padding:3mm 3.8mm;margin-top:4mm}
+.rule p,.log p{font-size:8.9pt;line-height:1.34;text-align:justify;margin:0}
+.rule b{color:var(--amber-ink)}
+.log{margin-top:4mm}
+.apa p{margin:0 0 1.2mm}
+.apa b{color:var(--deep)}
+.db td{padding:1.15mm 1.8mm;line-height:1.22}.db th{padding:1.3mm 1.8mm}.db td:first-child{width:1%}
+.lower{display:grid;grid-template-columns:1.18fr 1fr;gap:5mm;align-items:start;margin-top:3.4mm}
+.lower h2{margin:0 0 1.6mm}.lower .t+h2{margin-top:3.4mm}
+.cmp td{padding:1.2mm 1.8mm}.cmp td:first-child{width:50%}.cmp td.n{width:11%}
+.cal td{padding:1.1mm 1.8mm}
+.db td{font-size:7.6pt;line-height:1.2;padding:1mm 1.6mm}.db th{font-size:8pt;padding:1.2mm 1.6mm}
+.cmp td,.cal td{font-size:7.9pt;line-height:1.24}.cmp td:first-child{width:45%}
+.chkbox h3{font-size:9.8pt}.chkbox ol.num li,.rule p,.log p{font-size:8.6pt;line-height:1.3}
+.lower .t+h2{margin-top:3mm}
+.ss .page{padding:10mm 14mm 8mm}.ss header{margin-bottom:3mm}.ss .lower{margin-top:2.6mm}.ss .lower .t+h2{margin-top:2.6mm}
+.ss .srcline{margin-top:2.6mm}.ss .db td{line-height:1.17;padding:.9mm 1.6mm}.ss .rule{margin-top:3mm}.ss .log{margin-top:3mm}
+.srcline{font-size:7.6pt;line-height:1.3;color:var(--muted);text-align:justify;margin-top:4mm}
+.srcline b{color:var(--body)}
+</style></head><body class="cl"><section class="page"><header><span class="kick">Εργασία 3: λίστα ελέγχου έως την υποβολή</span><h1>Για τη δική σας ανασκόπηση, από την επιλογή ως την υποβολή</h1></header><div class="content"><div class="two"><div><h2>Τα βήματα, στις δικές σας μελέτες</h2><div class="box"><ol class="num"><li><span>Πλήρη κεί&shy;μενα και Στάδιο 2 της επι&shy;λο&shy;γής, με λόγο για κάθε απο&shy;κλει&shy;σμό.</span></li><li><span>Δοκιμή του πίνακα εξα&shy;γω&shy;γής σε τρεις με&shy;λέ&shy;τες: αν μια στήλη μένει συχνά κενή, το πρό&shy;βλημα είναι η στήλη.</span></li><li><span>Εξα&shy;γωγή και αξιο&shy;λό&shy;γηση ποιό&shy;τη&shy;τας για κάθε μελέτη που εντά&shy;χθηκε, με ίδιες στήλες για όλες.</span></li><li><span>Σύν&shy;θεση ανά ερευ&shy;νη&shy;τικό ερώ&shy;τημα, και κα&shy;τό&shy;πιν συγ&shy;γραφή.</span></li></ol><p class="fine">Στο προ&shy;αι&shy;ρε&shy;τικό αρχείο προ&shy;τύ&shy;πων της ερ&shy;γα&shy;σίας, τα φύλλα 2_Επι&shy;λογή, 3_Εξα&shy;γωγή, 4_Ποιό&shy;τητα και 5_Σύν&shy;θεση ακο&shy;λου&shy;θούν ακρι&shy;βώς αυτά τα βήματα, και το φύλλο PRISMA_αριθ&shy;μοί υπο&shy;λο&shy;γί&shy;ζει αυ&shy;τό&shy;ματα τους αριθ&shy;μούς του δια&shy;γράμ&shy;μα&shy;τος ροής.</p></div><h2>Τρεις κανόνες για τη γραμμή εξαγωγής</h2><div class="box"><ol class="num"><li><span>Το εύρημα γρά&shy;φε&shy;ται με κα&shy;τεύ&shy;θυνση και, όπου υπάρ&shy;χει, με μέ&shy;γε&shy;θος. «Η μελέτη εξέ&shy;τασε…» δεν είναι εύρημα.</span></li><li><span>Το δείγμα γρά&shy;φε&shy;ται με αριθ&shy;μούς και με το ποιοι ήταν οι συμ&shy;με&shy;τέ&shy;χο&shy;ντες.</span></li><li><span>Ό,τι δεν ανα&shy;φέ&shy;ρει η μελέτη γρά&shy;φε&shy;ται «δεν ανα&shy;φέ&shy;ρε&shy;ται», όχι κενό.</span></li></ol></div><h2>Σύνθεση δεν είναι παράθεση</h2><div class="box"><p>«Ο Α βρήκε… Ο Β βρήκε… Ο Γ βρήκε…» είναι τρεις πε&shy;ρι&shy;λή&shy;ψεις. Σύν&shy;θεση είναι ο ισχυ&shy;ρι&shy;σμός που προ&shy;κύ&shy;πτει από τις με&shy;λέ&shy;τες μαζί, με το πόσες τον στη&shy;ρί&shy;ζουν και πόσες όχι. Για κάθε ισχυ&shy;ρι&shy;σμό: <span class="hl">το ερευ&shy;νη&shy;τικό ερώ&shy;τημα</span> στο οποίο απαντά, <span class="hl">μία πρό&shy;ταση χωρίς ερ&shy;μη&shy;νεία</span> (η ερ&shy;μη&shy;νεία ανήκει στη Συ&shy;ζή&shy;τηση), <span class="hl">οι με&shy;λέ&shy;τες υπέρ και κατά</span>, <span class="hl">η ποιό&shy;τητα</span> των με&shy;λε&shy;τών υπέρ, <span class="hl">τα πλαί&shy;σια</span> όπου ισχύει, και <span class="hl">η πρό&shy;ταση</span> όπως θα γρα&shy;φτεί στα Απο&shy;τε&shy;λέ&shy;σματα, με τις πα&shy;ρα&shy;πο&shy;μπές της. Κάθε ερευ&shy;νη&shy;τικό ερώ&shy;τημα γί&shy;νε&shy;ται μία ενό&shy;τητα στα Απο&shy;τε&shy;λέ&shy;σματα.</p></div><h2>Τέσσερα συνήθη λάθη</h2><div class="err"><ol class="num"><li><span>Στήλες που αλ&shy;λά&shy;ζουν από μελέτη σε μελέτη: ο πί&shy;να&shy;κας παύει να συ&shy;γκρί&shy;νει.</span></li><li><span>Ευ&shy;ρή&shy;ματα αντι&shy;γραμ&shy;μένα από την πε&shy;ρί&shy;ληψη, χωρίς κα&shy;τεύ&shy;θυνση και μέ&shy;γε&shy;θος.</span></li><li><span>Ισχυ&shy;ρι&shy;σμοί που στη&shy;ρί&shy;ζο&shy;νται σε μία μόνο μελέτη και γρά&shy;φο&shy;νται ως βε&shy;βαιό&shy;τη&shy;τες.</span></li><li><span>Κα&shy;τα&shy;μέ&shy;τρηση με&shy;λε&shy;τών αντί για στάθ&shy;μιση: δέκα αδύ&shy;να&shy;μες με&shy;λέ&shy;τες δεν υπε&shy;ρι&shy;σχύουν δύο ισχυ&shy;ρών.</span></li></ol></div></div><div><h2>PRISMA 2020: τέσσερις έλεγχοι στους αριθμούς σας</h2><table class="t"><tr><th>Έλεγχος</th><th>Αν δεν ισχύει</th></tr><tr><td>Εγγραφές ανά βάση = σύνολο που εντοπίστηκε</td><td class="fail">λείπει αναζήτηση από το ημερολόγιο</td></tr><tr><td>Σύνολο − διπλοεγγραφές = εγγραφές προς έλεγχο</td><td class="fail">διπλοεγγραφές που αφαιρέθηκαν χωρίς να μετρηθούν</td></tr><tr><td>Εγγραφές που ελέγχθηκαν − αποκλεισμοί = πλήρη κείμενα</td><td class="fail">εγγραφή χωρίς απόφαση στον έλεγχο τίτλου και περίληψης</td></tr><tr><td>Πλήρη κείμενα − μη ανακτηθέντα − αποκλεισμοί με λόγο = μελέτες</td><td class="fail">αποκλεισμός χωρίς καταγεγραμμένο λόγο</td></tr></table><p class="fine">Page et al. (2021), The PRISMA 2020 statement, BMJ, 372, n71. Η ερ&shy;γα&shy;σία χωρίς δομή PRISMA και χωρίς διά&shy;γραμμα ροής επι&shy;στρέ&shy;φε&shy;ται για επα&shy;νυ&shy;πο&shy;βολή.</p><h2>Έλεγχος πριν από την υποβολή</h2><table class="t"><tr><th>Ενότητα</th><th>Τι πρέπει να υπάρχει</th></tr><tr><td class="sec">Μεθοδολογία</td><td>Συμβολοσειρά και ημερολόγιο αναζήτησης. Κριτήρια ένταξης και αποκλεισμού. Διάγραμμα PRISMA 2020 με αριθμούς που αθροίζονται. Εξαγωγή δεδομένων και αξιολόγηση ποιότητας.</td></tr><tr><td class="sec">Αποτελέσματα</td><td>Πίνακας μελετών. Μία ενότητα ανά ερευνητικό ερώτημα. Γραφήματα ανά έτος, πλαίσιο και μέθοδο.</td></tr><tr><td class="sec">Συζήτηση</td><td>Ερμηνεία. Σύγκριση με προηγούμενες έρευνες. Περιορισμοί της δικής σας ανασκόπησης. Προτάσεις για μελλοντική έρευνα.</td></tr><tr><td class="sec">Μορφή</td><td>APA 7. Από 4.000 έως 6.000 λέξεις. Δήλωση για τη χρήση Τεχνητής Νοημοσύνης στο τέλος.</td></tr></table><h2>APA 7 σε τρεις γραμμές</h2><div class="box apa"><p><b>Στο κεί&shy;μενο:</b> (Hellings &amp; Hael&shy;er&shy;mans, 2022) για δύο συγ&shy;γρα&shy;φείς, (Bañeres et al., 2023) για τρεις ή πε&shy;ρισ&shy;σό&shy;τε&shy;ρους, από την πρώτη ανα&shy;φορά.</p><p><b>Άρθρο πε&shy;ριο&shy;δι&shy;κού:</b> Επώ&shy;νυμο, Α. Α., &amp; Επώ&shy;νυμο, Β. Β. (Έτος). Τίτλος άρθρου. <i>Τίτλος Πε&shy;ριο&shy;δι&shy;κού, τόμος</i>(τεύχος), σελίδες. https://doi.org/…</p><p><b>Πα&shy;ρά&shy;δειγμα:</b> Hellings, J., &amp; Hael&shy;er&shy;mans, C. (2022). The effect of providing learning analytics on student behaviour and per&shy;for&shy;mance in pro&shy;gram&shy;ming: A ran&shy;domised con&shy;trolled experiment. <i>Higher Education, 83</i>(1), 1–18. https://doi.org/10.1007/s10734-020-00560-z</p></div><p class="fine">Η προ&shy;θε&shy;σμία και ο τρόπος υπο&shy;βο&shy;λής ορί&shy;ζο&shy;νται στην πλατ&shy;φόρμα του μα&shy;θή&shy;μα&shy;τος. Απο&shy;ρίες: στην πλατ&shy;φόρμα, ανά πάσα στιγμή.</p></div></div></div><footer><span>Βάσεις Δεδομένων &amp; Ανάλυση Δεδομένων Μάθησης</span><span>Εργασία 3</span></footer></section></body></html>
