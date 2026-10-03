@@ -1,13 +1,13 @@
-// Συλλογή persons για το παράδειγμα συνάθροισης της Βραδιάς 2, Μέρος 3.
+// Συλλογή persons για το παράδειγμα συνάθροισης της Εβδομάδας 2, Μέρος 3.
 // Πηγή: Paul Done, Practical MongoDB Aggregations, παράδειγμα «Filtered Top Subset».
 // Επικολλήστε όλο το περιεχόμενο στο mongosh, ή γράψτε load("persons.txt") από τον φάκελο του αρχείου.
 db = db.getSiblingDB("book-filtered-top-subset");
-db.dropDatabase();
+db.persons.drop();
 
-// Create an index for a persons collection
+// Ευρετήριο στη συλλογή persons
 db.persons.createIndex({"vocation": 1, "dateofbirth": 1});
 
-// Insert records into the persons collection
+// Εισαγωγή των έξι ατόμων στη συλλογή persons
 db.persons.insertMany([
   {
     "person_id": "6392529400",
