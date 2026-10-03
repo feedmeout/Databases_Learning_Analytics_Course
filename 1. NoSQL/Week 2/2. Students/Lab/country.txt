@@ -1,0 +1,13 @@
+// Η συλλογή country της βάσης world, με τρεις χώρες: Ελλάδα, Γαλλία, Γερμανία.
+// Για όποιον δεν έχει τη συλλογή. Επικολλήστε όλο το περιεχόμενο στο mongosh, ή γράψτε load("country.txt") από τον φάκελο του αρχείου.
+db = db.getSiblingDB("world");
+db.country.drop();
+
+// Εισαγωγή των τριών χωρών στη συλλογή country
+db.country.insertMany([
+  { name: "Greece", euSince: 1981, population: 10400000 },
+  { name: "France", euSince: 1958, population: 68600000,
+    capital: { name: "Paris", timezone: "Europe/Paris" } },
+  { name: "Germany", euSince: 1958, population: 83600000,
+    capital: { name: "Berlin", timezone: "Europe/Berlin" } }
+]);

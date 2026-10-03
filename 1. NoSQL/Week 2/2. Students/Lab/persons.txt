@@ -1,4 +1,4 @@
-// Συλλογή persons για το παράδειγμα συνάθροισης της Εβδομάδας 2, Μέρος 3.
+// Συλλογή persons για το παράδειγμα συνάθροισης.
 // Πηγή: Paul Done, Practical MongoDB Aggregations, παράδειγμα «Filtered Top Subset».
 // Επικολλήστε όλο το περιεχόμενο στο mongosh, ή γράψτε load("persons.txt") από τον φάκελο του αρχείου.
 db = db.getSiblingDB("book-filtered-top-subset");
